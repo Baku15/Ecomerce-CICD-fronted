@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './editar-perfil.component.html',
   styleUrl: './editar-perfil.component.css'
 })
-export class LoginComponent {
+export class EditarperfilComponent {
 
 }

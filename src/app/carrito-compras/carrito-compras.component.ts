@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-carritocompras',
   standalone: true,
   imports: [],
-  templateUrl: './carritocompras.component.html',
-  styleUrl: './carritocompras.component.css'
+  templateUrl: './carrito-compras.component.html',
+  styleUrl: './carrito-compras.component.css'
 })
 export class carritocomprasComponent {
 
