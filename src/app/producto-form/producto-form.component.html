@@ -1,1 +1,36 @@
-<p>producto-form works!</p>
+<div class="container py-5">
+
+<h2 class="mb-5">Nuevo Producto</h2>
+<div class="row row-cols-3 justify-content-center">
+  <form [formGroup]= "form" (ngSubmit)="create()">
+    <div class="mb-3">
+         <label for="name">Nombre</label>
+         <input id="name" type="text" placeholder="Nombre" class="form-control" formControlName="nombre">
+    </div>
+    <div class="mb-3">
+      <label for="descripcion">Descripcion</label>
+         <input id="descripcion" type="text" placeholder="Descripcion" class="form-control" formControlName="descripcion">
+    </div>
+<div class="mb-3">
+      <label for="precio">Precio</label>
+         <input id="precio" type="text" placeholder="Precio" class="form-control" formControlName="precio">
+    </div>
+<div class="mb-3">
+
+      <label for="stock">Stock</label>
+         <input id="stock" type="text" placeholder="Stock" class="form-control" formControlName="stock">
+    </div>
+<div class="mb-3">
+      <label for="urlimg">Imagen</label>
+         <input id="urlimg" type="text" placeholder="Imagen" class="form-control" formControlName="urlimg">
+    </div>
+
+<div class="text-end">
+        <button type="button" class="btn btn-light" routerLink=""> Cancelar</button>
+         <button class="btn btn-primary ms-2">Crear producto </button>
+</div>
+  </form>
+
+</div>
+</div>
+

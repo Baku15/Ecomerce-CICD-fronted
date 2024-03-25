@@ -16,7 +16,7 @@ export class ProductoService {
   }
 
   create(producto: any){
-    return this.http.post('http//localhost:8080/productos/',producto);
+    return this.http.post('http://localhost:8080/productos',producto);
 
   }
   constructor() { }
