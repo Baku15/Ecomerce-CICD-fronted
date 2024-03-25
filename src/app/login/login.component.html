@@ -1,1 +1,46 @@
-<p>login works!</p>
+<div class="container">
+    <div class="center">
+        <div class="left-section">
+            <div class="logo-section">
+                <img src="https://png.pngtree.com/element_our/sm/20180410/sm_5acd1797b5783.jpg" width=100 height=95>
+            </div>
+            <div class="text-welcome-section">
+                Welcome to the cloud
+            </div>
+            <div class="login-text-section">
+                Login
+            </div>
+            <form (ngSubmit)="onLogin()">
+                <div class="email-section">
+                    <mat-form-field color="accent">
+                        <mat-label>Enter your username</mat-label>
+                        <input matInput [(ngModel)]="username" name="usuario">
+                    </mat-form-field>
+                </div>
+                <div class="password-section">
+                    <div class="example-container">
+                        <mat-form-field color="accent">
+                          <mat-label>Enter your password</mat-label>
+                          <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password">
+                          <button mat-icon-button matSuffix (click)="hide = !hide" type="button">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                          </button>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="button-section">
+                    <div class="example-button-row">
+                        <button mat-raised-button type="submit">Login</button>
+                    </div>
+                </div>
+            </form>
+            <div class="help-section">
+                Having issues entering your account?
+            </div>
+        </div>
+        <div class="image-section">
+            <img src="https://www.cinc.com/wp-content/uploads/2023/03/cinc_727.jpg" width=auto>
+        </div>
+    </div>
+  </div>
+  
