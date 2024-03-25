@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { RegistroProductosComponent } from './registro-productos/registro-productos.component';
+import { ProductoFormComponent} from './producto-form/producto-form.component';
+
 
 export const routes: Routes = [
     { path: 'registro-usuario', component: RegistroUsuarioComponent},
@@ -19,4 +21,5 @@ export const routes: Routes = [
     { path: 'menu-principal', component: MenuPrincipalComponent},
     { path: 'perfil-user', component: PerfilUsuarioComponent},
     { path: 'registro-producto', component: RegistroProductosComponent},
+     { path: 'producto-form', component: ProductoFormComponent},
 ];

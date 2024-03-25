@@ -1,11 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from '../services/productos/producto.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-registro-productos',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './registro-productos.component.html',
   styleUrl: './registro-productos.component.css'
 })

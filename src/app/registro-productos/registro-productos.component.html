@@ -1,0 +1,38 @@
+<div class="container py-5">
+<h1 class="mb-10">LISTADO DE PRODUCTOS</h1>
+  <div class="text-end">
+    <button class="btn btn-primary" routerLink="/producto-form">
+      Nuevo contacto
+    </button>
+
+  </div>
+<table class="table table-hover">
+    <thead>
+         <tr>
+              <th>ID</th>
+              <th>NOMBRE</th>
+              <th>DESCRIPCION</th>
+              <th>PRECIO</th>
+              <th>STOCK</th>
+              <th>IMAGEN</th>
+              <th></th>
+
+    </tr>
+  </thead>
+<tbody>
+    @for(producto of productos; track producto.id){
+    <tr>
+        <td>{{producto.id}}</td>
+        <td>{{producto.nombre}}</td>
+        <td>{{producto.descripcion}}</td>
+        <td>{{producto.precio}}</td>
+        <td>{{producto.stock}}</td>
+        <td>{{producto.urlimg}}</td>
+        <!-- <td>{{marca_id}}</td> -->
+        <td></td>
+    </tr>
+    }
+</tbody>
+
+</table>
+</div>
