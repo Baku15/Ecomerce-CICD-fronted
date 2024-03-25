@@ -21,5 +21,6 @@ export const routes: Routes = [
     { path: 'menu-principal', component: MenuPrincipalComponent},
     { path: 'perfil-user', component: PerfilUsuarioComponent},
     { path: 'registro-producto', component: RegistroProductosComponent},
-     { path: 'producto-form', component: ProductoFormComponent},
+    { path: 'producto-form', component: ProductoFormComponent},
+    { path: 'registro-producto/:id/edit', component: ProductoFormComponent}
 ];

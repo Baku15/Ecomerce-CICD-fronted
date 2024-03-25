@@ -29,7 +29,17 @@
         <td>{{producto.stock}}</td>
         <td>{{producto.urlimg}}</td>
         <!-- <td>{{marca_id}}</td> -->
-        <td></td>
+        <td class="text-end">
+          <div class="btn-group">
+            <button class="btn btn-success"[routerLink]="[producto.id, 'edit' ]">
+              Editar
+            </button>
+
+            <button class="btn btn-danger">
+              Eliminar
+            </button>
+          </div>
+        </td>
     </tr>
     }
 </tbody>

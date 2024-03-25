@@ -2,6 +2,7 @@
 
 <h2 class="mb-5">Nuevo Producto</h2>
 <div class="row row-cols-3 justify-content-center">
+    @if(form){
   <form [formGroup]= "form" (ngSubmit)="create()">
     <div class="mb-3">
          <label for="name">Nombre</label>
@@ -26,11 +27,10 @@
     </div>
 
 <div class="text-end">
-        <button type="button" class="btn btn-light" routerLink=""> Cancelar</button>
+        <button type="button" class="btn btn-light" routerLink="/registro-producto"> Cancelar</button>
          <button class="btn btn-primary ms-2">Crear producto </button>
 </div>
   </form>
-
+    }
 </div>
 </div>
-

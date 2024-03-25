@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder,FormGroup, Validators } from '@angular/forms';
 import { ProductoService } from '../services/productos/producto.service';
 import { RouterModule } from '@angular/router';
+import { Producto } from '../model/producto.interface';
 
 @Component({
   selector: 'app-registro-productos',
@@ -13,10 +14,10 @@ import { RouterModule } from '@angular/router';
 export class RegistroProductosComponent implements OnInit {
 
   private productoService = inject(ProductoService);
-  productos: any[] = [];
+  productos: Producto[] = [];
   ngOnInit(): void {
       this.productoService.list()
-        .subscribe((productos: any) => {
+        .subscribe(productos  => {
         this.productos = productos;
       });
 
