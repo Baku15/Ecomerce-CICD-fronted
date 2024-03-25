@@ -1,1 +1,91 @@
-<p>perfil-usuario works!</p>
+<div class="title">
+    <mat-icon>account_circle</mat-icon> Profile
+</div>
+<div class="data">
+    <div class="data-secction">        
+        <div class="horizontal-layout">
+            <div class="vertical-layout">
+                <div class="personal-data"><mat-icon>account_box</mat-icon>Personal Data</div>
+                <div class="label">Nombre completo</div>
+                <div class="value">{{this.nombre +" "+ this.paterno +" "+ this.materno}}</div>  
+                <div class="label">Edad</div>
+                <div class="value">{{this.edad}}</div>   
+                <div class="label">Genero</div>
+                <div class="value">{{this.genero}}</div>
+                <div class="label">Telefono</div>
+                <div class="value">{{this.celular}}</div>
+                <div class="label">Direccion</div>
+                <div class="value">{{this.genero}}</div>
+            </div>
+            <div class="vertical-layout">
+                <div class="personal-data"><mat-icon>lock</mat-icon>Account Data</div>
+                <div class="label">Email</div>
+                <div class="value">{{this.email}}</div>
+                <div class="label">Usuario</div>
+                <div class="value">{{this.usuario}}</div> 
+            </div>         
+        </div>
+
+    </div>
+    <div class="horizontal-layout">        
+        <div class="vertical-layout">
+            <div class="personal-data"><mat-icon>edit</mat-icon>Edit Personal Data</div>
+            <mat-form-field color="accent">
+                <mat-label>Enter a new first name</mat-label>
+                <input matInput class="custom-input" placeholder="Enter email" color="accent">
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <mat-form-field color="accent">
+                <mat-label>Enter lastname</mat-label>
+                <input matInput class="custom-input" placeholder="Enter email" color="accent">
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <mat-form-field color="accent">
+                <mat-label>Enter lastname</mat-label>
+                <input matInput class="custom-input" placeholder="Enter email" color="accent">
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <mat-form-field color="accent">
+                <mat-label>Enter age</mat-label>
+                <input matInput class="custom-input" placeholder="Enter email" color="accent">
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <mat-form-field color="accent">
+                <mat-label>Enter new cellphone number</mat-label>
+                <input matInput class="custom-input" placeholder="Enter email" color="accent">
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <mat-form-field color="accent">
+                <mat-label>Enter new address</mat-label>
+                <input matInput class="custom-input" placeholder="Enter email" color="accent">
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="vertical-layout">
+            <div class="account-data"><mat-icon>edit</mat-icon>Edit Account Data</div>
+            <mat-form-field color="accent">
+                <mat-label>Enter new email</mat-label>
+                <input matInput class="custom-input" placeholder="Enter email" color="accent">
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <mat-form-field color="accent">
+                <mat-label>Change username</mat-label>
+                <input matInput class="custom-input" placeholder="Enter email" color="accent">
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <mat-form-field color="accent">
+                <mat-label>Change password</mat-label>
+                <input matInput class="custom-input" placeholder="Enter email" color="accent">
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="baja">
+    <div class="button-secction">        
+        <button mat-raised-button color="accent">Update your account</button>
+    </div>
+    <div class="button-secction">        
+        <button mat-raised-button color="warn">Delete your account</button>
+    </div>
+</div>
