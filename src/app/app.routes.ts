@@ -9,6 +9,7 @@ import { MenuPrincipalComponent } from './menu-principal/menu-principal.componen
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { RegistroProductosComponent } from './registro-productos/registro-productos.component';
 import { ProductoFormComponent} from './producto-form/producto-form.component';
+import { UserlistComponent } from './userlist/userlist.component';
 
 
 export const routes: Routes = [
@@ -22,5 +23,6 @@ export const routes: Routes = [
     { path: 'perfil-user', component: PerfilUsuarioComponent},
     { path: 'registro-producto', component: RegistroProductosComponent},
     { path: 'producto-form', component: ProductoFormComponent},
-    { path: 'registro-producto/:id/edit', component: ProductoFormComponent}
+    { path: 'registro-producto/:id/edit', component: ProductoFormComponent},
+    { path: 'userlist', component: UserlistComponent},
 ];
