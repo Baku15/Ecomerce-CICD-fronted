@@ -1,0 +1,52 @@
+<mat-toolbar class="mat-elevation-z3">
+    <button mat-icon-button aria-label="Example icon button with a home icon" class="hidebar" (click)="openSideNav()">
+        <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon button with a home icon" (click)="collapsed.set(!collapsed())">
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" [(opened)]="opened" [style.width]="sidenavwidth()" class="custom-sidebar">
+        <a routerLink="profile" routerLinkActive="active" matTooltip="My profile" [matTooltipPosition]="'right'">
+            <div class="sidenav-header">
+                <img [width]="profilepicsize()" [height]="profilepicsize()" src="https://imagenes.elpais.com/resizer/ldBDo5AcQeJ2QsYNS5iT7T7BVGM=/1960x1103/cloudfront-eu-central-1.images.arcpublishing.com/prisa/4UPKL26K5ZICHFC6UIAU5DDHWU.jpg"/>
+            </div>
+        </a>        
+        <mat-nav-list>
+            <a mat-list-item routerLink="home" routerLinkActive="active" matTooltip="My Cloud" [matTooltipPosition]="'right'">
+                <mat-icon class="iconoblanco">cloud</mat-icon>
+                <label class="iconoblanco">My Cloud</label>
+            </a>
+            <a mat-list-item routerLink="sharedFiles" routerLinkActive="active" matTooltip="Shared files" [matTooltipPosition]="'right'">
+                <mat-icon class="iconoblanco">share</mat-icon>
+                <label class="iconoblanco">Shared files</label>
+            </a>
+            <a mat-list-item routerLink="favorites" routerLinkActive="active" matTooltip="Folders" [matTooltipPosition]="'right'">
+                <mat-icon class="iconoblanco">folder_shared</mat-icon>
+                <label class="iconoblanco">Folders</label>
+            </a>
+            <a mat-list-item routerLink="upload" routerLinkActive="active" matTooltip="Upload files" [matTooltipPosition]="'right'">
+                <mat-icon class="iconoblanco">file_upload</mat-icon>
+                <label class="iconoblanco">Upload files</label>
+            </a>
+            <!-- VERSION 2
+            <a mat-list-item routerLink="signedfiles" routerLinkActive="active">
+                <mat-icon class="iconoblanco">rate_review</mat-icon>
+                <label class="iconoblanco">Status files</label>
+            </a>
+            -->
+            <a mat-list-item routerLink="userlist" routerLinkActive="active" matTooltip="User administration" [matTooltipPosition]="'right'">
+                <mat-icon class="iconoblanco">people</mat-icon>
+                <label class="iconoblanco">User administration</label>
+            </a>
+            <a mat-list-item routerLink="/loggout" routerLinkActive="active"  (click)="logout()" matTooltip="Logg out" [matTooltipPosition]="'right'">
+                <mat-icon class="iconoblanco">logout</mat-icon>
+                <label class="iconoblanco">Logg out</label>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="content" [style.margin-left]="sidenavwidth()">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
