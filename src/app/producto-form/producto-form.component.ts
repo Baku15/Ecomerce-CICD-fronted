@@ -25,7 +25,9 @@ export class ProductoFormComponent implements OnInit {
               this.form = this.fb.group({
                   nombre: [producto.id, [Validators.required]],
                   descripcion:[producto.nombre,[Validators.required]],
-                  precio:[producto.descripcion,[Validators.required]],
+                  // precio:[producto.descripcion,[Validators.required]],
+                  precio: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+
                   stock:[producto.stock,[Validators.required]],
                   urlimg:[producto.precio,[Validators.required]],
           });

@@ -13,14 +13,17 @@
          <input id="descripcion" type="text" placeholder="Descripcion" class="form-control" formControlName="descripcion">
     </div>
 <div class="mb-3">
-      <label for="precio">Precio</label>
-         <input id="precio" type="text" placeholder="Precio" class="form-control" formControlName="precio">
+    <label for="precio">Precio</label>
+    <input id="precio" type="number" placeholder="Precio" class="form-control" pattern = "^[0-9]*$"  formControlName="precio" step="1" min="0" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 46">
+    <div class="invalid-feedback d-none">
+        Precio es requerido y debe ser un valor numérico.
     </div>
+</div>
 <div class="mb-3">
-
       <label for="stock">Stock</label>
-         <input id="stock" type="text" placeholder="Stock" class="form-control" formControlName="stock">
-    </div>
+         <input id="stock" type="number" placeholder="Stock" class="form-control" pattern = "^[0-9]*$" formControlName="stock" step="1" min="0" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+
+</div>
 <div class="mb-3">
       <label for="urlimg">Imagen</label>
          <input id="urlimg" type="text" placeholder="Imagen" class="form-control" formControlName="urlimg">
@@ -28,7 +31,9 @@
 
 <div class="text-end">
         <button type="button" class="btn btn-light" routerLink="/registro-producto"> Cancelar</button>
-         <button class="btn btn-primary ms-2">Crear producto </button>
+         <!-- <button class="btn btn-primary ms-2">Crear producto </button> -->
+        <button type="submit" class="btn btn-primary ms-2" [disabled]="form.invalid">Crear producto</button>
+
 </div>
   </form>
     }
