@@ -16,7 +16,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 export const routes: Routes = [   
 
     //Login
-    { path: '', component: LoginComponent},
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent},
     { path: 'registro-usuario', component: RegistroUsuarioComponent},
     //Para el user Admin
     { path: 'admin', component: SidebarComponent,

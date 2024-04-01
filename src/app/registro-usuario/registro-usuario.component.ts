@@ -9,6 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { UsuarioService } from '../services/Usuarios/usuario.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-registro-usuario',
   standalone: true,
@@ -24,15 +25,22 @@ export class RegistroUsuarioComponent {
   telefono = new FormControl('', [Validators.required]);
   rol = new FormControl('', [Validators.required]);
   newUser: any = {};
+  stringMessage: string = '';
 
   errorMessage = '';
 
-  constructor(private usuarioService: UsuarioService) {
+  constructor(private usuarioService: UsuarioService,private router: Router,) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
   }
   registrarUser(){
+    if (this.nombre.value === '' || this.password.value === '' || this.telefono.value === '' || this.rol.value === '') {
+      this.stringMessage = 'Debe llenar todos los campos';
+      console.error('Debe llenar todos los campos');
+      this.mostrarMensajeDeleteError();
+      return;
+    }
     this.newUser = {
       usuario_nombre: this.nombre.value,
       usuario_pass: this.password.value,
@@ -44,6 +52,8 @@ export class RegistroUsuarioComponent {
     this.usuarioService.registerNewUsuario(this.newUser).subscribe({
       next: (response) => {
         console.log(response+" Usuario registrado: "+this.newUser);
+        this.mostrarMensajeDeleteError();
+        this.router.navigate(['../login']);
         // Ajustamos según la respuesta real esperada
         // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
       },
@@ -60,5 +70,43 @@ export class RegistroUsuarioComponent {
     } else {
       this.errorMessage = '';
     }
+  }
+  irhome(){
+    this.router.navigate(['../login']);
+  
+  }
+  mostrarAlerta = false;
+  mostrarAlertaError = false;
+  mostrarAlertaDelete = false;
+  mostrarAlertaErrorDelete = false;
+  mostrarMensajeRegistroExito() {
+    this.mostrarAlerta = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  mostrarMensajeRegistroError() {
+    this.mostrarAlertaError = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  mostrarMensajeDeleteExito() {
+    this.mostrarAlertaDelete = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  mostrarMensajeDeleteError() {
+    this.mostrarAlertaErrorDelete = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  cerrarAlerta() {
+    this.mostrarAlerta = false;
+    this.mostrarAlertaError = false;
+    this.mostrarAlertaDelete = false;
+    this.mostrarAlertaErrorDelete = false;
   }
 }

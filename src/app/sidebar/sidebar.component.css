@@ -4,6 +4,11 @@
     margin: 10px;
     border: 1px solid #d64141;
   }
+  .container{
+    display: flex;
+    height: 100vh; /* Use full height of the viewport */
+    flex-direction: column;
+  }
 mat-toolbar{
     position: relative;
     z-index: 5;
@@ -28,6 +33,7 @@ mat-sidenav-container {
     background-color: #EBF2FC;
     color: black;
     overflow-y:visible;
+    height: 100vh; /* Use full height of the viewport */
     
 }
 .sidebar-bottom {

@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit{
   hide = true;
   errorMessage: string = '';
   users$!: Observable<any[]>;
+  stringMessage: string = '';
 
   constructor(private router: Router, private usuarioService: UsuarioService) {}
   ngOnInit(): void {
@@ -38,15 +39,58 @@ export class LoginComponent implements OnInit{
   }
 
   onLogin(): void {
+    if (this.username === '' || this.password === ''){
+      this.stringMessage = 'Debe llenar todos los campos';
+      console.error('Debe llenar todos los campos');
+      this.mostrarMensajeDeleteError();
+      return;
+    }
     this.users$.subscribe(user => {
       for(let i = 0; i < user.length; i++){
         if(this.username == user[i].usuario_nombre && this.password == user[i].usuario_pass){
-          this.router.navigate(['/admin/menu-principal']);
+          this.router.navigate(['/admin'], { queryParams: { number: user[i].id_usuario } });
         }else{
           this.errorMessage = 'Usuario o contraseña incorrecta';
           console.log(this.errorMessage);
+          this.stringMessage = 'Error en el usuario o contraseña';
+          this.mostrarMensajeDeleteError();
         }
       }
     });
+  }
+
+  mostrarAlerta = false;
+  mostrarAlertaError = false;
+  mostrarAlertaDelete = false;
+  mostrarAlertaErrorDelete = false;
+  mostrarMensajeRegistroExito() {
+    this.mostrarAlerta = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  mostrarMensajeRegistroError() {
+    this.mostrarAlertaError = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  mostrarMensajeDeleteExito() {
+    this.mostrarAlertaDelete = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  mostrarMensajeDeleteError() {
+    this.mostrarAlertaErrorDelete = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  cerrarAlerta() {
+    this.mostrarAlerta = false;
+    this.mostrarAlertaError = false;
+    this.mostrarAlertaDelete = false;
+    this.mostrarAlertaErrorDelete = false;
   }
 }

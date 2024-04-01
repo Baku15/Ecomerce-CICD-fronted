@@ -29,15 +29,28 @@
                     </div>
                 </div>
                 <div class="button-section">
-                    {{this.password+" "+this.username}}
                     <div class="example-button-row">
                         <button mat-raised-button type="submit">Login</button>
+                    </div>
+                    <div class="example-button-row">
+                        <button mat-raised-button routerLink="../registro-usuario">Registrarse</button>
                     </div>
                 </div>
             </form>
             <div class="help-section">
                 Tienes problemas al acceder a tu cuenta?
+                
             </div>
+            @if(mostrarAlertaDelete){
+                <div class="alert">
+                    El archivo se registro satisfactoramente.
+                </div>
+              }
+              @if(mostrarAlertaErrorDelete){
+                  <div class="alertE">
+                      {{stringMessage}}
+                  </div>
+              }
         </div>
         <div class="image-section">
             <img src="https://monkeyplusbc.com/assets/imags/blogs/conoce-eCommerce-conveniente-para-tu-negocio-pricipal.jpg" width=auto>

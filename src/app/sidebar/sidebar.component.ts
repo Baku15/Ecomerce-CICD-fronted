@@ -1,4 +1,4 @@
-import { Component, Signal, computed } from '@angular/core';
+import { Component, OnInit, Signal, computed } from '@angular/core';
 
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
@@ -6,7 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { signal } from '@angular/core';
 import {MatListModule} from '@angular/material/list';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -24,11 +24,14 @@ export type MenuItem = {
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit{
   opened: boolean = true;
+  id: number = 0;
   openSideNav() {
     this.opened = this.opened ? false : true;
   }
+
+  
   menuItem1: MenuItem = {icon: 'home', label: 'Home', route: '/'};
   menuItems: Signal<MenuItem[]> = signal([
     {icon: 'home', label: 'Home', route: '/'},
@@ -36,7 +39,16 @@ export class SidebarComponent {
     {icon: 'settings', label: 'Settings', route: '/settings'}
   ]);
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private route: ActivatedRoute) { }
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.id = params['number'];
+    });
+  }
+
+  irperfil(){    
+    this.router.navigate(['perfil-user'], { queryParams: { number: this.id } });
+  }
 
   logout() {
     // Limpia el almacenamiento local o la sesión donde guardas el token de autenticación

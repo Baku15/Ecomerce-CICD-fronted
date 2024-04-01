@@ -38,7 +38,19 @@
         <mat-option value="comprador">Comprador</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button (click)="registrarUser()">Basic</button>
+    <button mat-raised-button (click)="registrarUser()">Registrar User</button>
+    <br>
+    <button mat-raised-button routerLinkActive="active" (click)="irhome()">Cancelar</button>
+    @if(mostrarAlertaDelete){
+      <div class="alert">
+          El archivo se registro satisfactoramente.
+      </div>
+    }
+    @if(mostrarAlertaErrorDelete){
+        <div class="alertE">
+            {{stringMessage}}
+        </div>
+    }
   </div>
 </div>
 
