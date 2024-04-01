@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit{
   errorMessage: string = '';
   users$!: Observable<any[]>;
 
-  constructor(private router: Router, private usuarioService: UsuarioService,) {}
+  constructor(private router: Router, private usuarioService: UsuarioService) {}
   ngOnInit(): void {
     this.usuarioService.getAllUsuarios().subscribe({
       next: (response) => {
