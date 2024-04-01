@@ -10,19 +10,32 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { RegistroProductosComponent } from './registro-productos/registro-productos.component';
 import { ProductoFormComponent} from './producto-form/producto-form.component';
 import { UserlistComponent } from './userlist/userlist.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
-export const routes: Routes = [
+export const routes: Routes = [   
+
+    //Login
+    { path: '', component: LoginComponent},
     { path: 'registro-usuario', component: RegistroUsuarioComponent},
-    { path: 'carrito-compras', component: carritocomprasComponent},
-    { path: 'catalogo', component: CatalogoComponent},
-    { path: 'categoria', component: CategoriaProductoComponent},
-    { path: 'editar-perfil', component: EditarperfilComponent},
-    { path: 'login', component: LoginComponent},
-    { path: 'menu-principal', component: MenuPrincipalComponent},
-    { path: 'perfil-user', component: PerfilUsuarioComponent},
-    { path: 'registro-producto', component: RegistroProductosComponent},
-    { path: 'producto-form', component: ProductoFormComponent},
-    { path: 'registro-producto/:id/edit', component: ProductoFormComponent},
-    { path: 'userlist', component: UserlistComponent},
+    //Para el user Admin
+    { path: 'admin', component: SidebarComponent,
+        children:[
+            { path: 'carrito-compras', component: carritocomprasComponent},
+            { path: 'catalogo', component: CatalogoComponent},
+            { path: 'categoria', component: CategoriaProductoComponent},
+            { path: 'editar-perfil', component: EditarperfilComponent},
+            { path: 'menu-principal', component: MenuPrincipalComponent},
+            { path: 'perfil-user', component: PerfilUsuarioComponent},
+            { path: 'registro-producto', component: RegistroProductosComponent},
+            { path: 'producto-form', component: ProductoFormComponent},
+            { path: 'registro-producto/:id/edit', component: ProductoFormComponent},
+            { path: 'userlist', component: UserlistComponent},
+        ]
+    },
+    //Para el user SuperAdmin
+    { path: 'superadmin', component: SidebarComponent,
+        children:[
+        ]
+    },
 ];
