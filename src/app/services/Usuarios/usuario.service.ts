@@ -18,5 +18,9 @@ export class UsuarioService {
   public registerNewUsuario(registroUsuario: any): Observable<any>{
     return this.httpClient.post(this.API_SERVER, registroUsuario)
   }
+
+  public deleteUsuariobyId(id: number): Observable<any>{
+    return this.httpClient.delete(this.API_SERVER + '/' + id);
+  }
 }
 
