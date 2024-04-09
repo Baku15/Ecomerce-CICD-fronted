@@ -32,7 +32,7 @@ export class UserlistComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   registrosUsers!: any;
   usersFiltrados: any[] = this.registrosUsers;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'numero'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'numero','edit'];
   constructor(public usuarioService: UsuarioService){}
   ngOnInit(): void {
     this.usuarioService.getAllUsuarios().subscribe(
