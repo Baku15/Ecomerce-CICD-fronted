@@ -4,6 +4,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -36,7 +37,7 @@ export class UserlistComponent implements OnInit {
   registrosUsers!: any;
   usersFiltrados: any[] = this.registrosUsers;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'numero','edit'];
-  constructor(public usuarioService: UsuarioService){}
+  constructor(private router: Router,public usuarioService: UsuarioService){}
   ngOnInit(): void {
     this.usuarioService.getAllUsuarios().subscribe(
       response => {
@@ -53,6 +54,11 @@ export class UserlistComponent implements OnInit {
     setTimeout(() => {    
       this.usersFiltrados = this.registrosUsers;
     }, 5000);
+  }
+
+  enterprofile(id: number){
+    console.log("id es:"+id);
+    this.router.navigate(['/admin/detalleuser'], { queryParams: { userid: id } });
   }
 
 }

@@ -29,11 +29,11 @@
       <td mat-cell *matCellDef="let element"> {{element.usuario_telefono}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="edit">
+    <ng-container matColumnDef="edit"> 
       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-      <td mat-cell *matCellDef="let row">
+      <td mat-cell *matCellDef="let element">
           <div class="button-secction">        
-            <button mat-stroked-button>Detalles user</button>
+            <button mat-stroked-button (click)="enterprofile(element.id_usuario)">Detalles user</button>
           </div>
       </td>
     </ng-container>

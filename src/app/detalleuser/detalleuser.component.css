@@ -1,11 +1,6 @@
-.container {
-    display: flex;
-    height: 100vh; /* Use full height of the viewport */
-    flex-direction: column;
-  }
 .vertical-layout{
     background-color: white;
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 2%;
     flex-direction: column;
     display: flex;
@@ -63,20 +58,3 @@
 .button-secction{
     margin: 2%;
 }
-
-@media only screen and (max-width: 768px) {
-    .horizontal-layout{
-        display: flex;
-        flex-direction: column;
-    }
-    .vertical-layout{
-        background-color: white;
-        border-radius: 15px;
-        padding: 2%;
-        flex-direction: column;
-        display: flex;
-        margin-top: 3%;
-        margin-left: 3%;
-        width: 94%;
-    }
-  }

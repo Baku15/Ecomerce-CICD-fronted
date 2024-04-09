@@ -1,33 +1,75 @@
-<div class="container">
-    <div class="title">
-        <mat-icon>account_circle</mat-icon> Profile
-    </div>
-    <div class="data">
-        <div class="data-secction">
-            <div class="horizontal-layout">
-                <div class="vertical-layout">
-                  <div class="personal-data"><mat-icon>account_box</mat-icon>Personal Data</div>
-                    <div class="label">Nombre completo</div>
-                    <div class="value">{{usuario.nombre + " " + usuario.paterno + " " + usuario.materno}}</div>
-                    <div class="label">Dependencia</div>
-                    <div class="value">{{usuario.dependencia}}</div>
-                    <div class="label">Sigla</div>
-                    <div class="value">{{usuario.sigla}}</div>
-                    <div class="label">Telefono</div>
-                    <div class="value">{{usuario.celular}}</div>
-                    <div class="label">Direccion</div>
-                    <div class="value">{{usuario.domicilio}}</div>
-                </div>
-                <div class="vertical-layout">
-                  <div class="personal-data"><mat-icon>lock</mat-icon>Account Data</div>
-                  <div class="label">Cedula de Identidad</div>
-                  <div class="value">{{usuario.ci}}</div>
-                  <div class="label">Usuario</div>
-                  <div class="value">{{usuario.usuario}}</div>
-                  <div class="label">Cargo</div>
-                  <div class="value">{{usuario.cargo}}</div>
-              </div>
+<div class="title">
+    <mat-icon>account_circle</mat-icon> Profile del user {{nombre}}
+</div>
+<div class="data">
+    <div class="data-secction">        
+        <div class="horizontal-layout">
+            <div class="vertical-layout">
+                <div class="personal-data"><mat-icon>account_box</mat-icon>Personal Data</div>
+                <div class="label">Nombre completo</div>
+                <div class="value">{{this.nombre}}</div>  
+                <div class="label">Estado</div>
+                <div class="value">{{this.status}}</div>   
+                <div class="label">Telefono</div>
+                <div class="value">{{this.celular}}</div>
+                <div class="label">Rol</div>
+                <div class="value">{{this.paterno}}</div>
             </div>
+            <div class="vertical-layout">
+                <div class="personal-data"><mat-icon>lock</mat-icon>Account Data</div>
+                <div class="label">Email</div>
+                <div class="value">{{this.email}}</div>
+                <div class="label">Usuario</div>
+                <div class="value">{{this.nombre}}</div> 
+            </div>         
         </div>
+
+    </div>
+    <div class="horizontal-layout">        
+        <div class="vertical-layout">
+            <div class="personal-data"><mat-icon>edit</mat-icon>Edit Personal Data</div>
+            <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input matInput [formControl]="nombref">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordf">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Enter your email</mat-label>
+                <input matInput
+                       placeholder="pat@example.com"
+                       [formControl]="emailf"
+                       (blur)="updateErrorMessage()"
+                       required>
+                @if (emailf.invalid) {
+                  <mat-error>{{errorMessage}}</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Telefono</mat-label>
+                <input matInput type="number" [formControl]="telefonof">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Select rol</mat-label>
+                <mat-select [formControl]="rolf">
+                  <mat-option value="admin">Admin</mat-option>
+                  <mat-option value="vendedor">Vendedor</mat-option>
+                  <mat-option value="comprador">Comprador</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="baja">
+    <div class="button-secction">        
+        <button mat-raised-button (click)="registrarUser()">Actualizar User</button>
+    </div>
+    <div class="button-secction">        
+        <!--<button mat-raised-button color="warn">Delete your account</button>-->
     </div>
 </div>
