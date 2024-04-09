@@ -22,7 +22,7 @@ import {merge} from 'rxjs';
 })
 export class PerfilUsuarioComponent implements OnInit{
   hide = true;
-  userPropid: number = 1;
+  userPropid: number = 0;
   nombre: string = "";
   paterno: string = "";
   materno: string = "";
@@ -36,6 +36,7 @@ export class PerfilUsuarioComponent implements OnInit{
   status: string = "";
   createdate: string = "";
   updatedate: string = "";
+  iduser: number = 0;
 
   emailf = new FormControl('', [Validators.required, Validators.email]);
   nombref = new FormControl('', [Validators.required]);
@@ -88,6 +89,35 @@ export class PerfilUsuarioComponent implements OnInit{
     },500) 
   }
 
+  deleteUser(){
+    console.log("entrando a delete: ", this.iduser)
+    this.usuarioService.deleteUsuariobyId(this.iduser).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.mostrarMensajeDeleteExito();
+        setTimeout(() => {
+          this.logout();
+        }, 3000); 
+        // Ajustamos según la respuesta real esperada
+        // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
+      },
+      error: (error) => {
+        console.error(error); // Para propósitos de depuración
+        this.mostrarMensajeDeleteExito();
+        setTimeout(() => {
+          this.logout();
+        }, 3000); 
+      }
+    });
+  }
+
+  logout() {
+    // Limpia el almacenamiento local o la sesión donde guardas el token de autenticación
+    localStorage.removeItem('token');
+    // Navega de vuelta a la pantalla de login
+    this.router.navigate(['/']);
+  }
+
   updateErrorMessage() {
     if (this.emailf.hasError('required')) {
       this.errorMessage = 'You must enter a value';
@@ -105,7 +135,7 @@ export class PerfilUsuarioComponent implements OnInit{
       return;
     }
     this.newUser = {
-      id_usuario: this.userPropid,
+      id_usuario: this.iduser,
       usuario_nombre: this.nombref.value,
       usuario_pass: this.passwordf.value,
       usuario_estado: "activo",
@@ -130,6 +160,7 @@ export class PerfilUsuarioComponent implements OnInit{
     this.userList$.subscribe((userList: any[]) => {
       for (var i = 0; i < userList.length; i++) {
         if (this.userPropid == userList[i].id) {
+          this.iduser = userList[i].id_usuario
           this.nombre = userList[i].usuario_nombre;
           this.paterno = userList[i].usuario_rol;
           this.materno = "";

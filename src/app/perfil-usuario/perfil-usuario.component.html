@@ -65,11 +65,21 @@
         </div>
     </div>
 </div>
+@if(mostrarAlertaDelete){
+  <div class="alert">
+      Se elimino la cuenta satisfactoramente espera 3 segundos para redirección.
+  </div>
+}
+@if(mostrarAlertaErrorDelete){
+    <div class="alertE">
+        {{stringMessage}}
+    </div>
+}
 <div class="baja">
     <div class="button-secction">        
         <button mat-raised-button (click)="registrarUser()">Actualizar User</button>
     </div>
     <div class="button-secction">        
-        <button mat-raised-button color="warn">Delete your account</button>
+        <button mat-raised-button color="warn" (click)="deleteUser()">Delete your account</button>
     </div>
 </div>
