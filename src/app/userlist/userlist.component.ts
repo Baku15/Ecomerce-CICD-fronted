@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../services/Usuarios/usuario.service';
 import {MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
 
 export interface PeriodicElement {
   name: string;
@@ -24,7 +27,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-userlist',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule,MatButtonModule, MatDividerModule, MatIconModule],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.css'
 })
