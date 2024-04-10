@@ -1,5 +1,5 @@
 <div class="title">Lista de clientes</div>
-<table mat-table [dataSource]="registrosUsers" class="mat-elevation-z8">
+<table mat-table [dataSource]="registroClients" class="mat-elevation-z8">
 
     <!-- Position Column -->
     <ng-container matColumnDef="position">
@@ -45,7 +45,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <div class="title">Lista de Vendedores</div>
-<table mat-table [dataSource]="registroClients" class="mat-elevation-z8">
+<table mat-table [dataSource]="registrosUsers" class="mat-elevation-z8">
 
     <!-- Position Column -->
     <ng-container matColumnDef="position">
