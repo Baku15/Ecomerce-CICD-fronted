@@ -34,14 +34,27 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class UserlistComponent implements OnInit {
   dataSource = ELEMENT_DATA;
-  registrosUsers!: any;
-  usersFiltrados: any[] = this.registrosUsers;
+  registrosUsers!: any[];
+  registroClients!: any[];
+  usersFiltrados!: any[];
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'numero','edit'];
   constructor(private router: Router,public usuarioService: UsuarioService){}
   ngOnInit(): void {
+    this.registroClients = [];
+    this.registrosUsers = [];
+    this.usersFiltrados = [];
     this.usuarioService.getAllUsuarios().subscribe(
       response => {
-        this.registrosUsers = response;
+        for(let i = 0; i < response.length; i++){
+          if(response[i].usuario_rol == "vendedor" || response[i].usuario_rol == "admin"){
+            this.registrosUsers.push(response[i]);
+          }
+          if(response[i].usuario_rol == "comprador"){
+            this.registroClients.push(response[i]);
+          }
+          
+        }
+        
 
         // Manejar la respuesta de éxito aquí
         console.log('Registros de users mostradas', response);
@@ -51,9 +64,16 @@ export class UserlistComponent implements OnInit {
         console.error('Error al mostrar el users', error);
       }
     )
-    setTimeout(() => {    
-      this.usersFiltrados = this.registrosUsers;
-    }, 5000);
+    setTimeout(() => {
+      for(let i = 0; i < this.registrosUsers.length; i++){
+        console.log("rol es: "+this.registrosUsers[i].usuario_rol);
+        if(this.registrosUsers[i].usuario_rol == "vendedor"){
+          console.log("entro a vendedor: ",this.registrosUsers[i].usuario_rol,this.registrosUsers[i].usuario_nombre);
+          this.usersFiltrados[i] = this.registrosUsers[i];
+          console.log("users filtrados: ",this.usersFiltrados);
+        }
+      }
+    }, 2000);
   }
 
   enterprofile(id: number){
