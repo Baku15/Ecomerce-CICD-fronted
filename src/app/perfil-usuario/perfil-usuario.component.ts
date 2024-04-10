@@ -13,6 +13,24 @@ import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angu
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {merge} from 'rxjs';
 
+import {Inject} from '@angular/core';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+} from '@angular/material/dialog';
+import { ModalpasswordComponent } from '../modalpassword/modalpassword.component';
+
+export interface DialogData {
+  id: number;
+  name: string;
+  password: string;
+}
+
 @Component({
   selector: 'app-perfil-usuario',
   standalone: true,
@@ -21,6 +39,8 @@ import {merge} from 'rxjs';
   styleUrl: './perfil-usuario.component.css'
 })
 export class PerfilUsuarioComponent implements OnInit{
+  animal!: string;
+  name!: string;
   hide = true;
   userPropid: number = 0;
   nombre: string = "";
@@ -49,7 +69,7 @@ export class PerfilUsuarioComponent implements OnInit{
   errorMessage = '';
 
   userList$!: Observable<any[]>;
-  constructor(private router: Router, private usuarioService: UsuarioService,private route: ActivatedRoute) {
+  constructor(public dialog: MatDialog,private router: Router, private usuarioService: UsuarioService,private route: ActivatedRoute) {
     merge(this.emailf.statusChanges, this.emailf.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -87,6 +107,17 @@ export class PerfilUsuarioComponent implements OnInit{
     setTimeout(() => {
       this.obtenerdatos();
     },500) 
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ModalpasswordComponent, {
+      data: {id:this.iduser, name: this.nombre, password: this.password},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
   }
 
   deleteUser(){
@@ -170,7 +201,7 @@ export class PerfilUsuarioComponent implements OnInit{
           this.domicilio = "";
           this.email = userList[i].usuario_correo;
           this.usuario = "";
-          this.password = "";
+          this.password = userList[i].usuario_pass;
           this.status = userList[i].usuario_estado;
           this.createdate = "";
           this.updatedate = "";
