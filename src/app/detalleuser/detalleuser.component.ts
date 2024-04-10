@@ -13,36 +13,17 @@ import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angu
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {merge} from 'rxjs';
 
-import {Inject} from '@angular/core';
-import {
-  MatDialog,
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogTitle,
-  MatDialogContent,
-  MatDialogActions,
-  MatDialogClose,
-} from '@angular/material/dialog';
-import { ModalpasswordComponent } from '../modalpassword/modalpassword.component';
-
-export interface DialogData {
-  id: number;
-  name: string;
-  password: string;
-}
 
 @Component({
-  selector: 'app-perfil-usuario',
+  selector: 'app-detalleuser',
   standalone: true,
   imports: [MatSelectModule,FormsModule, ReactiveFormsModule,MatButtonModule, MatDividerModule, MatIconModule,MatFormFieldModule, MatInputModule],
-  templateUrl: './perfil-usuario.component.html',
-  styleUrl: './perfil-usuario.component.css'
+  templateUrl: './detalleuser.component.html',
+  styleUrl: './detalleuser.component.css'
 })
-export class PerfilUsuarioComponent implements OnInit{
-  animal!: string;
-  name!: string;
+export class DetalleuserComponent implements OnInit{
   hide = true;
-  userPropid: number = 0;
+  userPropid: number = 1;
   nombre: string = "";
   paterno: string = "";
   materno: string = "";
@@ -56,7 +37,6 @@ export class PerfilUsuarioComponent implements OnInit{
   status: string = "";
   createdate: string = "";
   updatedate: string = "";
-  iduser: number = 0;
 
   emailf = new FormControl('', [Validators.required, Validators.email]);
   nombref = new FormControl('', [Validators.required]);
@@ -69,17 +49,19 @@ export class PerfilUsuarioComponent implements OnInit{
   errorMessage = '';
 
   userList$!: Observable<any[]>;
-  constructor(public dialog: MatDialog,private router: Router, private usuarioService: UsuarioService,private route: ActivatedRoute) {
+  constructor(private router: Router, private usuarioService: UsuarioService,private route: ActivatedRoute) {
     merge(this.emailf.statusChanges, this.emailf.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.userPropid = params['number'];
+      this.userPropid = params['userid'];
+      console.log("ida es:"+this.userPropid);
     });
     this.usuarioService.getAllUsuarios().subscribe({
       next: (response) => {
+        console.log(response);
         this.userList$ = of(response); // Ajustamos según la respuesta real esperada
         // Ajustamos según la respuesta real esperada
         // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
@@ -109,46 +91,6 @@ export class PerfilUsuarioComponent implements OnInit{
     },500) 
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ModalpasswordComponent, {
-      data: {id:this.iduser, name: this.nombre, password: this.password},
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.animal = result;
-    });
-  }
-
-  deleteUser(){
-    console.log("entrando a delete: ", this.iduser)
-    this.usuarioService.deleteUsuariobyId(this.iduser).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.mostrarMensajeDeleteExito();
-        setTimeout(() => {
-          this.logout();
-        }, 3000); 
-        // Ajustamos según la respuesta real esperada
-        // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
-      },
-      error: (error) => {
-        console.error(error); // Para propósitos de depuración
-        this.mostrarMensajeDeleteExito();
-        setTimeout(() => {
-          this.logout();
-        }, 3000); 
-      }
-    });
-  }
-
-  logout() {
-    // Limpia el almacenamiento local o la sesión donde guardas el token de autenticación
-    localStorage.removeItem('token');
-    // Navega de vuelta a la pantalla de login
-    this.router.navigate(['/']);
-  }
-
   updateErrorMessage() {
     if (this.emailf.hasError('required')) {
       this.errorMessage = 'You must enter a value';
@@ -166,7 +108,7 @@ export class PerfilUsuarioComponent implements OnInit{
       return;
     }
     this.newUser = {
-      id_usuario: this.iduser,
+      id_usuario: this.userPropid,
       usuario_nombre: this.nombref.value,
       usuario_pass: this.passwordf.value,
       usuario_estado: "activo",
@@ -190,8 +132,8 @@ export class PerfilUsuarioComponent implements OnInit{
   obtenerdatos() {
     this.userList$.subscribe((userList: any[]) => {
       for (var i = 0; i < userList.length; i++) {
-        if (this.userPropid == userList[i].id) {
-          this.iduser = userList[i].id_usuario
+        if (this.userPropid == userList[i].id_usuario) {
+          console.log("id encontrado: "+userList[i].usuario_nombre);
           this.nombre = userList[i].usuario_nombre;
           this.paterno = userList[i].usuario_rol;
           this.materno = "";
@@ -201,7 +143,7 @@ export class PerfilUsuarioComponent implements OnInit{
           this.domicilio = "";
           this.email = userList[i].usuario_correo;
           this.usuario = "";
-          this.password = userList[i].usuario_pass;
+          this.password = "";
           this.status = userList[i].usuario_estado;
           this.createdate = "";
           this.updatedate = "";

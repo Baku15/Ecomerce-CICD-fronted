@@ -52,13 +52,16 @@ export class RegistroUsuarioComponent {
     this.usuarioService.registerNewUsuario(this.newUser).subscribe({
       next: (response) => {
         console.log(response+" Usuario registrado: "+this.newUser);
-        this.mostrarMensajeDeleteError();
-        this.router.navigate(['../login']);
+        this.mostrarMensajeDeleteExito();
+          setTimeout(() => {
+            this.router.navigate(['../login']);
+          }, 3000); 
         // Ajustamos según la respuesta real esperada
         // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
       },
       error: (error) => {
         console.error(error+" Usuario registrado: "+this.newUser); // Para propósitos de depuración
+        this.mostrarMensajeDeleteError();
       }
     });
   }
