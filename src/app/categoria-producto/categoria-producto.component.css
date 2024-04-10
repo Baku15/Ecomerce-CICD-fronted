@@ -1,0 +1,32 @@
+/* categoria-form.component.css */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh; /* 100% del alto de la ventana */
+}
+/* categoria-form.component.css */
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:80vh; /* 100% del alto de la ventana */
+}
+
+.card-header {
+  justify-content: center;
+}
+
+.categoria-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 400px; /* ancho máximo del formulario */
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+

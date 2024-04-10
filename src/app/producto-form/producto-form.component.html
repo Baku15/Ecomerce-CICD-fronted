@@ -30,9 +30,9 @@
     </div>
 
 <div class="text-end">
-        <button type="button" class="btn btn-light" routerLink="/registro-producto"> Cancelar</button>
+        <button type="button" class="btn btn-light" routerLink="/admin/registro-producto"> Cancelar</button>
          <!-- <button class="btn btn-primary ms-2">Crear producto </button> -->
-        <button type="submit" class="btn btn-primary ms-2" [disabled]="form.invalid">Crear producto</button>
+        <button type="submit" class="btn btn-primary ms-2" routerLink="/admin/registro-producto"[disabled]="form.invalid">Crear producto</button>
 
 </div>
   </form>
