@@ -12,6 +12,7 @@ import { ProductoFormComponent} from './producto-form/producto-form.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DetalleuserComponent } from './detalleuser/detalleuser.component';
+import { RecoverpasswordComponent } from './recoverpassword/recoverpassword.component';
 
 
 export const routes: Routes = [   
@@ -20,6 +21,7 @@ export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent},
     { path: 'registro-usuario', component: RegistroUsuarioComponent},
+    { path: 'recoveraccount', component: RecoverpasswordComponent},
     //Para el user Admin
     { path: 'admin', component: SidebarComponent,
         children:[
