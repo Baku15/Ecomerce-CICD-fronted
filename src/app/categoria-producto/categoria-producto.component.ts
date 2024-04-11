@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../material-module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CategoriasService } from '../services/categorias/categorias.service';
 
 @Component({
   selector: 'app-categoria-producto',
@@ -10,20 +11,21 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './categoria-producto.component.css'
 })
 export class CategoriaProductoComponent implements OnInit {
-categoriaForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  categoriaForm!: FormGroup;  // Añadir '!' para indicar que la propiedad será inicializada en el constructor
+
+  constructor(
+    public fb: FormBuilder,
+    public categoriaService: CategoriasService ) {}
+
+  ngOnInit(): void {
     this.categoriaForm = this.fb.group({
       nombre: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
       estado: [true, [Validators.required]]
-    });
-  }
+    }); }
 
-  ngOnInit(): void {
-  }
-
-  onSubmit(): void {
+  guardar(): void {
     if (this.categoriaForm.valid) {
       console.log(this.categoriaForm.value);
     } else {

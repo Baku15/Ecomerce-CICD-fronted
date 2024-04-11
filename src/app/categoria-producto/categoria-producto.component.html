@@ -6,7 +6,7 @@
 
   <mat-card-content>
     <div class="form-container">
-      <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()" class="categoria-form">
+      <form [formGroup]="categoriaForm" (ngSubmit)="guardar()" class="categoria-form">
         <mat-form-field appearance="fill">
           <mat-label>Nombre</mat-label>
           <input matInput formControlName="nombre" required>
@@ -17,13 +17,13 @@
           <textarea matInput formControlName="descripcion" required></textarea>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Estado</mat-label>
-          <mat-select formControlName="estado" required>
-            <mat-option value="true">Activo</mat-option>
-            <mat-option value="false">Inactivo</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <!-- <mat-form-field appearance="fill"> -->
+        <!--   <mat-label>Estado</mat-label> -->
+        <!--   <mat-select formControlName="estado" required> -->
+        <!--     <mat-option value="true">Activo</mat-option> -->
+        <!--     <mat-option value="false">Inactivo</mat-option> -->
+        <!--   </mat-select> -->
+        <!-- </mat-form-field> -->
 
         <button mat-raised-button color="primary" type="submit">Guardar</button>
       </form>
