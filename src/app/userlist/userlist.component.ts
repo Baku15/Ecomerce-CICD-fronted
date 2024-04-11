@@ -46,16 +46,18 @@ export class UserlistComponent implements OnInit {
     this.usuarioService.getAllUsuarios().subscribe(
       response => {
         for(let i = 0; i < response.length; i++){
+          console.log(response[i]);
           if(response[i].usuario_rol == "vendedor" || response[i].usuario_rol == "admin"){
+            console.log("entro: ", response[i].usuario_rol);
             this.registrosUsers.push(response[i]);
+          }else{
+            console.log("entro 1: ", response[i].usuario_rol);
+            if(response[i].usuario_rol == "comprador"){
+              console.log("entro 2: ", response[i].usuario_rol);
+              this.registroClients.push(response[i]);
+            }
           }
-          if(response[i].usuario_rol == "comprador"){
-            this.registroClients.push(response[i]);
-          }
-          
-        }
-        
-
+        }     
         // Manejar la respuesta de éxito aquí
         console.log('Registros de users mostradas', response);
       },
@@ -65,15 +67,31 @@ export class UserlistComponent implements OnInit {
       }
     )
     setTimeout(() => {
-      for(let i = 0; i < this.registrosUsers.length; i++){
-        console.log("rol es: "+this.registrosUsers[i].usuario_rol);
-        if(this.registrosUsers[i].usuario_rol == "vendedor"){
-          console.log("entro a vendedor: ",this.registrosUsers[i].usuario_rol,this.registrosUsers[i].usuario_nombre);
-          this.usersFiltrados[i] = this.registrosUsers[i];
-          console.log("users filtrados: ",this.usersFiltrados);
+      this.usuarioService.getAllUsuarios().subscribe(
+        response => {
+          for(let i = 0; i < response.length; i++){
+            console.log(response[i]);
+            if(response[i].usuario_rol == "vendedor" || response[i].usuario_rol == "admin"){
+              console.log("entro: ", response[i].usuario_rol);
+              this.registrosUsers.push(response[i]);
+            }else{
+              console.log("entro 1: ", response[i].usuario_rol);
+              if(response[i].usuario_rol == "comprador"){
+                console.log("entro 2: ", response[i].usuario_rol);
+                this.registroClients.push(response[i]);
+              }
+            }
+          }     
+          // Manejar la respuesta de éxito aquí
+          console.log('Registros de users mostradas', response);
+        },
+        error => {
+          // Manejar el error aquí
+          console.error('Error al mostrar el users', error);
         }
-      }
-    }, 2000);
+      )
+    }, 1000);
+    
   }
 
   enterprofile(id: number){

@@ -8,7 +8,7 @@
 </mat-toolbar>
 <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" [(opened)]="opened" [style.width]="sidenavwidth()" class="custom-sidebar">
-        <a routerLink="perfil-user" routerLinkActive="active" matTooltip="My profile" [matTooltipPosition]="'right'">
+        <a (click)="irperfil()" routerLinkActive="active" matTooltip="My profile" [matTooltipPosition]="'right'">
             <div class="sidenav-header">
                 <img [width]="profilepicsize()" [height]="profilepicsize()" src="https://imagenes.elpais.com/resizer/ldBDo5AcQeJ2QsYNS5iT7T7BVGM=/1960x1103/cloudfront-eu-central-1.images.arcpublishing.com/prisa/4UPKL26K5ZICHFC6UIAU5DDHWU.jpg"/>
             </div>

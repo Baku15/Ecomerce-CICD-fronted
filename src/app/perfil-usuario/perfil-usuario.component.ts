@@ -43,7 +43,7 @@ export class PerfilUsuarioComponent implements OnInit{
   name!: string;
   hide = true;
   userPropid: number = 0;
-  nombre: string = "";
+  nombre!: string;
   paterno: string = "";
   materno: string = "";
   edad: number = 0;
@@ -75,9 +75,8 @@ export class PerfilUsuarioComponent implements OnInit{
       .subscribe(() => this.updateErrorMessage());
   }
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.userPropid = params['number'];
-    });
+    this.nombre = '';
+    this.userPropid = localStorage.getItem('token') ? parseInt(localStorage.getItem('token')!) : 0;
     this.usuarioService.getAllUsuarios().subscribe({
       next: (response) => {
         this.userList$ = of(response); // Ajustamos según la respuesta real esperada
@@ -190,7 +189,7 @@ export class PerfilUsuarioComponent implements OnInit{
   obtenerdatos() {
     this.userList$.subscribe((userList: any[]) => {
       for (var i = 0; i < userList.length; i++) {
-        if (this.userPropid == userList[i].id) {
+        if (this.userPropid == userList[i].id_usuario) {
           this.iduser = userList[i].id_usuario
           this.nombre = userList[i].usuario_nombre;
           this.paterno = userList[i].usuario_rol;

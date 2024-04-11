@@ -41,13 +41,14 @@ export class SidebarComponent implements OnInit{
 
   constructor(private router: Router,private route: ActivatedRoute) { }
   ngOnInit(): void {
+    console.log("El local: ",localStorage.getItem('token'));
     this.route.queryParams.subscribe(params => {
       this.id = params['number'];
     });
   }
 
   irperfil(){    
-    this.router.navigate(['perfil-user'], { queryParams: { number: this.id } });
+    this.router.navigate(['/admin/perfil-user'], { queryParams: { number: this.id } });
   }
 
   logout() {
