@@ -15,14 +15,17 @@ constructor (
 
   ) {}
 
-  public getAllCategorias(): Observable<any>{
-        return this.http.get(this.baseUrl);
-
-  }
+  // public getAllCategorias(): Observable<any>{
+  //       return this.http.get(this.baseUrl);
+  //
+  // }
  createCategoria(categoria: any){
     return this.http.post<Categoria>(this.baseUrl + 'categoria',categoria);
+  }
+
+  getAllCategorias():Observable<any>{
+      return this.http.get(this.baseUrl + 'categorias')
+    }
 
 
-
-}
 }
