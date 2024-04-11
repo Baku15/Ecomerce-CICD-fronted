@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit{
       }
     });
   }
-
   mostrarAlerta = false;
   mostrarAlertaError = false;
   mostrarAlertaDelete = false;
