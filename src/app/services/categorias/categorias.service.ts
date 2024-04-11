@@ -1,23 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Categoria } from '../../model/categoria.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriasService {
-  private baseUrl = 'http://localhost:8080/ecomerce/categorias';
+  private baseUrl = 'http://localhost:8080/ecomerce/';
 
 constructor (
 
- private httpClient: HttpClient
+ private http: HttpClient
 
   ) {}
 
-  private getAllategorias(): Observable<any>{
-        return this.httpClient.get(this.baseUrl);
+  public getAllCategorias(): Observable<any>{
+        return this.http.get(this.baseUrl);
 
   }
+ createCategoria(categoria: any){
+    return this.http.post<Categoria>(this.baseUrl + 'categoria',categoria);
 
 
+
+}
 }

@@ -1,36 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MaterialModule } from '../material-module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CategoriasService } from '../services/categorias/categorias.service';
+import { NgFor } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-categoria-producto',
   standalone: true,
-  imports: [MaterialModule,ReactiveFormsModule],
+  imports: [RouterModule,MaterialModule,ReactiveFormsModule, NgFor],
   templateUrl: './categoria-producto.component.html',
   styleUrl: './categoria-producto.component.css'
 })
 export class CategoriaProductoComponent implements OnInit {
 
   categoriaForm!: FormGroup;  // Añadir '!' para indicar que la propiedad será inicializada en el constructor
+  categorias: any;
+  private productoService = inject(CategoriasService)
 
   constructor(
     public fb: FormBuilder,
-    public categoriaService: CategoriasService ) {}
+    private router: Router,
+    private snackBar: MatSnackBar,
+    public categoriaService: CategoriasService
+  ) {}
+
 
   ngOnInit(): void {
     this.categoriaForm = this.fb.group({
       nombre: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
-      estado: [true, [Validators.required]]
+      // estado: [true, [Validators.required]]
     }); }
 
   guardar(): void {
-    if (this.categoriaForm.valid) {
-      console.log(this.categoriaForm.value);
-    } else {
-      alert('Por favor complete el formulario correctamente');
+    if(this.categoriaForm.valid){
+      this.categoriaService.createCategoria(this.categoriaForm.value).subscribe((res)=>{
+        if (res.id != null){
+          this.snackBar.open('caegoria creada de forma correcta', 'close',{
+            duration: 5000
+          });
+          this.router.navigateByUrl('/admin/registro-producto');
+        }else{
+          this.snackBar.open('error al crear categoria','close',{
+            duration: 5000,
+            panelClass: 'error-snackbar'
+          });
+        }
+      })
+
+    }else {
+        this.categoriaForm.markAllAsTouched();
     }
+      }
+
   }
 
-}
+

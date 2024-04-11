@@ -29,6 +29,16 @@
          <input id="urlimg" type="text" placeholder="Imagen" class="form-control" formControlName="urlimg">
     </div>
 
+<div class="mb-3">
+      <label for="categoria">Categoria</label>
+        <select name="categoria" id ="cateegoria" formControlName="categoria" class="form-control">
+          <option value="item.id" *ngFor="let item of categoria"></option>
+
+        </select>
+         <input id="urlimg" type="text" placeholder="Imagen" class="form-control" formControlName="urlimg">
+    </div>
+
+
 <div class="text-end">
         <button type="button" class="btn btn-light" routerLink="/admin/registro-producto"> Cancelar</button>
          <!-- <button class="btn btn-primary ms-2">Crear producto </button> -->
