@@ -11,13 +11,16 @@ export class ProductoService {
   private http = inject(HttpClient);
   private baseUrl = 'http://localhost:8080/ecomerce/productos';
 
+  private base_search = ''
   list(){
       return this.http.get<Producto[]>('http://localhost:8080/ecomerce/productos');
   }
 
   getAllProducts():Observable<any>{
     return this.http.get(this.baseUrl);
-
+  }
+ getAllProductsByNombre(nombre: any) :Observable<any>{
+    return this.http.get(`http://localhost:8080/ecomerce/search/${nombre}`);
   }
 
 get(id: number): Observable<Producto> {

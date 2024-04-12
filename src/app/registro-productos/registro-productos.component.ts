@@ -1,5 +1,5 @@
 import { Component,  OnInit,  } from '@angular/core';
-import {  ReactiveFormsModule, } from '@angular/forms';
+import {  FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { ProductoService } from '../services/productos/producto.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -24,12 +24,16 @@ interface Producto {
 })
 export class RegistroProductosComponent implements OnInit {
   productos: Producto[] = [];
+  searchProductForm!: FormGroup;
   image: Blob | undefined;
 
-  constructor(private productoService: ProductoService) { }
+  constructor(private productoService: ProductoService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.getAllProductos();
+    this.searchProductForm =  this.fb.group({
+      title: [null, [Validators.required]]
+    })
   }
 
   getAllProductos() {
@@ -40,6 +44,18 @@ export class RegistroProductosComponent implements OnInit {
         this.productos.push(element);
 
         });
+    })
+  }
+
+  submitForm(){
+      this.productos = [];
+    const title = this.searchProductForm.get('title')!.value;
+        this.productoService.getAllProductsByNombre(title).subscribe((res:Producto[]) => {
+      res.forEach((element:Producto) => {
+          element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
+        this.productos.push(element);
+      });
+      console.log(this.productos)
     })
 
 
