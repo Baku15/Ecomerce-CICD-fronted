@@ -28,19 +28,24 @@ form {
 
 /* Estilo para el contenedor de carga de archivos */
 .file-upload-container {
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 20px; /* Espacio inferior */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  /* position: relative; */
+  /* overflow: hidden; */
+  margin-bottom: 40px; /* Espacio inferior */
 }
 
 /* Estilo para la etiqueta de carga de archivos */
 .file-upload-label {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #007bff; /* Color de fondo */
   color: #fff; /* Color del texto */
-  padding: 10px 20px; /* Espaciado interno */
+  padding: 12px 24px; /* Espaciado interno */
   cursor: pointer; /* Cambiar cursor al pasar */
-  border-radius: 5px; /* Bordes redondeados */
+  border-radius: 6px; /* Bordes redondeados */
 }
 
 /* Estilo para el ícono de carga de archivos */

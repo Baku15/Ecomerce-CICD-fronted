@@ -12,14 +12,14 @@ export class ProductoService {
   private baseUrl = 'http://localhost:8080/productos';
 
   list(){
-      return this.http.get<Producto[]>('http://localhost:8080/productos');
+      return this.http.get<Producto[]>('http://localhost:8080/ecomerce/productos');
   }
 
 get(id: number): Observable<Producto> {
     return this.http.get<Producto>(`${this.baseUrl}/${id}`);
 }
-  create(producto: any){
-    return this.http.post<Producto>('http://localhost:8080/productos',producto);
+  create(productoDto: any){
+    return this.http.post<Producto>('http://localhost:8080/ecomerce/producto',productoDto);
 
   }
 update(id: number, producto: Producto): Observable<Producto> {

@@ -6,6 +6,7 @@ import { MaterialModule } from '../material-module';
 import { File } from 'buffer';
 import { CategoriasService } from '../services/categorias/categorias.service';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-producto-form',
   standalone: true,
@@ -23,6 +24,10 @@ imagePreview?: string | ArrayBuffer | null;
 constructor(
   private fb: FormBuilder,
   private categoriaService: CategoriasService,
+  private productoService: ProductoService,
+ private snackBar: MatSnackBar,
+    private router: Router,
+
   // private router = inject(Router),
   // private route = inject(ActivatedRoute),
   // private productoService = inject(ProductoService)
@@ -58,8 +63,39 @@ stock: [null,[Validators.required]],
     this.listOfCategorias = res;
     })
   }
-  create():void{
+create(): void {
+  if (this.productoForm.valid) {
+    const formData: FormData = new FormData();
+    formData.append('categoriaId', this.productoForm.get('categoriaId')?.value.toString());
+    formData.append('nombre', this.productoForm.get('nombre')?.value);
+    formData.append('descripcion', this.productoForm.get('descripcion')?.value);
+    formData.append('precio', this.productoForm.get('precio')?.value.toString());
+    formData.append('stock', this.productoForm.get('stock')?.value.toString());
 
+    // Check if selectedFile is defined before appending
+        if (this.selectedFile) {
+      const blob = this.selectedFile as Blob;
+      formData.append('img', blob, this.selectedFile.name);
+    }
+      this.productoService.create(formData).subscribe((res)=>{
+        if(res.id != null){
+          this.snackBar.open("Producto creado correctamente", 'Close',{
+            duration: 5000
+          });
+        this.router.navigateByUrl('/admin/registro-productos');
+        }else {
+          this.snackBar.open('error al crear el producto', 'ERROR',{
+        duration: 5000
+          });
+        }
+      })
+
+    }else {
+      for(const i in this.productoForm.controls){
+      this.productoForm.controls[i].markAsDirty();
+        this.productoForm.controls[i].updateValueAndValidity();
+      }
+    }
   }
 }
 
