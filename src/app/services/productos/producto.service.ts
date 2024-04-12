@@ -9,10 +9,15 @@ import { Observable } from 'rxjs';
 export class ProductoService {
 
   private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:8080/productos';
+  private baseUrl = 'http://localhost:8080/ecomerce/productos';
 
   list(){
       return this.http.get<Producto[]>('http://localhost:8080/ecomerce/productos');
+  }
+
+  getAllProducts():Observable<any>{
+    return this.http.get(this.baseUrl);
+
   }
 
 get(id: number): Observable<Producto> {

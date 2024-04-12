@@ -1,48 +1,39 @@
-<div class="container py-5">
-<h1 class="mb-10">LISTADO DE PRODUCTOS</h1>
-  <div class="text-end">
-    <button class="btn btn-primary" routerLink="/admin/producto-form">
-      Nuevo contacto
-    </button>
+<div class="product-list">
+  <mat-card class="product-card" *ngFor="let producto of productos">
+    <div class="product-image">
+      <img [src]="producto.processedImg" alt= "product-image">
 
-  </div>
-<table class="table table-hover">
-    <thead>
-         <tr>
-              <th>ID</th>
-              <th>NOMBRE</th>
-              <th>DESCRIPCION</th>
-              <th>PRECIO</th>
-              <th>STOCK</th>
-              <th>IMAGEN</th>
-              <th></th>
+    </div>
+    <div class="product-details">
+      <h2 class="producto-nombre">{{producto.nombre}}</h2>
+       <p class="producto-descripcion">{{producto.descripcion}}</p>
 
-    </tr>
-  </thead>
-<tbody>
-    @for(producto of productos; track producto.id){
-    <tr>
-        <td>{{producto.id}}</td>
-        <td>{{producto.nombre}}</td>
-        <td>{{producto.descripcion}}</td>
-        <td>{{producto.precio}}</td>
-        <td>{{producto.stock}}</td>
-        <td>{{producto.urlimg}}</td>
-        <!-- <td>{{marca_id}}</td> -->
-        <td class="text-end">
-          <div class="btn-group">
-            <button class="btn btn-success"[routerLink]="[producto.id, 'edit' ]">
-              Editar
-            </button>
+      <mat-divider></mat-divider>
+      <div class="producto-info">
+        <div class="info-row">
+          <span class="info-label">Precio:</span>
+          <span class="info-value">Bs{{producto.precio}}</span>
+</div>
+        <div class="info-row">
+          <span class="info-label">Categoria:</span>
+          <span class="info-label">{{producto.categoriaNombre}}</span>
 
-            <button class="btn btn-danger">
-              Eliminar
-            </button>
-          </div>
-        </td>
-    </tr>
-    }
-</tbody>
+        </div>
 
-</table>
+<div class="info-row">
+          <span class="info-label">Stock:</span>
+          <span class="info-label">{{producto.stock}}</span>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+      <div class="actions">
+        <button mat-raised-button color="primary" class="update-button"[routerLink]="">FAQ</button>
+ <button mat-raised-button color="accent" class="update-button"[routerLink]="">Update</button>
+ <button mat-raised-button color="warn" class="delete-button"[routerLink]="">Delete</button>
+      </div>
+
+    </div>
+  </mat-card>
+
 </div>

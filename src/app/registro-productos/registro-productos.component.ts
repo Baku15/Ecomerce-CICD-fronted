@@ -1,35 +1,47 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder,FormGroup, Validators } from '@angular/forms';
+import { Component,  OnInit,  } from '@angular/core';
+import {  ReactiveFormsModule, } from '@angular/forms';
 import { ProductoService } from '../services/productos/producto.service';
 import { RouterModule } from '@angular/router';
-import { Producto } from '../model/producto.interface';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../material-module';
+interface Producto {
+  byteImg: string;
+  // Otras propiedades del producto
+    processedImg: string;
+  stock: number;
+  precio: number;
+  descripcion: string;
+  nombre:string;
+  categoriaNombre:String;
+}
 
 @Component({
   selector: 'app-registro-productos',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule,CommonModule, ReactiveFormsModule, MaterialModule],
   templateUrl: './registro-productos.component.html',
   styleUrl: './registro-productos.component.css'
 })
 export class RegistroProductosComponent implements OnInit {
-
-  private productoService = inject(ProductoService);
   productos: Producto[] = [];
-  ngOnInit(): void {
-      this.productoService.list()
-        .subscribe(productos  => {
-        this.productos = productos;
-      });
+  image: Blob | undefined;
 
-    // this.productoForm = this.fb.group({
-    //     nombre : ['',Validators.required],
-    //     descripcion : ['',Validators.required],
-    //     precio : ['',Validators.required],
-    //     stock : ['',Validators.required],
-    //     urlimg : ['',Validators.required],
+  constructor(private productoService: ProductoService) { }
 
-    // })
+  ngOnInit() {
+    this.getAllProductos();
   }
-    guardar():void{
+
+  getAllProductos() {
+      this.productos=[];
+    this.productoService.getAllProducts().subscribe((res:Producto[]) =>{
+        res.forEach((element:Producto) => {
+          element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
+        this.productos.push(element);
+
+        });
+    })
+
+
   }
 }
