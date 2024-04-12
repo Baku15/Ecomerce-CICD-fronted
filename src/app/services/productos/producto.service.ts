@@ -19,9 +19,15 @@ export class ProductoService {
   getAllProducts():Observable<any>{
     return this.http.get(this.baseUrl);
   }
+
  getAllProductsByNombre(nombre: any) :Observable<any>{
     return this.http.get(`http://localhost:8080/ecomerce/search/${nombre}`);
   }
+
+deleteProducto(productoId: any) :Observable<any>{
+    return this.http.delete(`http://localhost:8080/ecomerce/producto/${productoId}`);
+  }
+
 
 get(id: number): Observable<Producto> {
     return this.http.get<Producto>(`${this.baseUrl}/${id}`);
