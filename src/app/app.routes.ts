@@ -9,6 +9,7 @@ import { MenuPrincipalComponent } from './menu-principal/menu-principal.componen
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { RegistroProductosComponent } from './registro-productos/registro-productos.component';
 import { ProductoFormComponent} from './producto-form/producto-form.component';
+import { UpdateProductoComponent } from './update-producto/update-producto.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DetalleuserComponent } from './detalleuser/detalleuser.component';
@@ -35,6 +36,7 @@ export const routes: Routes = [
             { path: 'producto-form', component: ProductoFormComponent},
             { path: 'registro-producto/:id/edit', component: ProductoFormComponent},
             { path: 'userlist', component: UserlistComponent},
+            { path:  'producto/:productoId', component: UpdateProductoComponent}
             { path: 'detalleuser', component: DetalleuserComponent},
         ]
     },
