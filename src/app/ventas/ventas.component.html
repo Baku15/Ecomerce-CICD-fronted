@@ -1,0 +1,14 @@
+<div class="carousel slide" data-ride="carousel" id="productCarousel">
+    <div class="carousel-inner">
+      <div *ngFor="let product of products; let isFirst = first" [class.active]="isFirst" class="carousel-item">
+        <img [src]="product.imageUrl" class="d-block w-100" alt="{{product.name}}">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{ product.name }}</h5>
+          <p>{{ product.description }}</p>
+          <p>${{ product.price }}</p>
+          <button class="btn btn-primary" (click)="addToCart(product)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
