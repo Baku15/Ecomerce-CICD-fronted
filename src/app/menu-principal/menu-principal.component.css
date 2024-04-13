@@ -53,3 +53,26 @@ footer {
   bottom: 0;
   width: 100%;
 }
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.carousel-item img {
+  height: 500px; /* Ajusta la altura según tus necesidades */
+  object-fit: cover;
+}
+
+.carousel-caption {
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
