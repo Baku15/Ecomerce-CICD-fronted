@@ -20,6 +20,9 @@ export class ProductoService {
     return this.http.get(this.baseUrl);
   }
 
+  getProductoById(productId: string | number):Observable<any>{
+    return this.http.get(`http://localhost:8080/ecomerce/producto/${productId}`);
+  }
  getAllProductsByNombre(nombre: any) :Observable<any>{
     return this.http.get(`http://localhost:8080/ecomerce/search/${nombre}`);
   }

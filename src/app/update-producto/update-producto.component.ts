@@ -1,12 +1,110 @@
-import { Component } from '@angular/core';
-
+import { ProductoService } from '../services/productos/producto.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CategoriasService } from '../services/categorias/categorias.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router,RouterModule } from '@angular/router';
+import { FormBuilder,FormGroup,ReactiveFormsModule, Validators } from '@angular/forms';
+import { MaterialModule } from '../material-module';
+import { File } from 'buffer';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-update-producto',
   standalone: true,
-  imports: [],
+  imports: [CommonModule,RouterModule, ReactiveFormsModule, MaterialModule],
   templateUrl: './update-producto.component.html',
   styleUrl: './update-producto.component.css'
 })
 export class UpdateProductoComponent {
+productId = this.activatedRoute.snapshot.params['productId'];
+productoForm!: FormGroup;
+listOfCategorias: any=[];
+selectedFile?: File | null;
+imagePreview?: string | ArrayBuffer | null;
+existingImage?: string | ArrayBuffer | null;
+constructor(
+  private fb: FormBuilder,
+  private categoriaService: CategoriasService,
+  private productoService: ProductoService,
+ private snackBar: MatSnackBar,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
 
+  // private router = inject(Router),
+  // private route = inject(ActivatedRoute),
+  // private productoService = inject(ProductoService)
+){}
+  onFileSelected(event:any){
+    this.selectedFile = event.target.files[0];
+    this.previewImage();
+
+}
+  previewImage(): void {
+  if (this.selectedFile) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    };
+    reader.readAsDataURL(this.selectedFile as Blob);
+  }
+}
+
+  ngOnInit(): void {
+    this.productoForm = this.fb.group({
+      categoriaId: [null,[Validators.required]],
+nombre: [null,[Validators.required]],
+descripcion: [null,[Validators.required]],
+precio: [null,[Validators.required]],
+stock: [null,[Validators.required]],
+
+    });
+    this.getAllCategorias();
+    this.getProductoById();
+  }
+  getAllCategorias(){
+    this.categoriaService.getAllCategorias().subscribe(res=>{
+    this.listOfCategorias = res;
+    })
+  }
+
+getProductoById(){
+   this.productoService.getProductoById(this.productId).subscribe(res=>{
+      this.productoForm.patchValue(res);
+      this.existingImage= 'data:image/jpeg;base64,' + res.byteImg;
+    })
+  }
+
+create(): void {
+  if (this.productoForm.valid) {
+    const formData: FormData = new FormData();
+    formData.append('categoriaId', this.productoForm.get('categoriaId')?.value.toString());
+    formData.append('nombre', this.productoForm.get('nombre')?.value);
+    formData.append('descripcion', this.productoForm.get('descripcion')?.value);
+    formData.append('precio', this.productoForm.get('precio')?.value.toString());
+    formData.append('stock', this.productoForm.get('stock')?.value.toString());
+
+    // Check if selectedFile is defined before appending
+        if (this.selectedFile) {
+      const blob = this.selectedFile as Blob;
+      formData.append('img', blob, this.selectedFile.name);
+    }
+      this.productoService.create(formData).subscribe((res)=>{
+        if(res.id != null){
+          this.snackBar.open("Producto creado correctamente", 'Close',{
+            duration: 5000
+          });
+        this.router.navigateByUrl('/admin/registro-producto');
+        }else {
+          this.snackBar.open('error al crear el producto', 'ERROR',{
+        duration: 5000
+          });
+        }
+      })
+
+    }else {
+      for(const i in this.productoForm.controls){
+      this.productoForm.controls[i].markAsDirty();
+        this.productoForm.controls[i].updateValueAndValidity();
+      }
+    }
+  }
 }

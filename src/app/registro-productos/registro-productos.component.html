@@ -39,11 +39,12 @@
       <mat-divider></mat-divider>
       <div class="actions">
         <button mat-raised-button color="primary" class="update-button"[routerLink]="">FAQ</button>
- <button mat-raised-button color="accent" class="update-button"[routerLink]="">Update</button>
+ <button mat-raised-button color="accent" class="update-button"[routerLink]="'/admin/producto/' + producto.id">Update</button>
  <button mat-raised-button color="warn" class="delete-button" (click)="deleteProducto(producto.id)">Delete</button>
       </div>
 
     </div>
   </mat-card>
+
 
 </div>

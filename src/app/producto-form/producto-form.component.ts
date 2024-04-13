@@ -97,6 +97,40 @@ create(): void {
       }
     }
   }
+    mostrarAlerta = false;
+  mostrarAlertaError = false;
+  mostrarAlertaDelete = false;
+  mostrarAlertaErrorDelete = false;
+  mostrarMensajeRegistroExito() {
+    this.mostrarAlerta = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  mostrarMensajeRegistroError() {
+    this.mostrarAlertaError = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  mostrarMensajeDeleteExito() {
+    this.mostrarAlertaDelete = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  mostrarMensajeDeleteError() {
+    this.mostrarAlertaErrorDelete = true;
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000);
+  }
+  cerrarAlerta() {
+    this.mostrarAlerta = false;
+    this.mostrarAlertaError = false;
+    this.mostrarAlertaDelete = false;
+    this.mostrarAlertaErrorDelete = false;
+  }
 }
 
 //   productoForm!: FormGroup;

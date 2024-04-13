@@ -1,0 +1,143 @@
+.label-width {
+    width: 320px; /* Ajusta el valor según tus necesidades */
+  }
+  /* Estilo para el contenedor principal */
+  .container {
+    max-width: 960px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 20px; /* Espacio interno del contenedor */
+  }
+  
+  /* Estilo para el encabezado */
+  h2 {
+    font-size: 24px; /* Tamaño de fuente */
+    margin-bottom: 20px; /* Espacio inferior */
+  }
+  
+  /* Estilo para el contenedor del formulario */
+  .form-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Estilo para el formulario */
+  form {
+    width: 100%; /* Ancho completo */
+    max-width: 600px; /* Ancho máximo del formulario */
+  }
+  
+  /* Estilo para el contenedor de carga de archivos */
+  .file-upload-container {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    /* position: relative; */
+    /* overflow: hidden; */
+    margin-bottom: 40px; /* Espacio inferior */
+  }
+  
+  /* Estilo para la etiqueta de carga de archivos */
+  .file-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 12px 24px; /* Espaciado interno */
+    cursor: pointer; /* Cambiar cursor al pasar */
+    border-radius: 6px; /* Bordes redondeados */
+  }
+  
+  /* Estilo para el ícono de carga de archivos */
+  .mat-icon {
+    margin-right: 5px; /* Espaciado a la derecha */
+  }
+  
+  /* Estilo para la vista previa de la imagen */
+  .image-preview {
+    margin-top: 10px; /* Espacio superior */
+  }
+  
+  /* Estilo para la imagen de vista previa */
+  .preview-image {
+    max-width: 100%; /* Ancho máximo de la imagen */
+    max-height: 200px; /* Altura máxima de la imagen */
+    display: block; /* Mostrar como bloque */
+    margin: 0 auto; /* Centrar la imagen */
+  }
+  
+  /* Estilo para la imagen de vista previa en un círculo */
+  .circle-image {
+    width: 150px; /* Ancho de la imagen */
+    height: 150px; /* Altura de la imagen */
+    border-radius: 50%; /* Hacer la imagen circular */
+    overflow: hidden; /* Ocultar partes de la imagen fuera del círculo */
+    margin: 0 auto; /* Centrar la imagen */
+  }
+  
+  /* Estilo para los botones al final del formulario */
+  .text-end button {
+    margin-right: 10px; /* Espacio a la derecha entre botones */
+  }
+  
+  /* Estilo para el botón "Cancelar" */
+  .text-end button[color="warn"] {
+    background-color: #dc3545; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: none; /* Eliminar borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    cursor: pointer; /* Cambiar cursor al pasar */
+  }
+  
+  /* Estilo para el botón "Crear producto" */
+  .text-end button[color="primary"] {
+    background-color: #007bff; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: none; /* Eliminar borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    cursor: pointer; /* Cambiar cursor al pasar */
+  }
+  
+  /* Estilo para el contenedor de los botones */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Espacio superior */
+  }
+  
+  /* Estilo para los botones dentro del contenedor */
+  .button-container button {
+    margin: 0 10px; /* Espacio entre botones */
+  }
+  
+  /* Estilo para el contenedor de los botones */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Espacio superior */
+  }
+  
+  /* Estilo para los botones dentro del contenedor */
+  .button-container button {
+    margin: 0 10px; /* Espacio entre botones */
+    background-color: #007bff; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: none; /* Eliminar borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    cursor: pointer; /* Cambiar cursor al pasar */
+  }
+  
+  /* Estilo para el botón "Cancelar" */
+  .button-container button[color="warn"] {
+    background-color: #dc3545; /* Color de fondo */
+  }
+  
+  /* Estilo para el botón "Crear producto" */
+  .button-container button[color="primary"] {
+    background-color: #007bff; /* Color de fondo */
+  }
+  
+  

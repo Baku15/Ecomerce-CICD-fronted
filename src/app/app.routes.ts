@@ -16,7 +16,7 @@ import { DetalleuserComponent } from './detalleuser/detalleuser.component';
 import { RecoverpasswordComponent } from './recoverpassword/recoverpassword.component';
 
 
-export const routes: Routes = [   
+export const routes: Routes = [
 
     //Login
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -36,7 +36,7 @@ export const routes: Routes = [
             { path: 'producto-form', component: ProductoFormComponent},
             { path: 'registro-producto/:id/edit', component: ProductoFormComponent},
             { path: 'userlist', component: UserlistComponent},
-            { path:  'producto/:productoId', component: UpdateProductoComponent}
+            { path:  'producto/:productoId', component: UpdateProductoComponent},
             { path: 'detalleuser', component: DetalleuserComponent},
         ]
     },
