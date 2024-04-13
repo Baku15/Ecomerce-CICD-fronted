@@ -1,1 +1,16 @@
-<p>catalogo works!</p>
+<div class="product-catalog">
+    <h1>Catálogo de Productos</h1>
+    <div *ngIf="products.length > 0; else noProductsTemplate">
+      <div *ngFor="let product of products" class="product-card">
+        <h2>{{ product.name }}</h2>
+        <img [src]="product.image" alt="{{ product.name }}" class="product-image">
+        <p>{{ product.description }}</p>
+        <p class="product-price">${{ product.price }}</p>
+        <button (click)="addToCart(product)">Agregar al Carrito</button>
+      </div>
+    </div>
+    <ng-template #noProductsTemplate>
+      <p>No hay productos disponibles en este momento.</p>
+    </ng-template>
+  </div>
+  

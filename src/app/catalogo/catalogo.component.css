@@ -1,0 +1,35 @@
+.product-catalog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .product-card {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 15px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  
+  .product-price {
+    color: green;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
