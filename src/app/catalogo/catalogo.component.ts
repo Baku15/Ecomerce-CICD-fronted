@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProductoService } from '../services/productos/producto.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -8,5 +9,15 @@ import { Component } from '@angular/core';
   styleUrl: './catalogo.component.css'
 })
 export class CatalogoComponent {
+  products = [];
 
+  constructor(private ProductoService: ProductoService) { }
+
+  ngOnInit() {
+    this.ProductoService.getAllProducts().subscribe(data => {
+      this.products = data;
+    }, error => {
+      console.error('Error fetching products:', error);
+    });
+  }
 }
