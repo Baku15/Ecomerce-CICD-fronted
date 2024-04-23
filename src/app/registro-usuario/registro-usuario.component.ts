@@ -23,7 +23,6 @@ export class RegistroUsuarioComponent {
   nombre = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);
   telefono = new FormControl('', [Validators.required]);
-  rol = new FormControl('', [Validators.required]);
   newUser: any = {};
   stringMessage: string = '';
 
@@ -35,7 +34,7 @@ export class RegistroUsuarioComponent {
       .subscribe(() => this.updateErrorMessage());
   }
   registrarUser(){
-    if (this.nombre.value === '' || this.password.value === '' || this.telefono.value === '' || this.rol.value === '') {
+    if (this.nombre.value === '' || this.password.value === '' || this.telefono.value === '') {
       this.stringMessage = 'Debe llenar todos los campos';
       console.error('Debe llenar todos los campos');
       this.mostrarMensajeDeleteError();
@@ -47,7 +46,7 @@ export class RegistroUsuarioComponent {
       usuario_estado: "activo",
       usuario_correo: this.email.value,
       usuario_telefono: this.telefono.value,
-      usuario_rol: this.rol.value
+      usuario_rol: "comprador"
     }
     this.usuarioService.registerNewUsuario(this.newUser).subscribe({
       next: (response) => {

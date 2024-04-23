@@ -30,14 +30,6 @@
       <mat-label>Telefono</mat-label>
       <input matInput type="number" [formControl]="telefono">
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Select</mat-label>
-      <mat-select [formControl]="rol">
-        <mat-option value="admin">Admin</mat-option>
-        <mat-option value="vendedor">Vendedor</mat-option>
-        <mat-option value="comprador">Comprador</mat-option>
-      </mat-select>
-    </mat-form-field>
     <button mat-raised-button (click)="registrarUser()">Registrar User</button>
     <br>
     <button mat-raised-button routerLinkActive="active" (click)="irhome()">Cancelar</button>
