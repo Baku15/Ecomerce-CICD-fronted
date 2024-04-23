@@ -14,6 +14,7 @@ import { UserlistComponent } from './userlist/userlist.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DetalleuserComponent } from './detalleuser/detalleuser.component';
 import { RecoverpasswordComponent } from './recoverpassword/recoverpassword.component';
+import { MarcaComponent } from './marca/marca.component';
 
 
 export const routes: Routes = [
@@ -38,6 +39,7 @@ export const routes: Routes = [
             { path: 'userlist', component: UserlistComponent},
             { path:  'producto/:productoId', component: UpdateProductoComponent},
             { path: 'detalleuser', component: DetalleuserComponent},
+            {path: 'marca', component: MarcaComponent},
         ]
     },
     //Para el user SuperAdmin
