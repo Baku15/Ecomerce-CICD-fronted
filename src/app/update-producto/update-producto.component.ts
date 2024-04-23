@@ -15,12 +15,13 @@ import { CommonModule } from '@angular/common';
   styleUrl: './update-producto.component.css'
 })
 export class UpdateProductoComponent {
-productId = this.activatedRoute.snapshot.params['productId'];
+productoId = this.activatedRoute.snapshot.params['productoId'];
 productoForm!: FormGroup;
 listOfCategorias: any=[];
 selectedFile?: File | null;
 imagePreview?: string | ArrayBuffer | null;
-existingImage?: string | ArrayBuffer | null;
+existingImage: string | null = null;
+imgChanged = false;
 constructor(
   private fb: FormBuilder,
   private categoriaService: CategoriasService,
@@ -36,6 +37,8 @@ constructor(
   onFileSelected(event:any){
     this.selectedFile = event.target.files[0];
     this.previewImage();
+    this.imgChanged = true;
+    this.existingImage = null;
 
 }
   previewImage(): void {
@@ -67,15 +70,18 @@ stock: [null,[Validators.required]],
   }
 
 getProductoById(){
-   this.productoService.getProductoById(this.productId).subscribe(res=>{
+   this.productoService.getProductoById(this.productoId).subscribe(res=>{
       this.productoForm.patchValue(res);
       this.existingImage= 'data:image/jpeg;base64,' + res.byteImg;
     })
   }
-
-create(): void {
+updateProduct(): void {
   if (this.productoForm.valid) {
     const formData: FormData = new FormData();
+       if(this.imgChanged && this.selectedFile){
+            const blob = this.selectedFile as Blob;
+      formData.append('img', blob, this.selectedFile.name);
+      }
     formData.append('categoriaId', this.productoForm.get('categoriaId')?.value.toString());
     formData.append('nombre', this.productoForm.get('nombre')?.value);
     formData.append('descripcion', this.productoForm.get('descripcion')?.value);
@@ -87,7 +93,7 @@ create(): void {
       const blob = this.selectedFile as Blob;
       formData.append('img', blob, this.selectedFile.name);
     }
-      this.productoService.create(formData).subscribe((res)=>{
+      this.productoService.updateProducto(this.productoId,formData).subscribe((res)=>{
         if(res.id != null){
           this.snackBar.open("Producto creado correctamente", 'Close',{
             duration: 5000
