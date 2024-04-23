@@ -15,6 +15,7 @@ interface Producto {
   descripcion: string;
   nombre:string;
   categoriaNombre:String;
+  marcaNombre: String;
 }
 
 @Component({

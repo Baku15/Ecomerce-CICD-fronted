@@ -7,6 +7,7 @@ import { File } from 'buffer';
 import { CategoriasService } from '../services/categorias/categorias.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MarcaService } from '../services/marca/marca.service';
 @Component({
   selector: 'app-producto-form',
   standalone: true,
@@ -18,15 +19,17 @@ export class ProductoFormComponent implements OnInit {
 
 productoForm!: FormGroup;
 listOfCategorias: any=[];
+listOfMarcas: any=[];
 selectedFile?: File | null;
 imagePreview?: string | ArrayBuffer | null;
 
 constructor(
   private fb: FormBuilder,
   private categoriaService: CategoriasService,
+  private marcaService: MarcaService,
   private productoService: ProductoService,
- private snackBar: MatSnackBar,
-    private router: Router,
+  private snackBar: MatSnackBar,
+  private router: Router,
 
   // private router = inject(Router),
   // private route = inject(ActivatedRoute),
@@ -50,6 +53,7 @@ constructor(
   ngOnInit(): void {
     this.productoForm = this.fb.group({
       categoriaId: [null,[Validators.required]],
+marcaId: [null,[Validators.required]],
 nombre: [null,[Validators.required]],
 descripcion: [null,[Validators.required]],
 precio: [null,[Validators.required]],
@@ -57,16 +61,27 @@ stock: [null,[Validators.required]],
 
     });
     this.getAllCategorias();
+    this.getAllMarcas();
   }
   getAllCategorias(){
     this.categoriaService.getAllCategorias().subscribe(res=>{
     this.listOfCategorias = res;
     })
   }
+
+  getAllMarcas(){
+      this.marcaService.getAllMarcas().subscribe(res=>{
+      this.listOfMarcas = res;
+    })
+
+
+  }
+
 create(): void {
   if (this.productoForm.valid) {
     const formData: FormData = new FormData();
     formData.append('categoriaId', this.productoForm.get('categoriaId')?.value.toString());
+    formData.append('marcaId', this.productoForm.get('marcaId')?.value.toString());
     formData.append('nombre', this.productoForm.get('nombre')?.value);
     formData.append('descripcion', this.productoForm.get('descripcion')?.value);
     formData.append('precio', this.productoForm.get('precio')?.value.toString());

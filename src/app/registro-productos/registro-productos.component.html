@@ -1,50 +1,49 @@
-  <form [formGroup]="searchProductForm" class="search-form" (submit) = "submitForm()">
-    <mat-form-field appearance="outline" class="search-input">
-      <mat-label>Ingrese la palabra clave</mat-label>
-      <input matInput formControlName="title">
-        <button mat-button matSuffix color="primary" [disabled] = "searchProductForm.invalid">
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field>
-  </form>
+<form [formGroup]="searchProductForm" class="search-form" (submit)="submitForm()">
+  <mat-form-field appearance="outline" class="search-input">
+    <mat-label>Ingrese la palabra clave</mat-label>
+    <input matInput formControlName="title">
+    <button mat-button matSuffix color="primary" [disabled]="searchProductForm.invalid">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
 
 <div class="product-list">
   <mat-card class="product-card" *ngFor="let producto of productos">
     <div class="product-image">
-      <img [src]="producto.processedImg" alt= "product-image">
-
+      <img [src]="producto.processedImg" alt="product-image">
     </div>
     <div class="product-details">
       <h2 class="producto-nombre">{{producto.nombre}}</h2>
-       <p class="producto-descripcion">{{producto.descripcion}}</p>
+      <p class="producto-descripcion">{{producto.descripcion}}</p>
 
       <mat-divider></mat-divider>
       <div class="producto-info">
         <div class="info-row">
           <span class="info-label">Precio:</span>
           <span class="info-value">Bs{{producto.precio}}</span>
-</div>
+        </div>
         <div class="info-row">
           <span class="info-label">Categoria:</span>
-          <span class="info-label">{{producto.categoriaNombre}}</span>
-
+          <span class="info-value">{{producto.categoriaNombre}}</span>
         </div>
-
-<div class="info-row">
+        <div class="info-row">
+          <span class="info-label">Marca:</span>
+          <span class="info-value">{{producto.marcaNombre}}</span>
+        </div>
+        <div class="info-row">
           <span class="info-label">Stock:</span>
-          <span class="info-label">{{producto.stock}}</span>
+          <span class="info-value">{{producto.stock}}</span>
         </div>
       </div>
 
       <mat-divider></mat-divider>
       <div class="actions">
-        <button mat-raised-button color="primary" class="update-button"[routerLink]="">FAQ</button>
- <button mat-raised-button color="accent" class="update-button"[routerLink]="'/admin/producto/' + producto.id">Update</button>
- <button mat-raised-button color="warn" class="delete-button" (click)="deleteProducto(producto.id)">Delete</button>
+        <button mat-raised-button color="primary" class="update-button" [routerLink]="">FAQ</button>
+        <button mat-raised-button color="accent" class="update-button" [routerLink]="'/admin/producto/' + producto.id">Update</button>
+        <button mat-raised-button color="warn" class="delete-button" (click)="deleteProducto(producto.id)">Delete</button>
       </div>
-
     </div>
   </mat-card>
-
-
 </div>
+
