@@ -97,7 +97,7 @@ create(): void {
           this.snackBar.open("Producto creado correctamente", 'Close',{
             duration: 5000
           });
-        this.router.navigateByUrl('/admin/registro-producto');
+        this.router.navigateByUrl('/admin/lista-productos');
         }else {
           this.snackBar.open('error al crear el producto', 'ERROR',{
         duration: 5000

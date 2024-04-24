@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { RegistroUsuarioComponent } from './registro-usuario/registro-usuario.component';
 // import { CarritoComprasComponent } from './carrito-compras/carrito-compras.component';
 // import { CatalogoComponent } from './catalogo/catalogo.component';
-import { CategoriaProductoComponent } from './categoria-producto/categoria-producto.component';
 import { EditarperfilComponent } from './editar-perfil/editar-perfil.component';
 import { LoginComponent } from './login/login.component';
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
@@ -14,7 +13,8 @@ import { UserlistComponent } from './userlist/userlist.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DetalleuserComponent } from './detalleuser/detalleuser.component';
 import { RecoverpasswordComponent } from './recoverpassword/recoverpassword.component';
-import { MarcaComponent } from './marca/marca.component';
+import { MarcaComponent } from './productos/marca/marca.component';
+import { CategoriaProductoComponent } from './productos/categoria-producto/categoria-producto.component';
 
 
 export const routes: Routes = [

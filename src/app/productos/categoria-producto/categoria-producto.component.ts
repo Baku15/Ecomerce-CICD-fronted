@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { MaterialModule } from '../material-module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CategoriasService } from '../services/categorias/categorias.service';
 import { NgFor } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MaterialModule } from '../../material-module';
+import { CategoriasService } from '../../services/categorias/categorias.service';
 
 @Component({
   selector: 'app-categoria-producto',
@@ -41,7 +41,7 @@ export class CategoriaProductoComponent implements OnInit {
           this.snackBar.open('caegoria creada de forma correcta', 'close',{
             duration: 5000
           });
-          this.router.navigateByUrl('/admin/registro-producto');
+          this.router.navigateByUrl('/admin/lista-productos');
         }else{
           this.snackBar.open('error al crear categoria','close',{
             duration: 5000,

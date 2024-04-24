@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
-import { MarcaService } from '../services/marca/marca.service';
 import { NgFor } from '@angular/common';
-import { MaterialModule } from '../material-module';
+import { MaterialModule } from '../../material-module';
+import { MarcaService } from '../../services/marca/marca.service';
 
 @Component({
   selector: 'app-marca',
@@ -39,7 +39,7 @@ export class MarcaComponent {
           this.snackBar.open('caegoria creada de forma correcta', 'close',{
             duration: 5000
           });
-          this.router.navigateByUrl('/admin/registro-producto');
+          this.router.navigateByUrl('/admin/lista-productos');
         }else{
           this.snackBar.open('error al crear categoria','close',{
             duration: 5000,

@@ -7,6 +7,7 @@ import { FormBuilder,FormGroup,ReactiveFormsModule, Validators } from '@angular/
 import { MaterialModule } from '../material-module';
 import { File } from 'buffer';
 import { CommonModule } from '@angular/common';
+import { MarcaService } from '../services/marca/marca.service';
 @Component({
   selector: 'app-update-producto',
   standalone: true,
@@ -16,8 +17,10 @@ import { CommonModule } from '@angular/common';
 })
 export class UpdateProductoComponent {
 productoId = this.activatedRoute.snapshot.params['productoId'];
+marcaId = this.activatedRoute.snapshot.params['marcaId'];
 productoForm!: FormGroup;
 listOfCategorias: any=[];
+listOfMarcas: any=[];
 selectedFile?: File | null;
 imagePreview?: string | ArrayBuffer | null;
 existingImage: string | null = null;
@@ -26,6 +29,7 @@ constructor(
   private fb: FormBuilder,
   private categoriaService: CategoriasService,
   private productoService: ProductoService,
+  private marcaService: MarcaService,
  private snackBar: MatSnackBar,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -54,6 +58,7 @@ constructor(
   ngOnInit(): void {
     this.productoForm = this.fb.group({
       categoriaId: [null,[Validators.required]],
+      marcaId: [null,[Validators.required]],
 nombre: [null,[Validators.required]],
 descripcion: [null,[Validators.required]],
 precio: [null,[Validators.required]],
@@ -62,10 +67,17 @@ stock: [null,[Validators.required]],
     });
     this.getAllCategorias();
     this.getProductoById();
+    this.getAllMarcas();
   }
   getAllCategorias(){
     this.categoriaService.getAllCategorias().subscribe(res=>{
     this.listOfCategorias = res;
+    })
+  }
+
+  getAllMarcas(){
+    this.marcaService.getAllMarcas().subscribe(res=>{
+    this.listOfMarcas = res;
     })
   }
 
@@ -83,6 +95,8 @@ updateProduct(): void {
       formData.append('img', blob, this.selectedFile.name);
       }
     formData.append('categoriaId', this.productoForm.get('categoriaId')?.value.toString());
+formData.append('marcaId', this.productoForm.get('marcaId')?.value.toString());
+
     formData.append('nombre', this.productoForm.get('nombre')?.value);
     formData.append('descripcion', this.productoForm.get('descripcion')?.value);
     formData.append('precio', this.productoForm.get('precio')?.value.toString());
@@ -95,12 +109,12 @@ updateProduct(): void {
     }
       this.productoService.updateProducto(this.productoId,formData).subscribe((res)=>{
         if(res.id != null){
-          this.snackBar.open("Producto creado correctamente", 'Close',{
+          this.snackBar.open("Producto modificado correctamente", 'Close',{
             duration: 5000
           });
-        this.router.navigateByUrl('/admin/registro-producto');
+        this.router.navigateByUrl('/admin/lista-productos');
         }else {
-          this.snackBar.open('error al crear el producto', 'ERROR',{
+          this.snackBar.open('error al modificar el producto', 'ERROR',{
         duration: 5000
           });
         }
