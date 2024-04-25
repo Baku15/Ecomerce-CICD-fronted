@@ -15,6 +15,7 @@ import { DetalleuserComponent } from './detalleuser/detalleuser.component';
 import { RecoverpasswordComponent } from './recoverpassword/recoverpassword.component';
 import { MarcaComponent } from './productos/marca/marca.component';
 import { CategoriaProductoComponent } from './productos/categoria-producto/categoria-producto.component';
+import { RegistroEmpleadoComponent } from './registro-empleado/registro-empleado.component';
 
 
 export const routes: Routes = [
@@ -39,7 +40,8 @@ export const routes: Routes = [
             { path: 'userlist', component: UserlistComponent},
             { path:  'producto/:productoId', component: UpdateProductoComponent},
             { path: 'detalleuser', component: DetalleuserComponent},
-            {path: 'marca', component: MarcaComponent},
+            { path: 'marca', component: MarcaComponent},
+            { path: 'registroempleado', component: RegistroEmpleadoComponent},
         ]
     },
     //Para el user SuperAdmin
