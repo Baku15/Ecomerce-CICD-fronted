@@ -38,7 +38,7 @@ export const routes: Routes = [
             { path: 'nuevo-producto', component: ProductoFormComponent},
             { path: 'registro-producto/:id/edit', component: ProductoFormComponent},
             { path: 'userlist', component: UserlistComponent},
-            { path:  'producto/:productoId', component: UpdateProductoComponent},
+            { path: 'producto/:productoId', component: UpdateProductoComponent},
             { path: 'detalleuser', component: DetalleuserComponent},
             { path: 'marca', component: MarcaComponent},
             { path: 'registroempleado', component: RegistroEmpleadoComponent},
