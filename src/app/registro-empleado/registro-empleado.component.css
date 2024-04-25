@@ -1,12 +1,9 @@
 .center {
-    margin: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: calc(100vh-64px);
-    background-color: bisque;
-    padding: 5%;
+    height: calc(100vh - 64px);
     border-radius: 20px;
   }
   .Title{
