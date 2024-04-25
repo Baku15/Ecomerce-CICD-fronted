@@ -53,7 +53,7 @@ export class RegistroEmpleadoComponent {
         console.log(response+" Usuario registrado: "+this.newUser);
         this.mostrarMensajeDeleteExito();
           setTimeout(() => {
-            this.router.navigate(['../login']);
+            this.router.navigate(['admin/userlist']);
           }, 3000); 
         // Ajustamos según la respuesta real esperada
         // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
@@ -74,7 +74,7 @@ export class RegistroEmpleadoComponent {
     }
   }
   irhome(){
-    this.router.navigate(['../login']);
+    this.router.navigate(['admin/userlist']);
   
   }
   mostrarAlerta = false;
