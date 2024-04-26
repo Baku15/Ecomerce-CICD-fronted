@@ -17,8 +17,19 @@ export class UsuarioService {
     return this.httpClient.get(this.API_SERVER);
   }
 
+  public getAllUsers(): Observable<any>{
+    return this.httpClient.get('http://localhost:8050/api/BusquedasP/todas');
+  }
   public registerNewUsuario(registroUsuario: any): Observable<any>{
     return this.httpClient.post(this.API_SERVER, registroUsuario)
+  } 
+
+  public getAllCostumers(): Observable<any>{
+    return this.httpClient.get('http://localhost:8050/api/BusquedasR/buscarRol/Comprador');
+  }
+
+  public getAllEmployees(): Observable<any>{
+    return this.httpClient.get('http://localhost:8050/api/BusquedasR/buscarRol/EMPLEADO');
   }
 
   public deleteUsuariobyId(id: number): Observable<any>{
