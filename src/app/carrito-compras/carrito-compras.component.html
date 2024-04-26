@@ -1,49 +1,22 @@
-<!-- <!DOCTYPE html> -->
-<!-- <html lang="es"> -->
-<!-- <head> -->
-<!--     <meta charset="UTF-8"> -->
-<!--     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-<!--     <title>Listado de Productos</title> -->
-<!-- </head> -->
-<!-- <body> -->
-<!--     <header> -->
-<!--         <h1>Listado de Productos</h1> -->
-<!--     </header> -->
-<!---->
-<!--     <main> -->
-<!--         <div class="container"> -->
-<!--             <div class="column"> -->
-<!--                 <div class="product-card"> -->
-<!--                     <h2>Producto 1</h2> -->
-<!--                     <p>Descripción del Producto 1.</p> -->
-<!--                     <p>Precio: $10</p> -->
-<!--                 </div> -->
-<!--                 <!-- Agregar más productos aquí --> -->
-<!--             </div> -->
-<!---->
-<!--             <div class="column"> -->
-<!--                 <div class="product-card"> -->
-<!--                     <h2>Producto 2</h2> -->
-<!--                     <p>Descripción del Producto 2.</p> -->
-<!--                     <p>Precio: $15</p> -->
-<!--                 </div> -->
-<!--                 <!-- Agregar más productos aquí --> -->
-<!--             </div> -->
-<!---->
-<!--             <div class="column"> -->
-<!--                 <div class="product-card"> -->
-<!--                     <h2>Producto 3</h2> -->
-<!--                     <p>Descripción del Producto 3.</p> -->
-<!--                     <p>Precio: $20</p> -->
-<!--                 </div> -->
-<!--                 <!-- Agregar más productos aquí --> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--     </main> -->
-<!---->
-<!--     <footer> -->
-<!--         <p>&copy; 2024 Listado de Productos. Todos los derechos reservados.</p> -->
-<!--     </footer> -->
-<!-- </body> -->
-<!-- </html> -->
-<!---->
+<div class="carrito-compras">
+    <h2>Carrito de Compras</h2>
+
+    <div *ngIf="productos.length > 0; else carritoVacio">
+        <div *ngFor="let producto of productos">
+            <div class="producto">
+                <span>{{ producto.nombre }}</span>
+                <span>{{ producto.precio }}</span>
+                <button (click)="eliminarProducto(producto)">Eliminar</button>
+                <input type="number" [(ngModel)]="producto.cantidad" (change)="actualizarCantidad(producto)">
+            </div>
+        </div>
+
+        <div class="suma-total">
+            <span>Total: {{ calcularTotal() }}</span>
+        </div>
+    </div>
+
+    <ng-template #carritoVacio>
+        <p>No hay productos en el carrito.</p>
+    </ng-template>
+</div>

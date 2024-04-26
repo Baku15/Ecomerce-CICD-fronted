@@ -21,6 +21,9 @@ export class RegistroEmpleadoComponent {
   hide = true;
   email = new FormControl('', [Validators.required, Validators.email]);
   nombre = new FormControl('', [Validators.required]);
+  carnet = new FormControl('', [Validators.required]);
+  apellido = new FormControl('', [Validators.required]);
+  username = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);
   telefono = new FormControl('', [Validators.required]);
   rol = new FormControl('', [Validators.required]);
@@ -42,14 +45,16 @@ export class RegistroEmpleadoComponent {
       return;
     }
     this.newUser = {
-      usuario_nombre: this.nombre.value,
-      usuario_pass: this.password.value,
-      usuario_estado: "activo",
-      usuario_correo: this.email.value,
-      usuario_telefono: this.telefono.value,
-      usuario_rol: this.rol.value
+      nombre: this.nombre.value,
+      apellido: this.apellido.value,
+      carnet: this.carnet.value,
+      telefono: this.telefono.value,
+      email: this.email.value,
+      password: this.password.value,
+      username: this.username.value,
+      roles: [this.rol.value]
     }
-    this.usuarioService.registerNewUsuario(this.newUser).subscribe({
+    this.usuarioService.registerNewUser(this.newUser).subscribe({
       next: (response) => {
         console.log(response+" Usuario registrado: "+this.newUser);
         this.mostrarMensajeDeleteExito();

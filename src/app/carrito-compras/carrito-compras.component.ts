@@ -1,36 +1,35 @@
-// import { Component } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { SalesDataService } from '../services/sales-data.service';
-// import { Product } from '../models/product.model'; // Asegúrate de tener esta clase definida en tu proyecto
-//
-// @Component({
-//   selector: 'app-carritocompras',
-//   standalone: true,
-//   imports: [CommonModule], // Importa CommonModule para usar directivas como ngFor, ngIf, etc.
-//   templateUrl: './carrito-compras.component.html',
-//   styleUrls: ['./carrito-compras.component.css']
-// })
-// export class CarritoComprasComponent {
-//   cartItems: Product[] = [];
-//
-//   constructor(private salesDataService: SalesDataService) {
-//     this.subscribeToCartChanges();
-//   }
-//
-//   private subscribeToCartChanges() {
-//     // Suscribirse a los cambios en el carrito
-//     this.salesDataService.cart$.subscribe(items => {
-//       this.cartItems = items;
-//     });
-//   }
-//
-//   removeFromCart(product: Product) {
-//     // Lógica para remover un producto del carrito
-//     this.salesDataService.removeFromCart(product);
-//   }
-//
-//   clearCart() {
-//     // Limpia todos los productos del carrito
-//     this.salesDataService.clearCart();
-//   }
-// }
+import { CarritoService } from './services/carritoCompras/carrito.service';
+import { RegistroCarritoService } from 'services/registro-carrito.service';
+
+// Importa los servicios necesarios
+
+// Define la clase del componente
+class CarritoComprasComponent {
+    constructor(private carritoService: CarritoService, private registroCarritoService: RegistroCarritoService) {}
+
+    // Define las propiedades y métodos necesarios para el componente
+
+    // Método para obtener los productos del carrito
+    obtenerProductosCarrito() {
+        return this.carritoService.obtenerProductos();
+    }
+
+    // Método para agregar un producto al carrito
+    agregarProductoCarrito(producto) {
+        this.carritoService.agregarProducto(producto);
+    }
+
+    // Método para eliminar un producto del carrito
+    eliminarProductoCarrito(producto) {
+        this.carritoService.eliminarProducto(producto);
+    }
+
+    // Método para registrar el carrito de compras
+    registrarCarrito() {
+        const carrito = this.carritoService.obtenerCarrito();
+        this.registroCarritoService.registrarCarrito(carrito);
+    }
+}
+
+// Exporta la clase del componente
+export default CarritoComprasComponent;
