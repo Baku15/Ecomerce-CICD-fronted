@@ -12,13 +12,10 @@ import { DetalleuserComponent } from './detalleuser/detalleuser.component';
 import { RecoverpasswordComponent } from './recoverpassword/recoverpassword.component';
 import { MarcaComponent } from './productos/marca/marca.component';
 import { CategoriaProductoComponent } from './productos/categoria-producto/categoria-producto.component';
-<<<<<<< HEAD
 import { RegistroProductosComponent } from './productos/registro-productos/registro-productos.component';
 import { ProductoFormComponent } from './productos/producto-form/producto-form.component';
 import { UpdateProductoComponent } from './productos/update-producto/update-producto.component';
-=======
 import { RegistroEmpleadoComponent } from './registro-empleado/registro-empleado.component';
->>>>>>> 6b6492512b2fc3866477cc343ab301ef277e8209
 
 
 export const routes: Routes = [
