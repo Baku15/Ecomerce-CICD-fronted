@@ -1,34 +1,72 @@
-import { CarritoService } from './services/carritoCompras/carrito.service';
-import { RegistroCarritoService } from 'services/registro-carrito.service';
-
-// Importa los servicios necesarios
-
+import { CarritoService } from '../services/carritoCompras/carrito.service';
+import { RegistroCarritoService } from '../services/carritoCompras/registro-carrito.service';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+//import { MaterialModule } from '../../material-module';
+//import { ProductoService } from '../../services/productos/producto.service';
+//primero esto
+interface registroDTO {
+  id: number;
+  fechaCommpra: Date;
+  usuarioId: number;
+  itemsCarrito: carritoComprasDTO[];
+}
+//segundo esto
+interface carritoComprasDTO {
+  id: number;
+  cantidad: number;
+  productoID: number;
+  registroCompraID: number;
+}
+@Component({
+  selector: 'app-carrito-registro-compras',
+  templateUrl: './carrito-compras.component.html',
+  styleUrls: ['./carrito-compras.component.css'],
+  standalone: true,
+  imports: [CommonModule],
+})
 // Define la clase del componente
-class CarritoComprasComponent {
-    constructor(private carritoService: CarritoService, private registroCarritoService: RegistroCarritoService) {}
+export class CarritoComprasComponent implements OnInit {
+    productosCarrito: any[] = [];
 
-    // Define las propiedades y métodos necesarios para el componente
+  realizarCompra() {
 
-    // Método para obtener los productos del carrito
-    obtenerProductosCarrito() {
-        return this.carritoService.obtenerProductos();
-    }
+    
+  }
 
-    // Método para agregar un producto al carrito
-    agregarProductoCarrito(producto) {
-        this.carritoService.agregarProducto(producto);
-    }
+  constructor(
+    private carritoService: CarritoService,
+    private registroCarritoService: RegistroCarritoService
+  ) {}
+  ngOnInit() {
+    this.obtenerProductosCarrito().subscribe(productos => {
+  });
+    this.productosCarrito = productos;
+  }
+  // De carrito Service
+  // Método para obtener los productos del carrito
+  obtenerProductosCarrito() {
+    return this.carritoService.obtenerTodosLosCarritos();
+  }
 
-    // Método para eliminar un producto del carrito
-    eliminarProductoCarrito(producto) {
-        this.carritoService.eliminarProducto(producto);
-    }
+  // Método para agregar un producto al carrito
+  agregarProductoCarrito(registroDTO: registroDTO) {
+    this.carritoService.crearCarritoCompras(registroDTO);
+  }
 
-    // Método para registrar el carrito de compras
-    registrarCarrito() {
-        const carrito = this.carritoService.obtenerCarrito();
-        this.registroCarritoService.registrarCarrito(carrito);
-    }
+  // Método para eliminar un producto del carrito
+  eliminarProductoCarrito(registroDTOID: registroDTO['id']) {
+    this.carritoService.eliminarCarritoPorId(registroDTOID);
+  }
+  //De carrito Registro Service
 }
 
 // Exporta la clase del componente

@@ -33,7 +33,9 @@ export class UsuarioService {
   }
 
   public changerole(id: number, rol: string): Observable<any>{
-    return this.httpClient.post('http://localhost:8050/api/user/'+id+'/roles', [rol])
+    const roles = `${rol}`;
+    console.log(roles);
+    return this.httpClient.put('http://localhost:8050/api/user/'+id+'/roles', [roles])
   } 
 
   public deleteUsuariobyId(id: number): Observable<any>{

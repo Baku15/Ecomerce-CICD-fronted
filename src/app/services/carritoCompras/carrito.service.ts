@@ -6,7 +6,6 @@ import { Observable, catchError, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class CarritoService {
-
   constructor(private http: HttpClient) { }
   private baseUrl = 'http://localhost:8095/api/carrito-compras';
   private base_search = ''
@@ -18,6 +17,7 @@ export class CarritoService {
   crearCarritoCompras(carritoDto: any){
     return this.http.post('http://localhost:8095/api/carrito-compras',carritoDto);
   }
+  //todos los carritos
   obtenerTodosLosCarritos():Observable<any>{
     return this.http.get('http://localhost:8095/api/carrito-compras/all');
   }
