@@ -1,34 +1,40 @@
-import { CarritoService } from './services/carritoCompras/carrito.service';
-import { RegistroCarritoService } from 'services/registro-carrito.service';
+import { CarritoService } from '../services/carritoCompras/carrito.service';
+import { RegistroCarritoService } from '../services/carritoCompras/registro-carrito.service';
 
-// Importa los servicios necesarios
+interface  registroDTO{
+    id: number;
+    fechaCommpra: Date;
+    usuarioId: number;
+    itemsCarrito: carritoComprasDTO[];
+}
+interface  carritoComprasDTO{
+    id: number;
+    cantidad: number;
+    productoID: number;
+    registroCompraID: number;
+}
 
 // Define la clase del componente
 class CarritoComprasComponent {
     constructor(private carritoService: CarritoService, private registroCarritoService: RegistroCarritoService) {}
 
-    // Define las propiedades y métodos necesarios para el componente
-
+    // De carrito Service
     // Método para obtener los productos del carrito
     obtenerProductosCarrito() {
-        return this.carritoService.obtenerProductos();
+        return this.carritoService.obtenerTodosLosCarritos();
     }
 
     // Método para agregar un producto al carrito
-    agregarProductoCarrito(producto) {
-        this.carritoService.agregarProducto(producto);
+    agregarProductoCarrito(registroDTO: registroDTO) {
+        this.carritoService.crearCarritoCompras(registroDTO);
     }
 
     // Método para eliminar un producto del carrito
-    eliminarProductoCarrito(producto) {
-        this.carritoService.eliminarProducto(producto);
+    eliminarProductoCarrito(registroDTOID: registroDTO["id"]) {
+        this.carritoService.eliminarCarritoPorId(registroDTOID);
     }
+    //De carrito Registro Service
 
-    // Método para registrar el carrito de compras
-    registrarCarrito() {
-        const carrito = this.carritoService.obtenerCarrito();
-        this.registroCarritoService.registrarCarrito(carrito);
-    }
 }
 
 // Exporta la clase del componente

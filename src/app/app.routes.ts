@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { RegistroUsuarioComponent } from './registro-usuario/registro-usuario.component';
 // import { CarritoComprasComponent } from './carrito-compras/carrito-compras.component';
+import CarritoComprasComponent from './carrito-compras/carrito-compras.component';
 // import { CatalogoComponent } from './catalogo/catalogo.component';
 import { EditarperfilComponent } from './editar-perfil/editar-perfil.component';
 import { LoginComponent } from './login/login.component';
@@ -42,6 +43,7 @@ export const routes: Routes = [
             { path: 'detalleuser', component: DetalleuserComponent},
             { path: 'marca', component: MarcaComponent},
             { path: 'registroempleado', component: RegistroEmpleadoComponent},
+            { path: 'carritoCompras', component: CarritoComprasComponent},
         ]
     },
     //Para el user SuperAdmin
