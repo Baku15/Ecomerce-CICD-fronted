@@ -32,6 +32,10 @@ export class UsuarioService {
     return this.httpClient.get('http://localhost:8050/api/BusquedasR/buscarRol/EMPLEADO');
   }
 
+  public changerole(id: number, rol: string): Observable<any>{
+    return this.httpClient.post('http://localhost:8050/api/user/'+id+'/roles', [rol])
+  } 
+
   public deleteUsuariobyId(id: number): Observable<any>{
     return this.httpClient.delete(this.API_SERVER + '/' + id);
   }

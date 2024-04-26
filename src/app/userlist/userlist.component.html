@@ -62,7 +62,17 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="weight">
       <th mat-header-cell *matHeaderCellDef> Rol </th>
-      <td mat-cell *matCellDef="let element"> {{element.rol}} </td>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field>
+          <mat-label>{{element.rol}} </mat-label>
+          <mat-select [(value)]="selected">
+            <mat-option value="ADMIN">Admin</mat-option>
+            <mat-option value="EMPLEADO">Empleado</mat-option>
+            <mat-option value="Comprador">Comprador</mat-option>
+          </mat-select>
+        </mat-form-field>
+         
+      </td>
     </ng-container>
 
     <!-- Symbol Column -->
@@ -80,7 +90,10 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
       <td mat-cell *matCellDef="let element">
           <div class="button-secction">        
-            <button mat-stroked-button (click)="enterprofile(element.id_usuario)">Detalles user</button>
+            <button mat-stroked-button (click)="enterprofile(element.id)">Detalles user</button>
+          </div>
+          <div class="button-secction">        
+            <button mat-stroked-button (click)="actualizarrol(element.id)">Aplicar Nuevo Rol</button>
           </div>
       </td>
     </ng-container>
