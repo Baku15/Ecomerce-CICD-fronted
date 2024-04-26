@@ -1,22 +1,24 @@
-<div class="carrito-compras">
-    <h2>Carrito de Compras</h2>
+<div class="carrito-container">
+  <h2>Carrito de Compras</h2>
+  <form [formGroup]="carritoForm" (ngSubmit)="onSubmit()">
+    <label for="productoID">Producto ID:</label>
+    <input type="number" id="productoID" formControlName="productoID" required>
 
-    <div *ngIf="productos.length > 0; else carritoVacio">
-        <div *ngFor="let producto of productos">
-            <div class="producto">
-                <span>{{ producto.nombre }}</span>
-                <span>{{ producto.precio }}</span>
-                <button (click)="eliminarProducto(producto)">Eliminar</button>
-                <input type="number" [(ngModel)]="producto.cantidad" (change)="actualizarCantidad(producto)">
-            </div>
-        </div>
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" id="cantidad" formControlName="cantidad" required>
 
-        <div class="suma-total">
-            <span>Total: {{ calcularTotal() }}</span>
-        </div>
-    </div>
+    <button type="submit">Agregar Producto</button>
+  </form>
 
-    <ng-template #carritoVacio>
-        <p>No hay productos en el carrito.</p>
-    </ng-template>
+  <div *ngIf="productosCarrito.length > 0">
+    <ul>
+      <li *ngFor="let item of productosCarrito">
+        Producto ID: {{ item.productoID }}, Cantidad: {{ item.cantidad }}
+        <button (click)="eliminarProductoCarrito(item.id)">Eliminar</button>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="productosCarrito.length === 0">
+    <p>No hay productos en el carrito.</p>
+  </div>
 </div>
