@@ -16,7 +16,21 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="weight">
       <th mat-header-cell *matHeaderCellDef> Rol </th>
-      <td mat-cell *matCellDef="let element"> {{element.rol}} </td>
+      <td mat-cell *matCellDef="let element">
+        @if(slidecost[element.id]){
+          <mat-form-field>
+            <mat-label>{{element.rol}} </mat-label>
+            <mat-select [(value)]="selected" [formControl]="rol">
+              <mat-option value="ADMIN">Admin</mat-option>
+              <mat-option value="EMPLEADO">Empleado</mat-option>
+              <mat-option value="Comprador">Comprador</mat-option>
+            </mat-select>
+          </mat-form-field>
+        }
+        @if(!slidecost[element.id]){
+          {{element.rol}}
+        }       
+      </td>
     </ng-container>
 
     <!-- Symbol Column -->
@@ -28,6 +42,19 @@
     <ng-container matColumnDef="numero">
       <th mat-header-cell *matHeaderCellDef> Numero </th>
       <td mat-cell *matCellDef="let element"> {{element.persona.telefono}} </td>
+    </ng-container>
+    <ng-container matColumnDef="rol"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let element">
+          <div class="button-secction">        
+            <mat-slide-toggle [(ngModel)]="slidecost[element.id]"> > ¡Deliza para modificar rol!</mat-slide-toggle>
+          </div>
+          @if(slidecost[element.id]){
+            <div class="button-secction">        
+              <button mat-stroked-button (click)="actualizarrol(element.id)">Aplicar Nuevo Rol</button>
+            </div>
+          }           
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="edit"> 
@@ -44,7 +71,18 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  
   <div class="title">Lista de Empleados</div>
+  @if(mostrarAlertaDelete){
+    <div class="alert">
+        Se ha cambiado el rol del usuario.
+    </div>
+  }
+  @if(mostrarAlertaErrorDelete){
+      <div class="alertE">
+          No se pudo cambial el rol del usuario.
+      </div>
+  }
 <table mat-table [dataSource]="registrosUsers" class="mat-elevation-z8">
 
     <!-- Position Column -->
@@ -63,15 +101,19 @@
     <ng-container matColumnDef="weight">
       <th mat-header-cell *matHeaderCellDef> Rol </th>
       <td mat-cell *matCellDef="let element">
-        <mat-form-field>
-          <mat-label>{{element.rol}} </mat-label>
-          <mat-select [(value)]="selected">
-            <mat-option value="ADMIN">Admin</mat-option>
-            <mat-option value="EMPLEADO">Empleado</mat-option>
-            <mat-option value="Comprador">Comprador</mat-option>
-          </mat-select>
-        </mat-form-field>
-         
+        @if(slideemploy[element.id]){
+          <mat-form-field>
+            <mat-label>{{element.rol}} </mat-label>
+            <mat-select [(value)]="selected" [formControl]="rol">
+              <mat-option value="ADMIN">Admin</mat-option>
+              <mat-option value="EMPLEADO">Empleado</mat-option>
+              <mat-option value="Comprador">Comprador</mat-option>
+            </mat-select>
+          </mat-form-field>
+        }
+        @if(!slideemploy[element.id]){
+          {{element.rol}}
+        }       
       </td>
     </ng-container>
 
@@ -92,12 +134,21 @@
           <div class="button-secction">        
             <button mat-stroked-button (click)="enterprofile(element.id)">Detalles user</button>
           </div>
-          <div class="button-secction">        
-            <button mat-stroked-button (click)="actualizarrol(element.id)">Aplicar Nuevo Rol</button>
-          </div>
       </td>
     </ng-container>
-
+    <ng-container matColumnDef="rol"> 
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let element">
+          <div class="button-secction">        
+            <mat-slide-toggle [(ngModel)]="slideemploy[element.id]"> > ¡Deliza para modificar rol!</mat-slide-toggle>
+          </div>
+          @if(slideemploy[element.id]){
+            <div class="button-secction">        
+              <button mat-stroked-button (click)="actualizarrol(element.id)">Aplicar Nuevo Rol</button>
+            </div>
+          }           
+      </td>
+    </ng-container>
     
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

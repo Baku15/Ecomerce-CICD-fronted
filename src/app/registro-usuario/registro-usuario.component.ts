@@ -26,7 +26,6 @@ export class RegistroUsuarioComponent {
   username = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);
   telefono = new FormControl('', [Validators.required]);
-  rol = new FormControl('', [Validators.required]);
   newUser: any = {};
   stringMessage: string = '';
 
@@ -39,7 +38,7 @@ export class RegistroUsuarioComponent {
   }
 
   registrarUser(){
-    if (this.nombre.value === '' || this.password.value === '' || this.telefono.value === '' || this.rol.value === '') {
+    if (this.nombre.value === '' || this.password.value === '' || this.telefono.value === '') {
       this.stringMessage = 'Debe llenar todos los campos';
       console.error('Debe llenar todos los campos');
       this.mostrarMensajeDeleteError();

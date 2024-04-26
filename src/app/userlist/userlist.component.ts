@@ -10,6 +10,8 @@ import { AsyncPipe, NgFor } from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormControl, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 export interface PeriodicElement {
   name: string;
@@ -20,20 +22,25 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-userlist',
   standalone: true,
-  imports: [MatTableModule,MatButtonModule, MatDividerModule, MatIconModule,AsyncPipe,MatFormFieldModule, MatSelectModule],
+  imports: [MatSlideToggleModule,FormsModule, ReactiveFormsModule,MatTableModule,MatButtonModule, MatDividerModule, MatIconModule,AsyncPipe,MatFormFieldModule, MatSelectModule],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.css'
 })
 export class UserlistComponent implements OnInit {
+  checked = false;
   rol = new FormControl('', [Validators.required]);
   selected = 'option2';
   userlist$!: Observable<any[]>;
   registrosUsers!: any[];
   registroClients!: any[];
   usersFiltrados!: any[];
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'numero','edit'];
+  slideemploy!: any[];
+  slidecost!: any[];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'numero','edit','rol'];
   constructor(private router: Router,public usuarioService: UsuarioService){}
   ngOnInit(): void {
+    this.slidecost = [];
+    this.slideemploy = [];
     this.userlist$ = of([]);
     this.registroClients = [];
     this.registrosUsers = [];
@@ -41,6 +48,13 @@ export class UserlistComponent implements OnInit {
     this.usuarioService.getAllCostumers().subscribe({
       next: (response) => {
         this.userlist$ = of(response.result.filter((user: any) => user.rol === 'Comprador'));
+        if(response.result.length > 0){
+          for(let i = 0; i < response.result.length; i++){
+            this.slideemploy.push(false);
+            //console.log(this.slidecost[i]);
+          }
+        }
+        
         console.log(response.result[1].id,'Registros de clientes mostradas');
       },
       error: (error) => {
@@ -52,6 +66,13 @@ export class UserlistComponent implements OnInit {
     this.usuarioService.getAllEmployees().subscribe({
       next: (response) => {
         this.registrosUsers = response.result.filter((user: any) => user.rol === 'EMPLEADO');
+        if(response.result.length > 0){
+          for(let i = 0; i < response.result.length; i++){
+            this.slidecost.push(false);
+            //console.log(this.slidecost[i]);
+          }
+        }
+        
         console.log(response.result,'Registros de empleados mostradas');
       },
       error: (error) => {
@@ -99,6 +120,12 @@ export class UserlistComponent implements OnInit {
           this.mostrarMensajeDeleteExito();
           setTimeout(() => {
             this.cargardatos();
+            for(let i = 0; i < this.slidecost.length; i++){
+              this.slidecost[i] = false;
+            }
+            for(let i = 0; i < this.slideemploy.length; i++){
+              this.slideemploy[i] = false;
+            }
           }, 500);
           
           // Ajustamos según la respuesta real esperada
