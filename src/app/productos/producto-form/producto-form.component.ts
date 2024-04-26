@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router,RouterModule } from '@angular/router';
 import { AbstractControl, FormBuilder,FormGroup,ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { File } from 'buffer';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../material-module';
 import { CategoriasService } from '../../services/categorias/categorias.service';
@@ -11,7 +11,7 @@ import { ProductoService } from '../../services/productos/producto.service';
 @Component({
   selector: 'app-producto-form',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MaterialModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, MaterialModule, NgIf],
   templateUrl: './producto-form.component.html',
   styleUrl: './producto-form.component.css'
 })

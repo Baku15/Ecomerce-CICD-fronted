@@ -13,9 +13,6 @@
   height:80vh; /* 100% del alto de la ventana */
 }
 
-.card-header {
-  justify-content: center;
-}
 
 .marca-form {
   display: flex;
@@ -29,4 +26,55 @@ mat-form-field {
   width: 100%;
   margin-bottom: 15px;
 }
+/* Estilo para el contenedor de carga de archivos */
+.file-upload-container {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  /* position: relative; */
+  /* overflow: hidden; */
+  margin-bottom: 40px; /* Espacio inferior */
+}
 
+/* Estilo para la etiqueta de carga de archivos */
+.file-upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  padding: 12px 24px; /* Espaciado interno */
+  cursor: pointer; /* Cambiar cursor al pasar */
+  border-radius: 6px; /* Bordes redondeados */
+}
+
+/* Estilo para el ícono de carga de archivos */
+.mat-icon {
+  margin-right: 5px; /* Espaciado a la derecha */
+}
+
+/* Estilo para la vista previa de la imagen */
+.image-preview {
+  margin-top: 10px; /* Espacio superior */
+}
+
+/* Estilo para la imagen de vista previa */
+.preview-image {
+  max-width: 100%; /* Ancho máximo de la imagen */
+  max-height: 200px; /* Altura máxima de la imagen */
+  display: block; /* Mostrar como bloque */
+  margin: 0 auto; /* Centrar la imagen */
+}
+
+/* Estilo para la imagen de vista previa en un círculo */
+.circle-image {
+  width: 150px; /* Ancho de la imagen */
+  height: 150px; /* Altura de la imagen */
+  border-radius: 50%; /* Hacer la imagen circular */
+  overflow: hidden; /* Ocultar partes de la imagen fuera del círculo */
+  margin: 0 auto; /* Centrar la imagen */
+}
+
+.title-left {
+  text-align: left;
+}

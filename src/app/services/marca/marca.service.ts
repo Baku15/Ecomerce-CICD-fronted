@@ -20,7 +20,7 @@ constructor (
   //
   // }
  createMarca(marca: any){
-    return this.http.post<Marca>(this.baseUrl + 'marca',marca);
+    return this.http.post<Marca>(this.baseUrl + 'marca1',marca);
   }
 
   getAllMarcas():Observable<any>{
