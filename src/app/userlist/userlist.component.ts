@@ -33,17 +33,28 @@ export class UserlistComponent implements OnInit {
     this.registroClients = [];
     this.registrosUsers = [];
     this.usersFiltrados = [];
-    this.usuarioService.getAllUsuarios().subscribe({
+    this.usuarioService.getAllCostumers().subscribe({
       next: (response) => {
-        this.registrosUsers = response.filter((user: any) => user.usuario_rol === 'admin' || user.usuario_rol === 'vendedor');
-        this.userlist$ = of(response.filter((user: any) => user.usuario_rol === 'comprador'));
-        console.log('Registros de users mostradas', this.userlist$);
+        this.userlist$ = of(response.result.filter((user: any) => user.rol === 'Comprador'));
+        console.log(response.result[1].id,'Registros de clientes mostradas');
       },
       error: (error) => {
         // Manejar el error aquí
         console.error('Error al mostrar el users', error);
       }
-    });       
+    });
+    
+    this.usuarioService.getAllEmployees().subscribe({
+      next: (response) => {
+        this.registrosUsers = response.result.filter((user: any) => user.rol === 'EMPLEADO');
+        console.log(response.result,'Registros de empleados mostradas');
+      },
+      error: (error) => {
+        // Manejar el error aquí
+        console.error('Error al mostrar el users', error);
+      }
+    }); 
+          
   }
 
   enterprofile(id: number){
