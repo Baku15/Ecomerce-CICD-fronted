@@ -24,40 +24,31 @@ export class LoginComponent implements OnInit{
   users$!: Observable<any[]>;
   stringMessage: string = '';
 
+  credentials: any = {};
+
   constructor(private router: Router, private usuarioService: UsuarioService) {}
   ngOnInit(): void {
-    this.usuarioService.getAllUsuarios().subscribe({
-      next: (response) => {
-        this.users$ = of(response); // Ajustamos según la respuesta real esperada
-        // Ajustamos según la respuesta real esperada
-        // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
-        console.log('Registros de users mostrados', response);
-      },
-      error: (error) => {
-        console.error(error); // Para propósitos de depuración
-      }
-    });
   }
 
-  onLogin(): void {
+  login(){
+    console.log("userssss ",this.username,this.password)
     if (this.username === '' || this.password === ''){
       this.stringMessage = 'Debe llenar todos los campos';
       console.error('Debe llenar todos los campos');
       this.mostrarMensajeDeleteError();
       return;
     }
-    this.users$.subscribe(user => {
-      for(let i = 0; i < user.length; i++){
-        if(this.username == user[i].usuario_nombre && this.password == user[i].usuario_pass){
-          localStorage.setItem('token', user[i].id_usuario);
-          console.log('Usuario correcto: ', user[i].usuario_nombre, user[i].id_usuario);
-          this.router.navigate(['/admin'], { queryParams: { number: user[i].id_usuario } });
-        }else{
-          this.errorMessage = 'Usuario o contraseña incorrecta: ';
-          console.log(this.errorMessage);
-          this.stringMessage = 'Error en el usuario o contraseña';
-          this.mostrarMensajeDeleteError();
-        }
+    this.credentials = {
+      username: this.username,
+      password: this.password
+    }
+    this.usuarioService.login(this.credentials).subscribe({
+      next: (response) => {
+        sessionStorage.setItem('token', response.result.accessToken);
+        console.log('token', response.result.accessToken);
+        this.router.navigate(['/admin'], { queryParams: { number: response.result.accessToken } });
+      },
+      error: (error) => {
       }
     });
   }
