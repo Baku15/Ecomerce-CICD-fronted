@@ -6,15 +6,15 @@ import { EditarperfilComponent } from './editar-perfil/editar-perfil.component';
 import { LoginComponent } from './login/login.component';
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
-import { RegistroProductosComponent } from './registro-productos/registro-productos.component';
-import { ProductoFormComponent} from './producto-form/producto-form.component';
-import { UpdateProductoComponent } from './update-producto/update-producto.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DetalleuserComponent } from './detalleuser/detalleuser.component';
 import { RecoverpasswordComponent } from './recoverpassword/recoverpassword.component';
 import { MarcaComponent } from './productos/marca/marca.component';
 import { CategoriaProductoComponent } from './productos/categoria-producto/categoria-producto.component';
+import { RegistroProductosComponent } from './productos/registro-productos/registro-productos.component';
+import { ProductoFormComponent } from './productos/producto-form/producto-form.component';
+import { UpdateProductoComponent } from './productos/update-producto/update-producto.component';
 
 
 export const routes: Routes = [

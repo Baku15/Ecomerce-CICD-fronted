@@ -1,13 +1,13 @@
-import { ProductoService } from '../services/productos/producto.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CategoriasService } from '../services/categorias/categorias.service';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router,RouterModule } from '@angular/router';
 import { FormBuilder,FormGroup,ReactiveFormsModule, Validators } from '@angular/forms';
-import { MaterialModule } from '../material-module';
 import { File } from 'buffer';
 import { CommonModule } from '@angular/common';
-import { MarcaService } from '../services/marca/marca.service';
+import { MaterialModule } from '../../material-module';
+import { CategoriasService } from '../../services/categorias/categorias.service';
+import { ProductoService } from '../../services/productos/producto.service';
+import { MarcaService } from '../../services/marca/marca.service';
 @Component({
   selector: 'app-update-producto',
   standalone: true,

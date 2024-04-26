@@ -1,13 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router,RouterModule } from '@angular/router';
-import { FormBuilder,FormGroup,ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProductoService } from '../services/productos/producto.service';
-import { MaterialModule } from '../material-module';
+import { AbstractControl, FormBuilder,FormGroup,ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { File } from 'buffer';
-import { CategoriasService } from '../services/categorias/categorias.service';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MarcaService } from '../services/marca/marca.service';
+import { MaterialModule } from '../../material-module';
+import { CategoriasService } from '../../services/categorias/categorias.service';
+import { MarcaService } from '../../services/marca/marca.service';
+import { ProductoService } from '../../services/productos/producto.service';
 @Component({
   selector: 'app-producto-form',
   standalone: true,
@@ -56,13 +56,29 @@ constructor(
 marcaId: [null,[Validators.required]],
 nombre: [null,[Validators.required]],
 descripcion: [null,[Validators.required]],
-precio: [null,[Validators.required]],
+         precio: [null, [
+      Validators.required,
+      this.noRepetirCaracteres('--'),
+      this.noRepetirCaracteres('++'),
+      Validators.pattern('^[0-9,]*$'),
+      Validators.maxLength(10)
+    ]],
 stock: [null,[Validators.required]],
 
     });
     this.getAllCategorias();
     this.getAllMarcas();
   }
+
+  noRepetirCaracteres(repetido: string): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const value = control.value;
+    if (value && value.includes(repetido)) {
+      return { 'repetido': { value: value } };
+    }
+    return null;
+  };
+}
   getAllCategorias(){
     this.categoriaService.getAllCategorias().subscribe(res=>{
     this.listOfCategorias = res;
@@ -148,47 +164,3 @@ create(): void {
   }
 }
 
-//   productoForm!: FormGroup;
-//   ngOnInit(): void {
-//     const id = this.route.snapshot.paramMap.get('id');
-//     if (id){
-//         this.productoService.get(parseInt(id))
-//             .subscribe(producto => {
-//               this.productoForm = this.fb.group({
-//                   nombre: [producto.id, [Validators.required]],
-//                   descripcion:[producto.nombre,[Validators.required]],
-//                   // precio:[producto.descripcion,[Validators.required]],
-//                   precio: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-//
-//                   stock:[producto.stock,[Validators.required]],
-//                   urlimg:[producto.precio,[Validators.required]],
-//           });
-//        })
-//
-//     } else{
-//
-//       this.productoForm = this.fb.group({
-//                   nombre: ["", [Validators.required]],
-//                   descripcion:["",[Validators.required]],
-//                   precio:["",[Validators.required]],
-//                   stock:["",[Validators.required]],
-//                   urlimg:["",[Validators.required]],
-//
-//       });
-//     }
-//   }
-// create (){
-//     const producto = this.productoForm!.value;
-//     this.productoService.create(producto)
-//         .subscribe(() => {
-//             this.router.navigate(['registro-producto'])
-//       });
-//   }
-//
-//   onFileSelected(event:any){
-//
-//
-//   }
-//
-// }
-//

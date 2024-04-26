@@ -1,10 +1,10 @@
 import { Component,  OnInit,  } from '@angular/core';
 import {  FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
-import { ProductoService } from '../services/productos/producto.service';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../material-module';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MaterialModule } from '../../material-module';
+import { ProductoService } from '../../services/productos/producto.service';
 interface Producto {
   byteImg: string;
   // Otras propiedades del producto
