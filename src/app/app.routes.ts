@@ -12,9 +12,13 @@ import { DetalleuserComponent } from './detalleuser/detalleuser.component';
 import { RecoverpasswordComponent } from './recoverpassword/recoverpassword.component';
 import { MarcaComponent } from './productos/marca/marca.component';
 import { CategoriaProductoComponent } from './productos/categoria-producto/categoria-producto.component';
+<<<<<<< HEAD
 import { RegistroProductosComponent } from './productos/registro-productos/registro-productos.component';
 import { ProductoFormComponent } from './productos/producto-form/producto-form.component';
 import { UpdateProductoComponent } from './productos/update-producto/update-producto.component';
+=======
+import { RegistroEmpleadoComponent } from './registro-empleado/registro-empleado.component';
+>>>>>>> 6b6492512b2fc3866477cc343ab301ef277e8209
 
 
 export const routes: Routes = [
@@ -37,9 +41,10 @@ export const routes: Routes = [
             { path: 'nuevo-producto', component: ProductoFormComponent},
             { path: 'registro-producto/:id/edit', component: ProductoFormComponent},
             { path: 'userlist', component: UserlistComponent},
-            { path:  'producto/:productoId', component: UpdateProductoComponent},
+            { path: 'producto/:productoId', component: UpdateProductoComponent},
             { path: 'detalleuser', component: DetalleuserComponent},
-            {path: 'marca', component: MarcaComponent},
+            { path: 'marca', component: MarcaComponent},
+            { path: 'registroempleado', component: RegistroEmpleadoComponent},
         ]
     },
     //Para el user SuperAdmin

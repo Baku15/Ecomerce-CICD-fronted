@@ -1,0 +1,28 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 64px);
+    border-radius: 20px;
+  }
+  .Title{
+    font-size: large;
+    margin: 20px;
+  }
+  .form{
+    display: flex;
+    flex-direction: column;
+  }
+  .alert {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .alertE {
+    background-color: rgb(168, 30, 30);
+    color: white;
+    padding: 15px;
+  }
