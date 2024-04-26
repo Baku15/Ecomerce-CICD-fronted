@@ -16,6 +16,7 @@ import { RegistroProductosComponent } from './productos/registro-productos/regis
 import { ProductoFormComponent } from './productos/producto-form/producto-form.component';
 import { UpdateProductoComponent } from './productos/update-producto/update-producto.component';
 import { RegistroEmpleadoComponent } from './registro-empleado/registro-empleado.component';
+import { ListaMarcasComponent } from './productos/lista-marcas/lista-marcas.component';
 
 
 export const routes: Routes = [
@@ -42,6 +43,7 @@ export const routes: Routes = [
             { path: 'detalleuser', component: DetalleuserComponent},
             { path: 'marca', component: MarcaComponent},
             { path: 'registroempleado', component: RegistroEmpleadoComponent},
+            {path: 'lista-marcas',component: ListaMarcasComponent},
         ]
     },
     //Para el user SuperAdmin

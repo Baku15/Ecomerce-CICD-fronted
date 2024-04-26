@@ -1,0 +1,19 @@
+<div class="product-list">
+  <mat-card class="product-card" *ngFor="let marca of marca">
+    <div class="product-image">
+      <img [src]="marca.processedImg" alt="product-image">
+    </div>
+    <div class="product-details">
+      <h2 class="producto-nombre">{{marca.nombre}}</h2>
+      <p class="producto-descripcion">{{marca.descripcion}}</p>
+
+
+      <mat-divider></mat-divider>
+      <div class="actions">
+        <button mat-raised-button color="accent" class="update-button" [routerLink]="'/admin/producto/' + producto.id">Update</button>
+        <button mat-raised-button color="warn" class="delete-button" (click)="deleteProducto(producto.id)">Delete</button>
+      </div>
+    </div>
+  </mat-card>
+</div>
+

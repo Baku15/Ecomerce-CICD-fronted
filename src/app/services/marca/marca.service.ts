@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MarcaService {
-  private baseUrl = 'http://localhost:8080/ecomerce/';
+  private baseUrl = '://localhost:8092/api/marca/';
 
 constructor (
 
@@ -15,16 +15,12 @@ constructor (
 
   ) {}
 
-  // public getAllCategorias(): Observable<any>{
-  //       return this.http.get(this.baseUrl);
-  //
-  // }
  createMarca(marca: any){
-    return this.http.post<Marca>(this.baseUrl + 'marca1',marca);
+    return this.http.post<Marca>(this.baseUrl + 'crear',marca);
   }
 
   getAllMarcas():Observable<any>{
-      return this.http.get(this.baseUrl + 'marcas')
+      return this.http.get(this.baseUrl + 'all')
     }
 
 

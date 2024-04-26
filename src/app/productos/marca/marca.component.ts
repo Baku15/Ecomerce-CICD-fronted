@@ -42,7 +42,6 @@ imagePreview?: string | ArrayBuffer | null;
   }
 }
 
-
   ngOnInit(): void {
     this.marcaForm = this.fb.group({
       nombre: ['', [Validators.required]],
