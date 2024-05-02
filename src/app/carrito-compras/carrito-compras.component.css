@@ -1,35 +1,24 @@
 .carrito-container {
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    width: 300px;
-  }
-  
-  .carrito-container h2 {
-    color: #333;
-  }
-  
-  .carrito-container ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .carrito-container li {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .carrito-container button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .carrito-container button:hover {
-    background-color: #0056b3;
-  }
-  
+  width: 300px;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.carrito-container h2 {
+  color: #333;
+}
+
+.carrito-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.carrito-container li {
+  margin-bottom: 10px;
+}
+
+.carrito-container button {
+  margin-left: 10px;
+  cursor: pointer;
+}

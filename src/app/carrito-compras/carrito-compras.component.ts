@@ -13,18 +13,18 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 //import { MaterialModule } from '../../material-module';
 //import { ProductoService } from '../../services/productos/producto.service';
 //primero esto
-interface registroDTO {
-  id: number;
-  fechaCommpra: Date;
-  usuarioId: number;
-  itemsCarrito: carritoComprasDTO[];
-}
-//segundo esto
 interface carritoComprasDTO {
   id: number;
   cantidad: number;
   productoID: number;
   registroCompraID: number;
+}
+//segundo esto
+interface registroDTO {
+  id: number;
+  fechaCommpra: Date;
+  usuarioId: number;
+  itemsCarrito: carritoComprasDTO[];
 }
 @Component({
   selector: 'app-carrito-registro-compras',
@@ -35,12 +35,9 @@ interface carritoComprasDTO {
 })
 // Define la clase del componente
 export class CarritoComprasComponent {
-    productosCarrito: any[] = [];
+  productosCarrito: any[] = [];
 
-  realizarCompra() {
-
-    
-  }
+  realizarCompra() {}
 
   constructor(
     private carritoService: CarritoService,

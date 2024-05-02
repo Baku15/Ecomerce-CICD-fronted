@@ -15,7 +15,7 @@ export class CarritoService {
   }
   //post un producto
   crearCarritoCompras(carritoDto: any){
-    return this.http.post('http://localhost:8095/api/carrito-compras',carritoDto);
+    return this.http.post('http://localhost:8095/api/carrito-compras/crear',carritoDto);
   }
   //todos los carritos
   obtenerTodosLosCarritos():Observable<any>{
@@ -23,6 +23,9 @@ export class CarritoService {
   }
   eliminarCarritoPorId(carritoId: any):Observable<any>{
     return this.http.delete(`http://localhost:8095/api/carrito-compras/eliminar/${carritoId}`);
+  }
+  actualizarCarrito(id: any, carritoDto: any){
+    return this.http.put(`http://localhost:8095/api/carrito-compras/editar/${id}`,carritoDto);
   }
 }
 

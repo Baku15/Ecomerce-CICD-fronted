@@ -19,38 +19,34 @@ import { UpdateProductoComponent } from './productos/update-producto/update-prod
 import { RegistroEmpleadoComponent } from './registro-empleado/registro-empleado.component';
 import { ListaMarcasComponent } from './productos/lista-marcas/lista-marcas.component';
 
-
 export const routes: Routes = [
-
-    //Login
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent},
-    { path: 'registro-usuario', component: RegistroUsuarioComponent},
-    { path: 'recoveraccount', component: RecoverpasswordComponent},
-    //Para el user Admin
-    { path: 'admin', component: SidebarComponent,
-        children:[
-            // { path: 'carrito-compras', component: CarritoComprasComponent},
-            // { path: 'catalogo', component: CatalogoComponent},
-            { path: 'categoria', component: CategoriaProductoComponent},
-            { path: 'editar-perfil', component: EditarperfilComponent},
-            { path: 'menu-principal', component: MenuPrincipalComponent},
-            { path: 'perfil-user', component: PerfilUsuarioComponent},
-            { path: 'lista-productos', component: RegistroProductosComponent},
-            { path: 'nuevo-producto', component: ProductoFormComponent},
-            { path: 'registro-producto/:id/edit', component: ProductoFormComponent},
-            { path: 'userlist', component: UserlistComponent},
-            { path: 'producto/:productoId', component: UpdateProductoComponent},
-            { path: 'detalleuser', component: DetalleuserComponent},
-            { path: 'marca', component: MarcaComponent},
-            { path: 'registroempleado', component: RegistroEmpleadoComponent},
-            {path: 'lista-marcas',component: ListaMarcasComponent},
-            { path: 'carritoCompras', component: CarritoComprasComponent},
-        ]
-    },
-    //Para el user SuperAdmin
-    { path: 'superadmin', component: SidebarComponent,
-        children:[
-        ]
-    },
+  //Login
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'registro-usuario', component: RegistroUsuarioComponent },
+  { path: 'recoveraccount', component: RecoverpasswordComponent },
+  //Para el user Admin
+  {
+    path: 'admin',
+    component: SidebarComponent,
+    children: [
+      // { path: 'catalogo', component: CatalogoComponent},
+      { path: 'categoria', component: CategoriaProductoComponent },
+      { path: 'editar-perfil', component: EditarperfilComponent },
+      { path: 'menu-principal', component: MenuPrincipalComponent },
+      { path: 'perfil-user', component: PerfilUsuarioComponent },
+      { path: 'lista-productos', component: RegistroProductosComponent },
+      { path: 'nuevo-producto', component: ProductoFormComponent },
+      { path: 'registro-producto/:id/edit', component: ProductoFormComponent },
+      { path: 'userlist', component: UserlistComponent },
+      { path: 'producto/:productoId', component: UpdateProductoComponent },
+      { path: 'detalleuser', component: DetalleuserComponent },
+      { path: 'marca', component: MarcaComponent },
+      { path: 'registroempleado', component: RegistroEmpleadoComponent },
+      { path: 'lista-marcas', component: ListaMarcasComponent },
+      { path: 'carritoCompras', component: CarritoComprasComponent },
+    ],
+  },
+  //Para el user SuperAdmin
+  { path: 'superadmin', component: SidebarComponent, children: [] },
 ];
