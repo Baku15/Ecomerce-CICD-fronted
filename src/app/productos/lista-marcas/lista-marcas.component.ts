@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MarcaService } from '../../services/marca/marca.service';
 import { Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material-module';
+import { Component, Injectable } from '@angular/core';
 
 Component({
   selector: 'app-lista-marcas',
@@ -20,6 +21,7 @@ interface Marca {
   descripcion: string;
   nombre:string;
 }
+@Injectable()
 export class ListaMarcasComponent {
   marca: Marca[] = [];
   products: any[] = [];

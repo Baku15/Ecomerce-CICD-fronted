@@ -34,7 +34,7 @@ interface carritoComprasDTO {
   imports: [CommonModule],
 })
 // Define la clase del componente
-export class CarritoComprasComponent implements OnInit {
+export class CarritoComprasComponent {
     productosCarrito: any[] = [];
 
   realizarCompra() {
@@ -46,11 +46,7 @@ export class CarritoComprasComponent implements OnInit {
     private carritoService: CarritoService,
     private registroCarritoService: RegistroCarritoService
   ) {}
-  ngOnInit() {
-    this.obtenerProductosCarrito().subscribe(productos => {
-  });
-    this.productosCarrito = productos;
-  }
+
   // De carrito Service
   // Método para obtener los productos del carrito
   obtenerProductosCarrito() {
