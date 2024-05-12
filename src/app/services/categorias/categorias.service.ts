@@ -7,7 +7,7 @@ import { Categoria } from '../../model/categoria.interface';
   providedIn: 'root'
 })
 export class CategoriasService {
-  private baseUrl = 'http://localhost:8080/ecomerce/';
+  private baseUrl = 'http://localhost:8040/api/';
 
 constructor (
 
@@ -20,11 +20,11 @@ constructor (
   //
   // }
  createCategoria(categoria: any){
-    return this.http.post<Categoria>(this.baseUrl + 'categoria',categoria);
+    return this.http.post<Categoria>(this.baseUrl + 'Categoria',categoria);
   }
 
   getAllCategorias():Observable<any>{
-      return this.http.get(this.baseUrl + 'categorias')
+      return this.http.get(this.baseUrl + 'Categorias')
     }
 
 

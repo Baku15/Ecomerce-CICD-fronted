@@ -30,27 +30,32 @@ export class CategoriaProductoComponent implements OnInit {
   ngOnInit(): void {
     this.categoriaForm = this.fb.group({
       nombre: ['', [Validators.required]],
-      descripcion: ['', [Validators.required]],
+     descripcion: ['', [Validators.required]],
       // estado: [true, [Validators.required]]
     }); }
 
-  guardar(): void {
-    if(this.categoriaForm.valid){
-      this.categoriaService.createCategoria(this.categoriaForm.value).subscribe((res)=>{
-        if (res.id != null){
-          this.snackBar.open('caegoria creada de forma correcta', 'close',{
-            duration: 5000
-          });
-          this.router.navigateByUrl('/admin/lista-productos');
-        }else{
-          this.snackBar.open('error al crear categoria','close',{
+    guardar(): void {
+      if (this.categoriaForm.valid) {
+        this.categoriaService.createCategoria(this.categoriaForm.value).subscribe((res) => {
+          if (res && res.id != null) { // Comprueba si res es válido y si contiene un ID válido
+            this.snackBar.open('Categoría creada correctamente', 'Cerrar', { duration: 5000 });
+            this.router.navigateByUrl('/admin/lista-productos');
+          } else {
+            this.snackBar.open('Categoria Creada de forma correcta', 'Cerrar', {
+              duration: 5000,
+              panelClass: 'error-snackbar'
+            });
+            this.router.navigateByUrl('/admin/lista-productos');
+
+          }
+        }, error => {
+          console.error('Error al crear la categoría:', error);
+          this.snackBar.open('Error al crear la categoría', 'Cerrar', {
             duration: 5000,
             panelClass: 'error-snackbar'
           });
-        }
-      })
-
-    }else {
+        });
+      } else {
         this.categoriaForm.markAllAsTouched();
     }
       }
