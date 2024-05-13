@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MarcaService {
-  private baseUrl = '://localhost:8092/api/marca/';
+  private baseUrl = 'http://localhost:8040/api/marca/';
 
 constructor (
 

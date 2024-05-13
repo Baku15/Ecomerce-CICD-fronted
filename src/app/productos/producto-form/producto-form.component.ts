@@ -70,6 +70,25 @@ stock: [null,[Validators.required]],
     this.getAllMarcas();
   }
 
+  getAllCategorias() {
+    this.categoriaService.getAllCategorias().subscribe(
+      res => {
+        console.log('Respuesta del servidor:', res);
+        if (Array.isArray(res)) {
+          this.listOfCategorias = res;
+          console.log('Categorías recibidas:', this.listOfCategorias);
+          this.productoForm.updateValueAndValidity(); // Valida el formulario después de recibir las categorías
+        } else {
+          console.error('Error: La propiedad "result" no es un arreglo.', res);
+        }
+      },
+      error => {
+        console.error('Error al obtener las categorías:', error);
+      }
+    );
+  }
+  
+
   noRepetirCaracteres(repetido: string): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const value = control.value;
@@ -79,11 +98,7 @@ stock: [null,[Validators.required]],
     return null;
   };
 }
-  getAllCategorias(){
-    this.categoriaService.getAllCategorias().subscribe(res=>{
-    this.listOfCategorias = res;
-    })
-  }
+
 
   getAllMarcas(){
       this.marcaService.getAllMarcas().subscribe(res=>{

@@ -1,7 +1,7 @@
 export interface Marca {
 
  id: number;
-      nombre: string;
+      marca: string;
       descripcion: string;
 
 }

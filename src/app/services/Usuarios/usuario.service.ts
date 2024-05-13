@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http'
 })
 export class UsuarioService {
 
-  private API_SERVER = "http://localhost:8050/api/user";
+  private API_SERVER = "http://localhost:8040/api/user";
 
   constructor(private httpClient: HttpClient) { }
   public login(credentials: any): Observable<any>{
@@ -18,24 +18,24 @@ export class UsuarioService {
   }
 
   public getAllUsers(): Observable<any>{
-    return this.httpClient.get('http://localhost:8050/api/BusquedasP/todas');
+    return this.httpClient.get('http://localhost:8040/api/BusquedasP/todas');
   }
   public registerNewUsuario(registroUsuario: any): Observable<any>{
     return this.httpClient.post(this.API_SERVER, registroUsuario)
   } 
 
   public getAllCostumers(): Observable<any>{
-    return this.httpClient.get('http://localhost:8050/api/BusquedasR/buscarRol/Comprador');
+    return this.httpClient.get('http://localhost:8040/api/BusquedasR/buscarRol/Comprador');
   }
 
   public getAllEmployees(): Observable<any>{
-    return this.httpClient.get('http://localhost:8050/api/BusquedasR/buscarRol/EMPLEADO');
+    return this.httpClient.get('http://localhost:8040/api/BusquedasR/buscarRol/EMPLEADO');
   }
 
   public changerole(id: number, rol: string): Observable<any>{
     const roles = `${rol}`;
     console.log(roles);
-    return this.httpClient.put('http://localhost:8050/api/user/'+id+'/roles', [roles])
+    return this.httpClient.put('http://localhost:8040/api/user/'+id+'/roles', [roles])
   } 
 
   public deleteUsuariobyId(id: number): Observable<any>{
@@ -44,7 +44,7 @@ export class UsuarioService {
 
   //servicio para user
   public registerNewUser(registroUsuario: any): Observable<any>{
-    return this.httpClient.post('http://localhost:8050/api/BusquedasP/createG', registroUsuario)
+    return this.httpClient.post('http://localhost:8040/api/BusquedasP/createG', registroUsuario)
   }
   //servicio para persona
   public registerNewPersona(registroUsuario: any): Observable<any>{

@@ -46,7 +46,7 @@
           </mat-form-field>
         </div>
 
-<div class="col-md-6">
+<!-- <div class="col-md-6">
           <mat-form-field class="mb-3">
             <mat-label class="label-width">Marca</mat-label>
  <mat-select formControlName="marcaId">
@@ -54,13 +54,13 @@
             </mat-select>
           </mat-form-field>
         </div>
-
+ -->
 
         <div class="col-md-6">
           <mat-form-field class="mb-3">
             <mat-label class="label-width">Categoría</mat-label>
             <mat-select formControlName="categoriaId">
-              <mat-option *ngFor="let categoria of listOfCategorias" [value]="categoria.id">{{ categoria.nombre }}</mat-option>
+              <mat-option *ngFor="let categoria of listOfCategorias" [value]="categoria.idCategoria">{{ categoria.nombre }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

@@ -9,12 +9,12 @@ import { Observable, catchError, throwError } from 'rxjs';
 export class ProductoService {
   constructor(private http: HttpClient) {}
 
-  private baseUrl = 'http://localhost:8092/api/productos';
+  private baseUrl = 'http://localhost:8040/api/producto';
 
   private base_search = '';
   list() {
     return this.http.get<Producto[]>(
-      'http://localhost:8092/api/productos'
+      'http://localhost:8040/api/producto'
     );
   }
 
@@ -24,7 +24,7 @@ export class ProductoService {
 
   getProductoById(productoId: string | number): Observable<any> {
     return this.http.get<[]>(
-      `http://localhost:8092/api/producto/${productoId}`
+      `http://localhost:8040/api/producto/${productoId}`
     );
   }
 
@@ -43,7 +43,7 @@ export class ProductoService {
   }
   create(productoDto: any) {
     return this.http.post<Producto>(
-      'http://localhost:8092/api/producto',
+      'http://localhost:8092/api/producto/crear',
       productoDto
     );
   }

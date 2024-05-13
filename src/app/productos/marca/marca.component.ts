@@ -44,7 +44,7 @@ imagePreview?: string | ArrayBuffer | null;
 
   ngOnInit(): void {
     this.marcaForm = this.fb.group({
-      nombre: ['', [Validators.required]],
+      marca: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
       // estado: [true, [Validators.required]]
     }); }
@@ -52,12 +52,12 @@ imagePreview?: string | ArrayBuffer | null;
   guardar(): void {
    if (this.marcaForm.valid) {
     const formData: FormData = new FormData();
-    formData.append('nombre', this.marcaForm.get('nombre')?.value);
+    formData.append('marca', this.marcaForm.get('marca')?.value);
     formData.append('descripcion', this.marcaForm.get('descripcion')?.value);
     // Check if selectedFile is defined before appending
         if (this.selectedFile) {
       const blob = this.selectedFile as Blob;
-      formData.append('img', blob, this.selectedFile.name);
+      formData.append('imagen', blob, this.selectedFile.name);
     }
     this.marcaService.createMarca(formData).subscribe((res)=>{
         if(res.id != null){
