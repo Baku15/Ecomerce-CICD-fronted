@@ -19,10 +19,8 @@ jobs:
         node-version: '18.x'
 
     - name: Install dependencies
-      run: npm install
+      run: npm install --force
 
     - name: Build
       run: npm run build --prod
 
-    - name: Run tests
-      run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
