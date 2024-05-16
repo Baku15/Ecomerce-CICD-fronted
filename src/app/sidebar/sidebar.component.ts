@@ -50,7 +50,6 @@ export class SidebarComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute) {}
   ngOnInit(): void {
-    console.log('El local: ', localStorage.getItem('token'));
     this.route.queryParams.subscribe((params) => {
       this.id = params['number'];
     });
