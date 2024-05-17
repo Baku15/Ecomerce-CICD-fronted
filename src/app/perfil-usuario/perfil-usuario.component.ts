@@ -125,6 +125,7 @@ export class PerfilUsuarioComponent implements OnInit{
     });
     setTimeout(() => {
       this.obtenerdatos();
+      this.obteneraddress();
     },500) 
   }
 
@@ -215,21 +216,21 @@ export class PerfilUsuarioComponent implements OnInit{
       return;
     }
     this.newDireccion = {
-      address: this.direccion,
+      address: this.direccion.value,
       city: this.ciudad.value,
       postalCode: this.codigopostal.value,
-      peopleId: this.iduser
+      peopleId: 1
     }
-    this.usuarioService.registerNewAddres(this.newUser).subscribe({
+    this.usuarioService.registerNewAddres(this.newDireccion).subscribe({
       next: (response) => {
-        console.log(response+" Usuario registrado: "+this.newUser);
-        this.mostrarMensajeDeleteError();
+        console.log("la lograste nabo");
+        this.mostrarMensajeDeleteExito();
         this.actualizardatos();
         // Ajustamos según la respuesta real esperada
         // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
       },
       error: (error) => {
-        console.error(error+" Usuario registrado: "+this.newUser); // Para propósitos de depuración
+        console.error(error+ "fuiste"); // Para propósitos de depuración
       }
     });
   }
