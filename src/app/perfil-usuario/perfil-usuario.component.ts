@@ -69,6 +69,7 @@ export class PerfilUsuarioComponent implements OnInit{
   errorMessage = '';
 
   userList$!: Observable<any[]>;
+  addressList$!: Observable<any[]>;
   constructor(public dialog: MatDialog,private router: Router, private usuarioService: UsuarioService,private route: ActivatedRoute) {
     merge(this.emailf.statusChanges, this.emailf.valueChanges)
       .pipe(takeUntilDestroyed())
@@ -90,6 +91,19 @@ export class PerfilUsuarioComponent implements OnInit{
     setTimeout(() => {
       this.obtenerdatos();
     },500)    
+  }
+
+  obteneraddress(){
+    this.usuarioService.getAllAddress().subscribe({
+      next: (response) => {
+        this.addressList$ = of(response); // Ajustamos según la respuesta real esperada
+        // Ajustamos según la respuesta real esperada
+        // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
+      },
+      error: (error) => {
+        console.error(error); // Para propósitos de depuración
+      }
+    });
   }
 
   actualizardatos(){
