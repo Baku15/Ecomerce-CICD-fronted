@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
 import { RegistroUsuarioComponent } from './registro-usuario/registro-usuario.component';
-// import { CarritoComprasComponent } from './carrito-compras/carrito-compras.component';
-import CarritoComprasComponent from './carrito-compras/carrito-compras.component';
-// import { CatalogoComponent } from './catalogo/catalogo.component';
+import { ShoppingCartComponent } from './carrito-compras/carrito-compras.component';
 import { EditarperfilComponent } from './editar-perfil/editar-perfil.component';
 import { LoginComponent } from './login/login.component';
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
@@ -44,7 +42,7 @@ export const routes: Routes = [
       { path: 'marca', component: MarcaComponent },
       { path: 'registroempleado', component: RegistroEmpleadoComponent },
       { path: 'lista-marcas', component: ListaMarcasComponent },
-      { path: 'carritoCompras', component: CarritoComprasComponent },
+      { path: 'carritoCompras', component: ShoppingCartComponent },
     ],
   },
   //Para el user SuperAdmin
