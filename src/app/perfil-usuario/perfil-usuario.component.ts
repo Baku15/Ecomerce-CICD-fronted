@@ -63,7 +63,13 @@ export class PerfilUsuarioComponent implements OnInit{
   passwordf = new FormControl('', [Validators.required]);
   telefonof = new FormControl('', [Validators.required]);
   rolf = new FormControl('', [Validators.required]);
+
+  direccion = new FormControl('', [Validators.required]);
+  ciudad = new FormControl('', [Validators.required]);
+  codigopostal = new FormControl('', [Validators.required]);
+
   newUser: any = {};
+  newDireccion: any = {};
   stringMessage: string = '';
 
   errorMessage = '';
@@ -200,6 +206,34 @@ export class PerfilUsuarioComponent implements OnInit{
       }
     });
   }
+
+  registrarAddress(){
+    if (this.direccion.value === '' || this.codigopostal.value === '' || this.ciudad.value === '') {
+      this.stringMessage = 'Debe llenar todos los campos';
+      console.error('Debe llenar todos los campos');
+      this.mostrarMensajeDeleteError();
+      return;
+    }
+    this.newDireccion = {
+      address: this.direccion,
+      city: this.ciudad.value,
+      postalCode: this.codigopostal.value,
+      peopleId: this.iduser
+    }
+    this.usuarioService.registerNewAddres(this.newUser).subscribe({
+      next: (response) => {
+        console.log(response+" Usuario registrado: "+this.newUser);
+        this.mostrarMensajeDeleteError();
+        this.actualizardatos();
+        // Ajustamos según la respuesta real esperada
+        // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
+      },
+      error: (error) => {
+        console.error(error+" Usuario registrado: "+this.newUser); // Para propósitos de depuración
+      }
+    });
+  }
+
   obtenerdatos() {
     this.userList$.subscribe((userList: any[]) => {
       for (var i = 0; i < userList.length; i++) {
