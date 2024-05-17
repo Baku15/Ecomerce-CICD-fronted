@@ -51,9 +51,13 @@ export class UsuarioService {
     return this.httpClient.post(this.API_SERVER, registroUsuario)
   }
 
-  //servicio para user
+  //servicio para address
   public registerNewAddres(adress: any): Observable<any>{
     return this.httpClient.post('http://localhost:8040/api/Address', adress)
+  }
+
+  public getAllAddress(): Observable<any>{
+    return this.httpClient.get('http://localhost:8040/api/Addresses');
   }
 }
 
