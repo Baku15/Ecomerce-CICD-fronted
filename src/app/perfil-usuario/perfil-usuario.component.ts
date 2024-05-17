@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -12,6 +12,7 @@ import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angu
 
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {merge} from 'rxjs';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 import {Inject} from '@angular/core';
 import {
@@ -34,7 +35,7 @@ export interface DialogData {
 @Component({
   selector: 'app-perfil-usuario',
   standalone: true,
-  imports: [MatSelectModule,FormsModule, ReactiveFormsModule,MatButtonModule, MatDividerModule, MatIconModule,MatFormFieldModule, MatInputModule],
+  imports: [AsyncPipe,CommonModule,MatSelectModule,FormsModule, ReactiveFormsModule,MatButtonModule, MatDividerModule, MatIconModule,MatFormFieldModule, MatInputModule],
   templateUrl: './perfil-usuario.component.html',
   styleUrl: './perfil-usuario.component.css'
 })
@@ -71,6 +72,7 @@ export class PerfilUsuarioComponent implements OnInit{
   newUser: any = {};
   newDireccion: any = {};
   stringMessage: string = '';
+  options: any[] = [];
 
   errorMessage = '';
 
@@ -84,6 +86,7 @@ export class PerfilUsuarioComponent implements OnInit{
   ngOnInit(): void {
     this.nombre = '';
     this.userPropid = localStorage.getItem('token') ? parseInt(localStorage.getItem('token')!) : 0;
+    this.obteneraddress();
     this.usuarioService.getAllUsuarios().subscribe({
       next: (response) => {
         this.userList$ = of(response); // Ajustamos según la respuesta real esperada
@@ -102,17 +105,20 @@ export class PerfilUsuarioComponent implements OnInit{
   obteneraddress(){
     this.usuarioService.getAllAddress().subscribe({
       next: (response) => {
-        this.addressList$ = of(response); // Ajustamos según la respuesta real esperada
-        // Ajustamos según la respuesta real esperada
-        // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
+        this.addressList$ = of(response.result);
+        this.options = response.result;
+        console.log(response.result+"siu");
       },
       error: (error) => {
-        console.error(error); // Para propósitos de depuración
+        // Manejar el error aquí
+        console.error('Error al mostrar el adress', error);
       }
     });
   }
 
   actualizardatos(){
+    
+    this.obteneraddress();
     this.usuarioService.getAllUsuarios().subscribe({
       next: (response) => {
         this.userList$ = of(response); // Ajustamos según la respuesta real esperada
@@ -230,6 +236,7 @@ export class PerfilUsuarioComponent implements OnInit{
         // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
       },
       error: (error) => {
+        this.actualizardatos();
         console.error(error+ "fuiste"); // Para propósitos de depuración
       }
     });

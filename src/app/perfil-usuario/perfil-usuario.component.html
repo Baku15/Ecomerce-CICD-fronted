@@ -81,6 +81,15 @@
           <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon" (click)="registrarAddress()">
             <mat-icon>add</mat-icon>
           </button>
+          <h4 style="margin-top: 1%;">Direcciones guardadas</h4>
+          <mat-form-field>
+            <mat-label>Privacidad del archivo</mat-label>
+            <mat-select>
+              @for (food of options; track food) {
+                <mat-option [value]="food">{{food.city+" - "+food.address}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         </div>
     </div>
 </div>
