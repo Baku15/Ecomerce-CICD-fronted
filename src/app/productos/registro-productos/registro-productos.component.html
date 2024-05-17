@@ -10,9 +10,11 @@
 
 <div class="product-list">
   <mat-card class="product-card" *ngFor="let producto of productos">
+
     <div class="product-image">
-      <img [src]="producto.processedImg" alt="product-image">
+      <img [src]="producto.imageUrl" alt="product-image">
     </div>
+
     <div class="product-details">
       <h2 class="producto-nombre">{{producto.nombre}}</h2>
       <p class="producto-descripcion">{{producto.descripcion}}</p>
@@ -25,11 +27,11 @@
         </div>
         <div class="info-row">
           <span class="info-label">Categoria:</span>
-          <span class="info-value">{{producto.categoriaNombre}}</span>
+          <span class="info-value">{{producto.categorias}}</span>
         </div>
         <div class="info-row">
           <span class="info-label">Marca:</span>
-          <span class="info-value">{{producto.marcaNombre}}</span>
+          <span class="info-value">{{producto.marca}}</span>
         </div>
         <div class="info-row">
           <span class="info-label">Stock:</span>

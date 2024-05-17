@@ -52,8 +52,8 @@ constructor(
 
   ngOnInit(): void {
     this.productoForm = this.fb.group({
-      categoriaId: [null,[Validators.required]],
-marcaId: [null,[Validators.required]],
+      categorias: [null,[Validators.required]],
+marca: [null,[Validators.required]],
 nombre: [null,[Validators.required]],
 descripcion: [null,[Validators.required]],
          precio: [null, [
@@ -87,7 +87,7 @@ stock: [null,[Validators.required]],
       }
     );
   }
-  
+
 
   noRepetirCaracteres(repetido: string): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -111,8 +111,8 @@ stock: [null,[Validators.required]],
 create(): void {
   if (this.productoForm.valid) {
     const formData: FormData = new FormData();
-    formData.append('categoriaId', this.productoForm.get('categoriaId')?.value.toString());
-    formData.append('marcaId', this.productoForm.get('marcaId')?.value.toString());
+    formData.append('categorias', this.productoForm.get('categorias')?.value.toString());
+    formData.append('marca', this.productoForm.get('marca')?.value.toString());
     formData.append('nombre', this.productoForm.get('nombre')?.value);
     formData.append('descripcion', this.productoForm.get('descripcion')?.value);
     formData.append('precio', this.productoForm.get('precio')?.value.toString());
@@ -121,7 +121,7 @@ create(): void {
     // Check if selectedFile is defined before appending
         if (this.selectedFile) {
       const blob = this.selectedFile as Blob;
-      formData.append('img', blob, this.selectedFile.name);
+      formData.append('imageUrl', blob, this.selectedFile.name);
     }
       this.productoService.create(formData).subscribe((res)=>{
         if(res.id != null){

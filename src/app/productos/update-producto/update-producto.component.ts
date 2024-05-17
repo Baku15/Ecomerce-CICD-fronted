@@ -17,7 +17,6 @@ import { MarcaService } from '../../services/marca/marca.service';
 })
 export class UpdateProductoComponent {
 productoId = this.activatedRoute.snapshot.params['productoId'];
-marcaId = this.activatedRoute.snapshot.params['marcaId'];
 productoForm!: FormGroup;
 listOfCategorias: any=[];
 listOfMarcas: any=[];
@@ -34,10 +33,8 @@ constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
 
-  // private router = inject(Router),
-  // private route = inject(ActivatedRoute),
-  // private productoService = inject(ProductoService)
 ){}
+
   onFileSelected(event:any){
     this.selectedFile = event.target.files[0];
     this.previewImage();
@@ -57,11 +54,13 @@ constructor(
 
   ngOnInit(): void {
     this.productoForm = this.fb.group({
-      categoriaId: [null,[Validators.required]],
-      marcaId: [null,[Validators.required]],
+
+ categorias: [null,[Validators.required]],
+      marca: [null,[Validators.required]],
 nombre: [null,[Validators.required]],
 descripcion: [null,[Validators.required]],
 precio: [null,[Validators.required]],
+imageUrl: [null,[Validators.required]],
 stock: [null,[Validators.required]],
 
     });
@@ -80,22 +79,33 @@ stock: [null,[Validators.required]],
     this.listOfMarcas = res;
     })
   }
-
-getProductoById(){
-   this.productoService.getProductoById(this.productoId).subscribe(res=>{
-      this.productoForm.patchValue(res);
-      this.existingImage= 'data:image/jpeg;base64,' + res.byteImg;
-    })
+getProductoById() {
+    this.productoService.getProductoById(this.productoId).subscribe(res => {
+      console.log('Respuesta del servicio getProductoById:', res);
+      this.productoForm.patchValue({
+        nombre: res.nombre,
+        descripcion: res.descripcion,
+        precio: res.precio,
+        stock: res.stock,
+        imageUrl: res.imageUrl,
+        marca: res.id, // Asumiendo que la marca tiene una propiedad id
+        categorias: res.id
+      });
+      this.existingImage = res.imageUrl; // Cargar la imagen existente
+    });
   }
+
+
+
 updateProduct(): void {
   if (this.productoForm.valid) {
     const formData: FormData = new FormData();
        if(this.imgChanged && this.selectedFile){
             const blob = this.selectedFile as Blob;
-      formData.append('img', blob, this.selectedFile.name);
+      formData.append('imageUrl', blob, this.selectedFile.name);
       }
-    formData.append('categoriaId', this.productoForm.get('categoriaId')?.value.toString());
-formData.append('marcaId', this.productoForm.get('marcaId')?.value.toString());
+    formData.append('categorias', this.productoForm.get('categorias')?.value.toString());
+formData.append('marca', this.productoForm.get('marca')?.value.toString());
 
     formData.append('nombre', this.productoForm.get('nombre')?.value);
     formData.append('descripcion', this.productoForm.get('descripcion')?.value);
@@ -105,26 +115,28 @@ formData.append('marcaId', this.productoForm.get('marcaId')?.value.toString());
     // Check if selectedFile is defined before appending
         if (this.selectedFile) {
       const blob = this.selectedFile as Blob;
-      formData.append('img', blob, this.selectedFile.name);
+      formData.append('imageUrl', blob, this.selectedFile.name);
     }
-      this.productoService.updateProducto(this.productoId,formData).subscribe((res)=>{
-        if(res.id != null){
-          this.snackBar.open("Producto modificado correctamente", 'Close',{
-            duration: 5000
-          });
-        this.router.navigateByUrl('/admin/lista-productos');
-        }else {
-          this.snackBar.open('error al modificar el producto', 'ERROR',{
-        duration: 5000
+
+      // Llamar al servicio para actualizar el producto
+    this.productoService.updateProducto(this.productoId, formData).subscribe(
+      () => {
+        // Manejar la respuesta del servidor
+          this.snackBar.open("Producto modificado correctamente", 'Cerrar', { duration: 5000 });
+          this.router.navigateByUrl('/admin/lista-productos');
+        }, error => {
+          this.snackBar.open('No se pudo actualizar el producto', 'Cerrar', {
+            duration: 5000,
+            panelClass: 'error-snackbar'
           });
         }
-      })
-
-    }else {
-      for(const i in this.productoForm.controls){
-      this.productoForm.controls[i].markAsDirty();
-        this.productoForm.controls[i].updateValueAndValidity();
-      }
+    );
+  } else {
+    // Marcar campos inválidos si el formulario no es válido
+    for (const control in this.productoForm.controls) {
+      this.productoForm.get(control)?.markAsDirty();
+      this.productoForm.get(control)?.updateValueAndValidity();
     }
   }
+}
 }
