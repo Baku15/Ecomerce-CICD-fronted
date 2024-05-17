@@ -35,31 +35,25 @@ export class CategoriaProductoComponent implements OnInit {
     }); }
 
     guardar(): void {
-      if (this.categoriaForm.valid) {
-        this.categoriaService.createCategoria(this.categoriaForm.value).subscribe((res) => {
-          if (res && res.id != null) { // Comprueba si res es válido y si contiene un ID válido
-            this.snackBar.open('Categoría creada correctamente', 'Cerrar', { duration: 5000 });
-            this.router.navigateByUrl('/admin/lista-productos');
-          } else {
-            this.snackBar.open('Categoria Creada de forma correcta', 'Cerrar', {
-              duration: 5000,
-              panelClass: 'error-snackbar'
-            });
-            this.router.navigateByUrl('/admin/lista-productos');
-
-          }
-        }, error => {
-          console.error('Error al crear la categoría:', error);
-          this.snackBar.open('Error al crear la categoría', 'Cerrar', {
-            duration: 5000,
-            panelClass: 'error-snackbar'
-          });
+  if (this.categoriaForm.valid) {
+    this.categoriaService.createCategoria(this.categoriaForm.value).subscribe(
+      () => {
+        // Manejar la respuesta del servidor
+        this.snackBar.open('Categoría creada correctamente', 'Cerrar', { duration: 5000 });
+        this.router.navigateByUrl('/admin/lista-productos');
+      },
+      (error) => {
+        // Manejar errores de la solicitud
+        console.error('Error al crear la categoría:', error);
+        this.snackBar.open('Error al crear la categoría', 'Cerrar', {
+          duration: 5000,
+          panelClass: 'error-snackbar'
         });
-      } else {
-        this.categoriaForm.markAllAsTouched();
-    }
       }
-
+    );
+  } else {
+    // Marcar todos los campos como tocados si el formulario no es válido
+    this.categoriaForm.markAllAsTouched();
   }
-
-
+}
+}

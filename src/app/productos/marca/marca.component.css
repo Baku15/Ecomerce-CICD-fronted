@@ -5,14 +5,14 @@
   align-items: center;
   height: 70vh; /* 100% del alto de la ventana */
 }
+
 /* categoria-form.component.css */
 .card-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height:80vh; /* 100% del alto de la ventana */
+  height: 80vh; /* 100% del alto de la ventana */
 }
-
 
 .marca-form {
   display: flex;
@@ -26,13 +26,12 @@ mat-form-field {
   width: 100%;
   margin-bottom: 15px;
 }
+
 /* Estilo para el contenedor de carga de archivos */
 .file-upload-container {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  /* position: relative; */
-  /* overflow: hidden; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 40px; /* Espacio inferior */
 }
 
@@ -66,15 +65,16 @@ mat-form-field {
   margin: 0 auto; /* Centrar la imagen */
 }
 
-/* Estilo para la imagen de vista previa en un círculo */
-.circle-image {
-  width: 150px; /* Ancho de la imagen */
-  height: 150px; /* Altura de la imagen */
-  border-radius: 50%; /* Hacer la imagen circular */
-  overflow: hidden; /* Ocultar partes de la imagen fuera del círculo */
+/* Estilo para la imagen de vista previa en un rectángulo */
+.rectangle-image {
+  width: 100%; /* Ancho completo del contenedor */
+  height: auto; /* Altura automática según el ancho */
+  border-radius: 10px; /* Esquinas redondeadas */
+  overflow: hidden; /* Ocultar partes de la imagen fuera del rectángulo */
   margin: 0 auto; /* Centrar la imagen */
 }
 
 .title-left {
   text-align: left;
 }
+

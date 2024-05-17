@@ -49,38 +49,38 @@ imagePreview?: string | ArrayBuffer | null;
       // estado: [true, [Validators.required]]
     }); }
 
-  guardar(): void {
-   if (this.marcaForm.valid) {
+guardar(): void {
+  if (this.marcaForm.valid) {
     const formData: FormData = new FormData();
     formData.append('marca', this.marcaForm.get('marca')?.value);
     formData.append('descripcion', this.marcaForm.get('descripcion')?.value);
     // Check if selectedFile is defined before appending
-        if (this.selectedFile) {
+    if (this.selectedFile) {
       const blob = this.selectedFile as Blob;
       formData.append('imagen', blob, this.selectedFile.name);
     }
-    this.marcaService.createMarca(formData).subscribe((res)=>{
-        if(res.id != null){
-          this.snackBar.open("Marca creada correctamente", 'Close',{
-            duration: 5000
-          });
+    this.marcaService.createMarca(formData).subscribe(
+      () => {
+        // Manejar la respuesta del servidor
+        this.snackBar.open('Marca creada correctamente', 'Cerrar', {
+          duration: 5000
+        });
         this.router.navigateByUrl('/admin/lista-productos');
-        }else {
-          this.snackBar.open('error al crear la marca', 'ERROR',{
-        duration: 5000
-          });
-        }
-      })
-
-    }else {
-      for(const i in this.marcaForm.controls){
-      this.marcaForm.controls[i].markAsDirty();
-        this.marcaForm.controls[i].updateValueAndValidity();
+      },
+      (error) => {
+        // Manejar errores de la solicitud
+        this.snackBar.open('Error al crear la marca', 'Cerrar', {
+          duration: 5000,
+          panelClass: 'error-snackbar'
+        });
       }
+    );
+  } else {
+    // Marcar todos los campos como tocados si el formulario no es válido
+    for (const i in this.marcaForm.controls) {
+      this.marcaForm.controls[i].markAsDirty();
+      this.marcaForm.controls[i].updateValueAndValidity();
     }
   }
-
-      }
-
-
-
+}
+}

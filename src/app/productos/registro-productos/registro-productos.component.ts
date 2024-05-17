@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../material-module';
 import { ProductoService } from '../../services/productos/producto.service';
+import { debounceTime } from 'rxjs';
 interface Producto {
   byteImg: string;
   // Otras propiedades del producto
@@ -27,7 +28,6 @@ interface Producto {
 })
 export class RegistroProductosComponent implements OnInit {
   productos: Producto[] = [];
-  products: any[] = [];
   searchProductForm!: FormGroup;
   image: Blob | undefined;
 
@@ -37,11 +37,18 @@ export class RegistroProductosComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar) { }
 
- ngOnInit() {
+  ngOnInit() {
     this.getAllProductos();
     this.searchProductForm = this.fb.group({
       title: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]]
     });
+
+    // Aplicar debounce a la búsqueda
+    this.searchProductForm.get('title')!.valueChanges
+      .pipe(debounceTime(300)) // Establece un retraso de 300 ms
+      .subscribe(() => {
+        this.submitForm();
+      });
   }
 
   getAllProductos() {
@@ -50,31 +57,32 @@ export class RegistroProductosComponent implements OnInit {
     });
   }
 
-  submitForm(){
-      this.productos = [];
+  submitForm() {
     const title = this.searchProductForm.get('title')!.value;
-        this.productoService.getAllProductsByNombre(title).subscribe((res:Producto[]) => {
-      res.forEach((element:Producto) => {
-        this.productos.push(element);
+    if (title.trim() !== '') {
+      this.productoService.getAllProductsByNombre(title).subscribe((res: Producto[]) => {
+        this.productos = res;
       });
-      console.log(this.productos)
-    })
-  }
-deleteProducto(productoId: any) {
-  this.productoService.deleteProducto(productoId).subscribe(
-    () => {
-      this.snackBar.open('Producto eliminado correctamente', 'Cerrar', {
-        duration: 5000,
-      });
-      // this.router.navigateByUrl('/admin/registro-producto');
-        this.getAllProductos();
-    },
-    error => {
-      console.error('Error deleting product:', error);
-      this.snackBar.open('No se pudo eliminar el Producto', 'Cerrar', {
-        duration: 5000,
-        panelClass: 'error-snackbar'
-      });
+    } else {
+      this.getAllProductos();
     }
-  );
-}}
+  }
+
+  deleteProducto(productoId: any) {
+    this.productoService.deleteProducto(productoId).subscribe(
+      () => {
+        this.snackBar.open('Producto eliminado correctamente', 'Cerrar', {
+          duration: 5000,
+        });
+        this.getAllProductos();
+      },
+      error => {
+        console.error('Error deleting product:', error);
+        this.snackBar.open('No se pudo eliminar el Producto', 'Cerrar', {
+          duration: 5000,
+          panelClass: 'error-snackbar'
+        });
+      }
+    );
+  }
+}

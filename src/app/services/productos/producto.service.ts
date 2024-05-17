@@ -29,7 +29,7 @@ export class ProductoService {
   }
 
   getAllProductsByNombre(nombre: any): Observable<any> {
-    return this.http.get(`http://localhost:8040/api/search/${nombre}`);
+    return this.http.get(`http://localhost:8040/api/producto/search/${nombre}`);
   }
 
   deleteProducto(productoId: any): Observable<any> {

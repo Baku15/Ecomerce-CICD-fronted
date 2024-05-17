@@ -123,19 +123,19 @@ create(): void {
       const blob = this.selectedFile as Blob;
       formData.append('imageUrl', blob, this.selectedFile.name);
     }
-      this.productoService.create(formData).subscribe((res)=>{
-        if(res.id != null){
-          this.snackBar.open("Producto creado correctamente", 'Close',{
-            duration: 5000
-          });
+   // Llamar al servicio para crear el producto
+    this.productoService.create(formData).subscribe(
+      () => {
+        // Manejar la respuesta del servidor
+        this.snackBar.open("Producto creado correctamente", 'Cerrar', { duration: 5000 });
         this.router.navigateByUrl('/admin/lista-productos');
-        }else {
-          this.snackBar.open('error al crear el producto', 'ERROR',{
-        duration: 5000
-          });
-        }
-      })
-
+      },
+      (error) => {
+        // Manejar errores de la solicitud
+        console.error('Error al crear el producto:', error);
+        this.snackBar.open('Error al crear el producto', 'ERROR', { duration: 5000 });
+      }
+    );
     }else {
       for(const i in this.productoForm.controls){
       this.productoForm.controls[i].markAsDirty();
