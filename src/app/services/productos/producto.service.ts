@@ -19,31 +19,32 @@ export class ProductoService {
   }
 
   getAllProducts(): Observable<any> {
-    return this.http.get(this.baseUrl);
+    return this.http.get(this.baseUrl + '/all');
   }
 
   getProductoById(productoId: string | number): Observable<any> {
     return this.http.get<[]>(
-      `http://localhost:8040/api/producto/${productoId}`
+      `http://localhost:8040/api/producto/buscar/${productoId}`
     );
   }
 
   getAllProductsByNombre(nombre: any): Observable<any> {
-    return this.http.get(`http://localhost:8092/api/search/${nombre}`);
+    return this.http.get(`http://localhost:8040/api/search/${nombre}`);
   }
 
   deleteProducto(productoId: any): Observable<any> {
     return this.http.delete(
-      `http://localhost:8092/api/producto/${productoId}`
+      `http://localhost:8040/api/producto/eliminar/${productoId}`
     );
   }
 
   get(id: number): Observable<Producto> {
     return this.http.get<Producto>(`${this.baseUrl}/${id}`);
   }
+
   create(productoDto: any) {
     return this.http.post<Producto>(
-      'http://localhost:8092/api/producto/crear',
+      'http://localhost:8040/api/producto/crear',
       productoDto
     );
   }
@@ -53,7 +54,7 @@ export class ProductoService {
 
     return this.http
       .put<any>(
-        `http://localhost:8092/api/producto/${productoId}`,
+        `http://localhost:8040/api/producto/editar/${productoId}`,
         productoDto,
         { headers: headers }
       )

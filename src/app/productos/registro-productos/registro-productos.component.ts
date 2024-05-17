@@ -9,13 +9,13 @@ interface Producto {
   byteImg: string;
   // Otras propiedades del producto
     id: number;
-    processedImg: string;
+    imageUrl: string;
   stock: number;
   precio: number;
   descripcion: string;
   nombre:string;
-  categoriaNombre:String;
-  marcaNombre: String;
+  categorias: string;
+  marca: string;
 }
 
 @Component({
@@ -37,23 +37,17 @@ export class RegistroProductosComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
+ ngOnInit() {
     this.getAllProductos();
-    this.searchProductForm =  this.fb.group({
-      title: [null, [Validators.required,Validators.pattern('^[a-zA-Z]+$')]]
-    })
+    this.searchProductForm = this.fb.group({
+      title: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]]
+    });
   }
 
   getAllProductos() {
-      this.productos=[];
-    this.productoService.getAllProducts().subscribe((res:Producto[]) =>{
-        res.forEach((element:Producto) => {
-          element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
-        this.productos.push(element);
-
-        });
-      console.log(this.productos)
-    })
+    this.productoService.getAllProducts().subscribe((res: Producto[]) => {
+      this.productos = res;
+    });
   }
 
   submitForm(){
@@ -61,7 +55,6 @@ export class RegistroProductosComponent implements OnInit {
     const title = this.searchProductForm.get('title')!.value;
         this.productoService.getAllProductsByNombre(title).subscribe((res:Producto[]) => {
       res.forEach((element:Producto) => {
-          element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
         this.productos.push(element);
       });
       console.log(this.productos)

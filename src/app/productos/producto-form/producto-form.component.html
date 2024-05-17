@@ -46,21 +46,21 @@
           </mat-form-field>
         </div>
 
-<!-- <div class="col-md-6">
+ <div class="col-md-6">
           <mat-form-field class="mb-3">
             <mat-label class="label-width">Marca</mat-label>
- <mat-select formControlName="marcaId">
+ <mat-select formControlName="marca">
 <mat-option *ngFor="let marca of listOfMarcas" [value]="marca.id">{{ marca.nombre }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
- -->
+
 
         <div class="col-md-6">
           <mat-form-field class="mb-3">
             <mat-label class="label-width">Categoría</mat-label>
-            <mat-select formControlName="categoriaId">
-              <mat-option *ngFor="let categoria of listOfCategorias" [value]="categoria.idCategoria">{{ categoria.nombre }}</mat-option>
+            <mat-select formControlName="categorias">
+              <mat-option *ngFor="let categoria of listOfCategorias" [value]="categoria.idCategoria">{{ categoria.categoria }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>

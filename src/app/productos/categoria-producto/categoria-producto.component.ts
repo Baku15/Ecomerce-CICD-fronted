@@ -29,7 +29,7 @@ export class CategoriaProductoComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoriaForm = this.fb.group({
-      nombre: ['', [Validators.required]],
+      categoria: ['', [Validators.required]],
      descripcion: ['', [Validators.required]],
       // estado: [true, [Validators.required]]
     }); }
