@@ -22,7 +22,7 @@ export class UsuarioService {
   }
   public registerNewUsuario(registroUsuario: any): Observable<any>{
     return this.httpClient.post(this.API_SERVER, registroUsuario)
-  } 
+  }
 
   public getAllCostumers(): Observable<any>{
     return this.httpClient.get('http://localhost:8040/api/BusquedasR/buscarRol/Comprador');
@@ -36,7 +36,7 @@ export class UsuarioService {
     const roles = `${rol}`;
     console.log(roles);
     return this.httpClient.put('http://localhost:8040/api/user/'+id+'/roles', [roles])
-  } 
+  }
 
   public deleteUsuariobyId(id: number): Observable<any>{
     return this.httpClient.delete(this.API_SERVER + '/' + id);
