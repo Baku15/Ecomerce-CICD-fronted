@@ -12,6 +12,8 @@
 
 .search-form .search-input input {
   padding-right: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .search-form .search-input button {
@@ -28,72 +30,159 @@
   background-color: #f8f8f8;
   min-height: 70vh;
   padding: 20px;
+  gap: 20px; /* Añadido gap para el espacio entre las tarjetas */
 }
 
 .product-list .product-card {
-  width: calc(33.33% - 20px);
+  width: calc(25% - 20px);
   margin-bottom: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative; /* Para el overlay de carga */
+}
+
+.product-list .product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .product-list .product-card .product-image {
-  height: 200px;
+  height: 150px;
   border-radius: 10px 10px 0 0;
   overflow: hidden;
+  position: relative;
 }
 
 .product-list .product-card .product-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s;
+  border-bottom: 1px solid #ddd; /* Borde sutil */
+}
+
+.product-list .product-card .product-image img:hover {
+  transform: scale(1.1);
+}
+
+.product-list .product-card .product-image .loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #999;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.product-list .product-card.loading .product-image .loading-overlay {
+  opacity: 1;
 }
 
 .product-list .product-card .product-details {
-  padding: 20px;
+  padding: 15px;
+  text-align: center;
 }
 
 .product-list .product-card .product-details .product-nombre {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   color: #108ee9;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .product-list .product-card .product-details .producto-descripcion {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.product-list .product-card .product-details .producto-precio {
+  font-size: 20px;
+  font-weight: bold;
+  color: #e74c3c;
   margin-bottom: 10px;
 }
 
 .product-list .product-card .product-details .producto-info {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .product-list .product-card .product-details .producto-info .info-row {
   flex: 0 0 50%;
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .product-list .product-card .product-details .producto-info .info-row .info-label {
-  font-weight: 20px; /* Esto debería ser font-size */
-  margin-right: 15px;
+  font-size: 14px;
+  margin-right: 10px;
+  color: #999;
 }
 
 .product-list .product-card .product-details .producto-info .info-row .info-value {
   font-weight: bold;
+  color: #333;
 }
 
 .product-list .product-card .product-details .actions {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
+  justify-content: center; /* Cambiado a center para centrar los botones */
+  margin-top: 8px;
+}
+
+.product-list .product-card .product-details .actions .update-button,
+.product-list .product-card .product-details .actions .delete-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .product-list .product-card .product-details .actions .update-button {
-  margin-right: 10px;
+  margin-right: 8px;
+  background-color: #108ee9;
+  color: #fff;
+}
+
+.product-list .product-card .product-details .actions .update-button:hover {
+  background-color: #0d7bcc;
+}
+
+.product-list .product-card .product-details .actions .update-button::before {
+  content: "\f044"; /* Icono de lápiz de FontAwesome */
+  font-family: 'FontAwesome';
+  margin-right: 5px;
+}
+
+.product-list .product-card .product-details .actions .delete-button {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.product-list .product-card .product-details .actions .delete-button:hover {
+  background-color: #c0392b;
+}
+
+.product-list .product-card .product-details .actions .delete-button::before {
+  content: "\f1f8"; /* Icono de papelera de FontAwesome */
+  font-family: 'FontAwesome';
+  margin-right: 5px;
 }
 
 .empty-cart {
@@ -106,7 +195,6 @@
 
 .empty-cart span {
   font-size: 18px;
-  color: #616161;
-  margin-top: 10px;
+  color: #777;
 }
 
