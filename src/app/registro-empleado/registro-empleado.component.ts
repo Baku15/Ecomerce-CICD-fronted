@@ -10,10 +10,11 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import { UsuarioService } from '../services/Usuarios/usuario.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-registro-empleado',
   standalone: true,
-  imports: [MatButtonModule, MatDividerModule, MatIconModule,MatSelectModule,MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule,MatSelectModule,MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
   templateUrl: './registro-empleado.component.html',
   styleUrl: './registro-empleado.component.css'
 })
@@ -60,7 +61,7 @@ export class RegistroEmpleadoComponent {
         this.mostrarMensajeDeleteExito();
           setTimeout(() => {
             this.router.navigate(['admin/userlist']);
-          }, 3000); 
+          }, 3000);
         // Ajustamos según la respuesta real esperada
         // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
       },
@@ -81,7 +82,7 @@ export class RegistroEmpleadoComponent {
   }
   irhome(){
     this.router.navigate(['admin/userlist']);
-  
+
   }
   mostrarAlerta = false;
   mostrarAlertaError = false;

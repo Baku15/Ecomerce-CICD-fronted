@@ -16,6 +16,7 @@ import { ProductoFormComponent } from './productos/producto-form/producto-form.c
 import { UpdateProductoComponent } from './productos/update-producto/update-producto.component';
 import { RegistroEmpleadoComponent } from './registro-empleado/registro-empleado.component';
 import { ListaMarcasComponent } from './productos/lista-marcas/lista-marcas.component';
+import { WelcomePageComponent } from './productos/welcome-page/welcome-page.component';
 
 export const routes: Routes = [
   //Login
@@ -34,6 +35,7 @@ export const routes: Routes = [
       { path: 'menu-principal', component: MenuPrincipalComponent },
       { path: 'perfil-user', component: PerfilUsuarioComponent },
       { path: 'lista-productos', component: RegistroProductosComponent },
+      {path: 'welcome-page', component: WelcomePageComponent},
       { path: 'nuevo-producto', component: ProductoFormComponent },
       { path: 'registro-producto/:id/edit', component: ProductoFormComponent },
       { path: 'userlist', component: UserlistComponent },

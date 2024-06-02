@@ -5,7 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { UsuarioService } from '../services/Usuarios/usuario.service';
 import { Observable, of } from 'rxjs';
 
@@ -16,6 +16,7 @@ import { Observable, of } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
 export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
@@ -46,9 +47,10 @@ export class LoginComponent implements OnInit {
     this.usuarioService.login(this.credentials).subscribe({
       next: (response) => {
         sessionStorage.setItem('token', response.result.accessToken);
-        sessionStorage.setItem('userId', response.result.userId); // Almacena el ID del usuario
-        sessionStorage.setItem('userName', response.result.userName); // Almacena el nombre del usuario
-        this.router.navigate(['/admin/nuevo-producto'], { queryParams: { number: response.result.accessToken } });
+        sessionStorage.setItem('userId', response.result.userId.toString());
+        sessionStorage.setItem('username', response.result.username);
+        sessionStorage.setItem('role', response.result.role); // Almacenar el rol del usuario
+        this.router.navigate(['/admin/welcome-page'], { queryParams: { number: response.result.accessToken } });
       },
       error: (error) => {
         console.error('Error de login', error);
