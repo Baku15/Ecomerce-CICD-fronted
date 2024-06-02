@@ -16,6 +16,24 @@
     <mat-label>Tamaño de Página</mat-label>
     <input matInput formControlName="size" type="number" min="1" (input)="submitForm()">
   </mat-form-field>
+
+  <mat-form-field appearance="outline" class="sort-input">
+    <mat-label>Ordenar por</mat-label>
+    <mat-select formControlName="sortField" (selectionChange)="submitForm()">
+      <mat-option value="id">ID</mat-option>
+      <mat-option value="nombre">Nombre</mat-option>
+      <mat-option value="precio">Precio</mat-option>
+      <!-- Agrega más opciones de orden según sea necesario -->
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="sort-input">
+    <mat-label>Orden</mat-label>
+    <mat-select formControlName="sortOrder" (selectionChange)="submitForm()">
+      <mat-option value="asc">Ascendente</mat-option>
+      <mat-option value="desc">Descendente</mat-option>
+    </mat-select>
+  </mat-form-field>
 </form>
 
 <div class="product-list">

@@ -24,6 +24,8 @@ export class RegistroProductosComponent implements OnInit {
   totalPages: number = 0;
   currentPage: number = 0;
   pageSize: number = 10;
+  sortField: string = 'id';
+  sortOrder: string = 'asc';
 
   constructor(
     private productoService: ProductoService,
@@ -37,7 +39,9 @@ export class RegistroProductosComponent implements OnInit {
     this.searchProductForm = this.fb.group({
       title: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
       page: [this.currentPage, [Validators.required, Validators.min(0)]],
-      size: [this.pageSize, [Validators.required, Validators.min(1)]]
+      size: [this.pageSize, [Validators.required, Validators.min(1)]],
+      sortField: [this.sortField],
+      sortOrder: [this.sortOrder]
     });
 
     this.loadProductos();
@@ -55,17 +59,19 @@ export class RegistroProductosComponent implements OnInit {
     const userId = this.authService.getUserId();
     const page = this.searchProductForm.get('page')!.value;
     const size = this.searchProductForm.get('size')!.value;
+    const sortField = this.searchProductForm.get('sortField')!.value;
+    const sortOrder = this.searchProductForm.get('sortOrder')!.value;
 
     if (role === 'Comprador') {
       if (title) {
-        this.productoService.getProductosByName(title, page, size).subscribe(
+        this.productoService.getProductosByName(title, page, size, sortField, sortOrder).subscribe(
           (res: Page<Producto>) => {
             this.productos = res.content;
             this.totalPages = res.totalPages;
           }
         );
       } else {
-        this.productoService.list(page, size).subscribe(
+        this.productoService.list(page, size, sortField, sortOrder).subscribe(
           (res: Page<Producto>) => {
             this.productos = res.content;
             this.totalPages = res.totalPages;
@@ -74,14 +80,14 @@ export class RegistroProductosComponent implements OnInit {
       }
     } else {
       if (title) {
-        this.productoService.getProductosByName(title, page, size).subscribe(
+        this.productoService.getProductosByName(title, page, size, sortField, sortOrder).subscribe(
           (res: Page<Producto>) => {
             this.productos = res.content;
             this.totalPages = res.totalPages;
           }
         );
       } else {
-        this.productoService.getProductosByUsuario(userId, page, size).subscribe(
+        this.productoService.getProductosByUsuario(userId, page, size, sortField, sortOrder).subscribe(
           (res: Page<Producto>) => {
             this.productos = res.content;
             this.totalPages = res.totalPages;
