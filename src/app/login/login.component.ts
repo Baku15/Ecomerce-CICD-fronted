@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { UsuarioService } from '../services/Usuarios/usuario.service';
 import { Observable, of } from 'rxjs';
+import { AuthService } from '../services/autenticacion/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,12 +23,11 @@ export class LoginComponent implements OnInit {
   password: string = '';
   hide = true;
   errorMessage: string = '';
-  users$!: Observable<any[]>;
   stringMessage: string = '';
 
   credentials: any = {};
 
-  constructor(private router: Router, private usuarioService: UsuarioService) {}
+  constructor(private router: Router, private usuarioService: UsuarioService, private authService: AuthService) {}
 
   ngOnInit(): void {}
 
@@ -46,11 +46,9 @@ export class LoginComponent implements OnInit {
 
     this.usuarioService.login(this.credentials).subscribe({
       next: (response) => {
-        sessionStorage.setItem('token', response.result.accessToken);
-        sessionStorage.setItem('userId', response.result.userId.toString());
-        sessionStorage.setItem('username', response.result.username);
-        sessionStorage.setItem('role', response.result.role); // Almacenar el rol del usuario
-        this.router.navigate(['/admin/welcome-page'], { queryParams: { number: response.result.accessToken } });
+        const { accessToken, userId, username, role } = response.result;
+        this.authService.setSessionData(accessToken, username, userId, role);
+        this.router.navigate(['/admin/welcome-page'], { queryParams: { number: accessToken } });
       },
       error: (error) => {
         console.error('Error de login', error);

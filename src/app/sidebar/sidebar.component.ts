@@ -10,6 +10,9 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthService } from '../services/autenticacion/auth.service';
+import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 export type MenuItem = {
   icon: string;
@@ -30,16 +33,18 @@ export type MenuItem = {
     RouterModule,
     MatCheckboxModule,
     FormsModule,
+    CommonModule,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
+
 export class SidebarComponent implements OnInit {
   opened: boolean = true;
   id: number = 0;
-  openSideNav() {
-    this.opened = this.opened ? false : true;
-  }
+  collapsed = signal(true);
+  sidenavwidth = computed(() => (this.collapsed() ? '65px' : '250px'));
+  profilepicsize = computed(() => (this.collapsed() ? '32' : '100'));
 
   menuItem1: MenuItem = { icon: 'home', label: 'Home', route: '/' };
   menuItems: Signal<MenuItem[]> = signal([
@@ -48,11 +53,20 @@ export class SidebarComponent implements OnInit {
     { icon: 'settings', label: 'Settings', route: '/settings' },
   ]);
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  role: string = '';
+  private authSubscription: Subscription = new Subscription();
+
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
+
   ngOnInit(): void {
+    this.authSubscription.add(this.authService.role$.subscribe(role => this.role = role));
     this.route.queryParams.subscribe((params) => {
       this.id = params['number'];
     });
+  }
+
+  openSideNav() {
+    this.opened = !this.opened;
   }
 
   irperfil() {
@@ -62,13 +76,11 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    // Limpia el almacenamiento local o la sesión donde guardas el token de autenticación
-    localStorage.removeItem('token');
-    // Navega de vuelta a la pantalla de login
+    this.authService.logout();
     this.router.navigate(['/']);
   }
 
-  collapsed = signal(true);
-  sidenavwidth = computed(() => (this.collapsed() ? '65px' : '250px'));
-  profilepicsize = computed(() => (this.collapsed() ? '32' : '100'));
+  ngOnDestroy(): void {
+    this.authSubscription.unsubscribe();
+  }
 }
