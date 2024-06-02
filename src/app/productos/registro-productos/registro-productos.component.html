@@ -65,9 +65,18 @@
       </div>
       <mat-divider></mat-divider>
       <div class="actions">
-        <button mat-raised-button color="primary" class="update-button" [routerLink]="">FAQ</button>
-        <button mat-raised-button color="accent" class="update-button" [routerLink]="'/admin/producto/' + producto.id">Update</button>
-        <button mat-raised-button color="warn" class="delete-button" (click)="deleteProducto(producto.id)">Delete</button>
+        <ng-container *ngIf="authService.getRole() === 'EMPLEADO'">
+          <button mat-raised-button color="primary" class="update-button" [routerLink]="">FAQ</button>
+          <button mat-raised-button color="accent" class="update-button" [routerLink]="'/admin/producto/' + producto.id">Update</button>
+          <button mat-raised-button color="warn" class="delete-button" (click)="deleteProducto(producto.id)">Delete</button>
+        </ng-container>
+        <ng-container *ngIf="authService.getRole() === 'Comprador'">
+          <div class="comprador-actions">
+            <button mat-raised-button color="primary" class="add-cart-button" (click)="addToCart(producto.id)">Agregar al carrito</button>
+            <button mat-raised-button color="accent" class="rate-button" (click)="rateProduct(producto.id)">Calificar</button>
+            <button mat-raised-button color="primary" class="comment-button" (click)="commentOnProduct(producto.id)">Comentarios</button>
+          </div>
+        </ng-container>
       </div>
     </div>
   </mat-card>

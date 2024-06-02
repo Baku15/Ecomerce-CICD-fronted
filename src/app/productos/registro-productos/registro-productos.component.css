@@ -1,3 +1,14 @@
+.comprador-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Ajusta este valor según sea necesario */
+}
+
+.comprador-actions button {
+  flex: 1 1 calc(50% - 10px); /* Ajusta este valor según sea necesario */
+  margin-bottom: 10px;
+}
+
 .search-form {
   display: flex;
   align-items: center;

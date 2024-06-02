@@ -24,29 +24,51 @@ export class RegistroProductosComponent implements OnInit {
   totalPages: number = 0;
   currentPage: number = 0;
   pageSize: number = 10;
-  sortField: string = 'id';
-  sortOrder: string = 'asc';
 
   constructor(
     private productoService: ProductoService,
     private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   ngOnInit() {
     this.searchProductForm = this.fb.group({
       title: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
-      page: [this.currentPage, [Validators.required, Validators.min(0)]],
-      size: [this.pageSize, [Validators.required, Validators.min(1)]],
-      sortField: [this.sortField],
-      sortOrder: [this.sortOrder]
+      page: [this.currentPage],
+      size: [this.pageSize],
+      sortField: ['id'],
+      sortOrder: ['asc']
     });
 
     this.loadProductos();
 
-    this.searchProductForm.valueChanges.pipe(
+    this.searchProductForm.get('title')!.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      this.loadProductos();
+    });
+
+    this.searchProductForm.get('page')!.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      this.loadProductos();
+    });
+
+    this.searchProductForm.get('size')!.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      this.loadProductos();
+    });
+
+    this.searchProductForm.get('sortField')!.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      this.loadProductos();
+    });
+
+    this.searchProductForm.get('sortOrder')!.valueChanges.pipe(
       debounceTime(300)
     ).subscribe(() => {
       this.loadProductos();
@@ -100,22 +122,27 @@ export class RegistroProductosComponent implements OnInit {
   onPageChange(event: any) {
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.searchProductForm.patchValue({ page: this.currentPage, size: this.pageSize });
     this.loadProductos();
   }
 
   submitForm() {
-    this.currentPage = this.searchProductForm.get('page')!.value;
-    this.pageSize = this.searchProductForm.get('size')!.value;
+    this.currentPage = 0;
     this.loadProductos();
   }
 
-  deleteProducto(productoId: number) {
-    this.productoService.deleteProducto(productoId).subscribe(() => {
-      this.snackBar.open('Producto eliminado correctamente', 'Cerrar', {
-        duration: 3000,
-      });
-      this.loadProductos();
-    });
+  deleteProducto(id: number) {
+    // Lógica para eliminar el producto
+  }
+
+  addToCart(id: number) {
+    // Lógica para agregar al carrito
+  }
+
+  rateProduct(id: number) {
+    // Lógica para calificar el producto
+  }
+
+  commentOnProduct(id: number) {
+    // Lógica para comentar sobre el producto
   }
 }
