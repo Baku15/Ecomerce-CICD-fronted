@@ -18,6 +18,11 @@ export class ProductoService {
     );
   }
 
+  // Método para obtener productos por usuario
+  getProductosByUsuario(userId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/usuario/${userId}`);
+  }
+
   getAllProducts(): Observable<any> {
     return this.http.get(this.baseUrl + '/all');
   }

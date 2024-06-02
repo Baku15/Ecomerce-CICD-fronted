@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../material-module';
 import { ProductoService } from '../../services/productos/producto.service';
 import { debounceTime } from 'rxjs';
+import { AuthService } from '../../services/autenticacion/auth.service';
 interface Producto {
   byteImg: string;
   // Otras propiedades del producto
@@ -26,19 +27,22 @@ interface Producto {
   templateUrl: './registro-productos.component.html',
   styleUrl: './registro-productos.component.css'
 })
+
 export class RegistroProductosComponent implements OnInit {
   productos: Producto[] = [];
   searchProductForm!: FormGroup;
-  image: Blob | undefined;
+  userId!: number;
 
   constructor(
     private productoService: ProductoService,
     private fb: FormBuilder,
-    private router: Router,
-    private snackBar: MatSnackBar) { }
+    private authService: AuthService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
-    this.getAllProductos();
+    this.userId = this.authService.getUserId(); // Asegúrate de tener un método para obtener el ID del usuario actual
+    this.getProductsByUsuario();
     this.searchProductForm = this.fb.group({
       title: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]]
     });
@@ -51,8 +55,8 @@ export class RegistroProductosComponent implements OnInit {
       });
   }
 
-  getAllProductos() {
-    this.productoService.getAllProducts().subscribe((res: Producto[]) => {
+  getProductsByUsuario() {
+    this.productoService.getProductosByUsuario(this.userId).subscribe((res: Producto[]) => {
       this.productos = res;
     });
   }
@@ -64,25 +68,16 @@ export class RegistroProductosComponent implements OnInit {
         this.productos = res;
       });
     } else {
-      this.getAllProductos();
+      this.getProductsByUsuario();
     }
   }
 
-  deleteProducto(productoId: any) {
-    this.productoService.deleteProducto(productoId).subscribe(
-      () => {
-        this.snackBar.open('Producto eliminado correctamente', 'Cerrar', {
-          duration: 5000,
-        });
-        this.getAllProductos();
-      },
-      error => {
-        console.error('Error deleting product:', error);
-        this.snackBar.open('No se pudo eliminar el Producto', 'Cerrar', {
-          duration: 5000,
-          panelClass: 'error-snackbar'
-        });
-      }
-    );
+  deleteProducto(productoId: number) {
+    this.productoService.deleteProducto(productoId).subscribe(() => {
+      this.snackBar.open('Producto eliminado correctamente', 'Cerrar', { duration: 5000 });
+      this.getProductsByUsuario();
+    }, error => {
+      this.snackBar.open('Error al eliminar el producto', 'ERROR', { duration: 5000 });
+    });
   }
 }
