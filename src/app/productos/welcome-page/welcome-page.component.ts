@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { AuthService } from '../../services/autenticacion/auth.service';
 
 
 @Component({
@@ -10,35 +11,17 @@ import { jwtDecode } from 'jwt-decode';
 })
 
 export class WelcomePageComponent implements OnInit {
-  token: string = '';
   username: string = '';
   userId: number = 0;
-  role: string = ''; // Agregar el rol
+  role: string = '';
+  token: string = '';
+
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    if (this.isBrowser()) {
-      const storedToken = sessionStorage.getItem('token');
-      const storedUsername = sessionStorage.getItem('username');
-      const storedRole = sessionStorage.getItem('role'); // Obtener el rol
-
-      this.token = storedToken ? storedToken : '';
-      this.username = storedUsername ? storedUsername : '';
-      this.role = storedRole ? storedRole : ''; // Asignar el rol
-
-      if (this.token) {
-        try {
-          const decodedToken: any = jwtDecode(this.token);
-          this.userId = decodedToken.userId || 0;
-        } catch (error) {
-          console.error('Error decodificando el token JWT', error);
-        }
-      }
-    } else {
-      console.error('sessionStorage no está disponible.');
-    }
-  }
-
-  isBrowser(): boolean {
-    return typeof window !== 'undefined' && typeof window.sessionStorage !== 'undefined';
+    this.username = this.authService.getUsername();
+    this.userId = this.authService.getUserId();
+    this.role = this.authService.getRole();
+    this.token = this.authService.getToken();
   }
 }
