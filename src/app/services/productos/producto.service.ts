@@ -6,6 +6,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
+
 export class ProductoService {
   constructor(private http: HttpClient) {}
 

@@ -29,20 +29,22 @@ interface Producto {
 })
 
 export class RegistroProductosComponent implements OnInit {
-  productos: Producto[] = [];
+productos: Producto[] = [];
   searchProductForm!: FormGroup;
   userId!: number;
+  userRole!: string;
 
   constructor(
     private productoService: ProductoService,
     private fb: FormBuilder,
     private authService: AuthService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.userId = this.authService.getUserId(); // Asegúrate de tener un método para obtener el ID del usuario actual
-    this.getProductsByUsuario();
+    this.userId = this.authService.getUserId(); // Obtener ID del usuario actual
+    this.userRole = this.authService.getRole(); // Obtener rol del usuario actual
+    this.loadProductos();
     this.searchProductForm = this.fb.group({
       title: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]]
     });
@@ -53,6 +55,20 @@ export class RegistroProductosComponent implements OnInit {
       .subscribe(() => {
         this.submitForm();
       });
+  }
+
+  loadProductos() {
+    if (this.userRole === 'Comprador') {
+      this.getAllProductos();
+    } else {
+      this.getProductsByUsuario();
+    }
+  }
+
+  getAllProductos() {
+    this.productoService.getAllProducts().subscribe((res: Producto[]) => {
+      this.productos = res;
+    });
   }
 
   getProductsByUsuario() {
@@ -68,14 +84,14 @@ export class RegistroProductosComponent implements OnInit {
         this.productos = res;
       });
     } else {
-      this.getProductsByUsuario();
+      this.loadProductos();
     }
   }
 
   deleteProducto(productoId: number) {
     this.productoService.deleteProducto(productoId).subscribe(() => {
       this.snackBar.open('Producto eliminado correctamente', 'Cerrar', { duration: 5000 });
-      this.getProductsByUsuario();
+      this.loadProductos();
     }, error => {
       this.snackBar.open('Error al eliminar el producto', 'ERROR', { duration: 5000 });
     });
