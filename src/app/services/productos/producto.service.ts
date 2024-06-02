@@ -1,27 +1,40 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Producto } from '../../model/producto.interface';
 import { Observable, catchError, throwError } from 'rxjs';
+import { Page } from '../../model/page.model';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class ProductoService {
-  constructor(private http: HttpClient) {}
-
   private baseUrl = 'http://localhost:8040/api/producto';
 
-  private base_search = '';
-  list() {
-    return this.http.get<Producto[]>(
-      'http://localhost:8040/api/producto'
-    );
+  constructor(private http: HttpClient) {}
+
+  list(page: number, size: number): Observable<Page<Producto>> {
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('size', size.toString());
+
+    return this.http.get<Page<Producto>>(`${this.baseUrl}/all-paginated`, { params });
   }
 
-  // Método para obtener productos por usuario
-  getProductosByUsuario(userId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/usuario/${userId}`);
+  getProductosByUsuario(userId: number, page: number, size: number): Observable<Page<Producto>> {
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('size', size.toString());
+
+    return this.http.get<Page<Producto>>(`${this.baseUrl}/usuario/${userId}`, { params });
+  }
+
+  getProductosByName(nombre: string, page: number, size: number): Observable<Page<Producto>> {
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('size', size.toString());
+
+    return this.http.get<Page<Producto>>(`${this.baseUrl}/search/${nombre}`, { params });
   }
 
   getAllProducts(): Observable<any> {

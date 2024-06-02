@@ -7,18 +7,8 @@ import { MaterialModule } from '../../material-module';
 import { ProductoService } from '../../services/productos/producto.service';
 import { debounceTime } from 'rxjs';
 import { AuthService } from '../../services/autenticacion/auth.service';
-interface Producto {
-  byteImg: string;
-  // Otras propiedades del producto
-    id: number;
-    imageUrl: string;
-  stock: number;
-  precio: number;
-  descripcion: string;
-  nombre:string;
-  categorias: string;
-  marca: string;
-}
+import { Page } from '../../model/page.model';
+import { Producto } from '../../model/producto.interface';
 
 @Component({
   selector: 'app-registro-productos',
@@ -29,71 +19,97 @@ interface Producto {
 })
 
 export class RegistroProductosComponent implements OnInit {
-productos: Producto[] = [];
+  productos: Producto[] = [];
   searchProductForm!: FormGroup;
-  userId!: number;
-  userRole!: string;
+  totalPages: number = 0;
+  currentPage: number = 0;
+  pageSize: number = 10;
 
   constructor(
     private productoService: ProductoService,
     private fb: FormBuilder,
-    private authService: AuthService,
-    private snackBar: MatSnackBar
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.userId = this.authService.getUserId(); // Obtener ID del usuario actual
-    this.userRole = this.authService.getRole(); // Obtener rol del usuario actual
-    this.loadProductos();
     this.searchProductForm = this.fb.group({
-      title: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]]
+      title: [null, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+      page: [this.currentPage, [Validators.required, Validators.min(0)]],
+      size: [this.pageSize, [Validators.required, Validators.min(1)]]
     });
 
-    // Aplicar debounce a la búsqueda
-    this.searchProductForm.get('title')!.valueChanges
-      .pipe(debounceTime(300)) // Establece un retraso de 300 ms
-      .subscribe(() => {
-        this.submitForm();
-      });
+    this.loadProductos();
+
+    this.searchProductForm.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      this.loadProductos();
+    });
   }
 
   loadProductos() {
-    if (this.userRole === 'Comprador') {
-      this.getAllProductos();
+    const title = this.searchProductForm.get('title')!.value;
+    const role = this.authService.getRole();
+    const userId = this.authService.getUserId();
+    const page = this.searchProductForm.get('page')!.value;
+    const size = this.searchProductForm.get('size')!.value;
+
+    if (role === 'Comprador') {
+      if (title) {
+        this.productoService.getProductosByName(title, page, size).subscribe(
+          (res: Page<Producto>) => {
+            this.productos = res.content;
+            this.totalPages = res.totalPages;
+          }
+        );
+      } else {
+        this.productoService.list(page, size).subscribe(
+          (res: Page<Producto>) => {
+            this.productos = res.content;
+            this.totalPages = res.totalPages;
+          }
+        );
+      }
     } else {
-      this.getProductsByUsuario();
+      if (title) {
+        this.productoService.getProductosByName(title, page, size).subscribe(
+          (res: Page<Producto>) => {
+            this.productos = res.content;
+            this.totalPages = res.totalPages;
+          }
+        );
+      } else {
+        this.productoService.getProductosByUsuario(userId, page, size).subscribe(
+          (res: Page<Producto>) => {
+            this.productos = res.content;
+            this.totalPages = res.totalPages;
+          }
+        );
+      }
     }
   }
 
-  getAllProductos() {
-    this.productoService.getAllProducts().subscribe((res: Producto[]) => {
-      this.productos = res;
-    });
-  }
-
-  getProductsByUsuario() {
-    this.productoService.getProductosByUsuario(this.userId).subscribe((res: Producto[]) => {
-      this.productos = res;
-    });
+  onPageChange(event: any) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.searchProductForm.patchValue({ page: this.currentPage, size: this.pageSize });
+    this.loadProductos();
   }
 
   submitForm() {
-    const title = this.searchProductForm.get('title')!.value;
-    if (title.trim() !== '') {
-      this.productoService.getAllProductsByNombre(title).subscribe((res: Producto[]) => {
-        this.productos = res;
-      });
-    } else {
-      this.loadProductos();
-    }
+    this.currentPage = this.searchProductForm.get('page')!.value;
+    this.pageSize = this.searchProductForm.get('size')!.value;
+    this.loadProductos();
   }
 
   deleteProducto(productoId: number) {
     this.productoService.deleteProducto(productoId).subscribe(() => {
-      this.snackBar.open('Producto eliminado correctamente', 'Cerrar', { duration: 5000 });
+      this.snackBar.open('Producto eliminado correctamente', 'Cerrar', {
+        duration: 3000,
+      });
       this.loadProductos();
-    }, error => {
-      this.snackBar.open('Error al eliminar el producto', 'ERROR', { duration: 5000 });
     });
   }
 }
