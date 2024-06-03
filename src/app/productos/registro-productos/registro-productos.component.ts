@@ -11,6 +11,8 @@ import { Page } from '../../model/page.model';
 import { Producto } from '../../model/producto.interface';
 import { ShoppingCart } from '../../model/shopping-cart.model';
 import { ShoppingCartService } from '../../services/carritoCompras/registro-carrito.service';
+import { QuantityDialogComponent } from '../../quantity-dialog/quantity-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-registro-productos',
@@ -33,7 +35,9 @@ export class RegistroProductosComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar,
     public authService: AuthService,
-    private shoppingCartService: ShoppingCartService // Inyecta tu servicio de carrito
+    private shoppingCartService: ShoppingCartService, // Inyecta tu servicio de carrito
+    private dialog: MatDialog
+
   ) {}
 
   ngOnInit() {
@@ -133,18 +137,34 @@ export class RegistroProductosComponent implements OnInit {
     this.loadProductos();
   }
 
-  deleteProducto(id: number) {
-    // Lógica para eliminar el producto
+deleteProducto(id: number) {
+  this.productoService.deleteProducto(id).subscribe(
+    () => {
+      this.snackBar.open('Producto eliminado con éxito', 'Cerrar', { duration: 3000 });
+      this.loadProductos(); // Recargar la lista de productos después de eliminar
+    },
+    error => {
+      console.error('Error al eliminar el producto:', error);
+      this.snackBar.open('Error al eliminar el producto', 'Cerrar', { duration: 3000 });
+    }
+  );
+}
+    openQuantityDialog(producto: Producto): void {
+    const dialogRef = this.dialog.open(QuantityDialogComponent, {
+      data: { quantity: 1, stock: producto.stock }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.addToCart(producto, result);
+      }
+    });
   }
-
-addToCart(productoId: number) {
-  const userId = this.authService.getUserId();
-  const producto = this.productos.find(p => p.id === productoId);
-
-  if (producto) {
-    const cartItem: ShoppingCart = {
-      id: 0,
-      quantity: 1,
+addToCart(producto: Producto, quantity: number): void {
+    const userId = this.authService.getUserId();
+    const cartItem = {
+      id: 0, // Asignando un valor inicial para el id
+      quantity: quantity,
       productId: producto.id,
       purchaseRecordId: 0, // Esto permitirá crear un nuevo registro de compra si no existe
       userId: userId,
@@ -153,7 +173,7 @@ addToCart(productoId: number) {
     };
 
     this.shoppingCartService.createShoppingCart(cartItem).subscribe(
-      response => {
+      () => {
         this.snackBar.open('Producto agregado al carrito', 'Cerrar', { duration: 3000 });
       },
       error => {
@@ -161,11 +181,8 @@ addToCart(productoId: number) {
         this.snackBar.open('Error al agregar al carrito', 'Cerrar', { duration: 3000 });
       }
     );
-  } else {
-    console.error('Producto no encontrado');
-    this.snackBar.open('Producto no encontrado', 'Cerrar', { duration: 3000 });
   }
-}
+
   rateProduct(id: number) {
     // Lógica para calificar el producto
   }

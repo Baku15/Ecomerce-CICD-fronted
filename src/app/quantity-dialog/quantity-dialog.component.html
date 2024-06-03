@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Seleccionar cantidad</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Cantidad</mat-label>
+    <input matInput [(ngModel)]="data.quantity" type="number" min="1" max="{{data.stock}}">
+    <mat-error *ngIf="data.quantity > data.stock">Cantidad excede el stock disponible.</mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button [disabled]="data.quantity > data.stock" (click)="onConfirm()">Agregar</button>
+</mat-dialog-actions>
+
