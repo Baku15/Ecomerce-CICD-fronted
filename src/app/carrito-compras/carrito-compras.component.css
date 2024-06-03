@@ -1,28 +1,37 @@
-/* Estilos simples para el componente */
-ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    margin: 10px 0;
-  }
-  
-  button {
-    margin-left: 10px;
-  }
-  
-  form {
-    margin-top: 20px;
-  }
-  
-  label {
-    display: block;
-    margin-top: 10px;
-  }
-  
-  input {
-    display: block;
-    margin-top: 5px;
-  }
-  
+/* src/app/carritocompras/carritocompras.component.css */
+.cart-container {
+  margin: 20px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.item-details {
+  display: flex;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cart-total {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+

@@ -1,47 +1,51 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Respuesta, ShoppingCartDto } from '../../model/shopping-cart.model';
+import { catchError, map, mergeMap } from 'rxjs/operators';
+import { ShoppingCart } from '../../model/shopping-cart.model';
+import { ProductoService } from '../productos/producto.service';
+import { Producto } from '../../model/producto.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingCartService {
-  private apiUrl = 'http://localhost:8080/api/shopping-cart';
+  private baseUrl = 'http://localhost:8040/api/shopping-cart';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private productoService: ProductoService) {}
 
-  createShoppingCart(shoppingCartDto: ShoppingCartDto): Observable<Respuesta> {
-    return this.http.post<Respuesta>(`${this.apiUrl}/create`, shoppingCartDto)
-      .pipe(
-        catchError(this.handleError)
-      );
+  getAllCarts(): Observable<ShoppingCart[]> {
+    return this.http.get<ShoppingCart[]>(`${this.baseUrl}/all`).pipe(
+      mergeMap((carts: ShoppingCart[]) => {
+        return this.productoService.getAllProducts().pipe(
+          map((productos: Producto[]) => {
+            return carts.map(cart => {
+              cart.producto = productos.find(p => p.id === cart.productId);
+              return cart;
+            });
+          })
+        );
+      })
+    );
   }
 
-  getShoppingCartById(id: number): Observable<Respuesta> {
-    return this.http.get<Respuesta>(`${this.apiUrl}/${id}`)
-      .pipe(
-        catchError(this.handleError)
-      );
+  deleteCartById(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  getAllShoppingCarts(): Observable<Respuesta> {
-    return this.http.get<Respuesta>(`${this.apiUrl}/all`)
-      .pipe(
-        catchError(this.handleError)
-      );
+  addToCart(cart: ShoppingCart): Observable<ShoppingCart> {
+    return this.http.post<ShoppingCart>(`${this.baseUrl}/create`, cart);
   }
 
-  deleteShoppingCartById(id: number): Observable<Respuesta> {
-    return this.http.delete<Respuesta>(`${this.apiUrl}/${id}`)
-      .pipe(
-        catchError(this.handleError)
-      );
+  createShoppingCart(cartItem: ShoppingCart): Observable<ShoppingCart> {
+    return this.http.post<ShoppingCart>(`${this.baseUrl}/create`, cartItem);
   }
 
-  private handleError(error: any): Observable<never> {
-    console.error('An error occurred', error);
-    throw error;
+  getShoppingCartsByUserId(userId: number): Observable<ShoppingCart[]> {
+    return this.http.get<ShoppingCart[]>(`${this.baseUrl}/user/${userId}`);
+  }
+
+  deleteShoppingCartById(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

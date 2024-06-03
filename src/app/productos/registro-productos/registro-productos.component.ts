@@ -9,6 +9,8 @@ import { debounceTime } from 'rxjs';
 import { AuthService } from '../../services/autenticacion/auth.service';
 import { Page } from '../../model/page.model';
 import { Producto } from '../../model/producto.interface';
+import { ShoppingCart } from '../../model/shopping-cart.model';
+import { ShoppingCartService } from '../../services/carritoCompras/registro-carrito.service';
 
 @Component({
   selector: 'app-registro-productos',
@@ -30,7 +32,8 @@ export class RegistroProductosComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private snackBar: MatSnackBar,
-    public authService: AuthService
+    public authService: AuthService,
+    private shoppingCartService: ShoppingCartService // Inyecta tu servicio de carrito
   ) {}
 
   ngOnInit() {
@@ -134,10 +137,35 @@ export class RegistroProductosComponent implements OnInit {
     // Lógica para eliminar el producto
   }
 
-  addToCart(id: number) {
-    // Lógica para agregar al carrito
-  }
+addToCart(productoId: number) {
+  const userId = this.authService.getUserId();
+  const producto = this.productos.find(p => p.id === productoId);
 
+  if (producto) {
+    const cartItem: ShoppingCart = {
+      id: 0,
+      quantity: 1,
+      productId: producto.id,
+      purchaseRecordId: 0, // Esto permitirá crear un nuevo registro de compra si no existe
+      userId: userId,
+      productName: producto.nombre,
+      productPrice: producto.precio
+    };
+
+    this.shoppingCartService.createShoppingCart(cartItem).subscribe(
+      response => {
+        this.snackBar.open('Producto agregado al carrito', 'Cerrar', { duration: 3000 });
+      },
+      error => {
+        console.error('Error al agregar al carrito:', error);
+        this.snackBar.open('Error al agregar al carrito', 'Cerrar', { duration: 3000 });
+      }
+    );
+  } else {
+    console.error('Producto no encontrado');
+    this.snackBar.open('Producto no encontrado', 'Cerrar', { duration: 3000 });
+  }
+}
   rateProduct(id: number) {
     // Lógica para calificar el producto
   }

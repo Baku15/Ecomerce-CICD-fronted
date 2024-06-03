@@ -26,6 +26,10 @@
         <mat-icon class="iconoblanco">list_alt</mat-icon>
         <span class="iconoblanco">Lista de Productos</span>
       </a>
+      <a *ngIf="role === 'Comprador'" mat-list-item routerLink="carritoCompras" routerLinkActive="active" matTooltip="Carrito de Compra" [matTooltipPosition]="'right'">
+        <mat-icon class="iconoblanco">shopping_cart</mat-icon>
+        <span class="iconoblanco">Carrito de Compra</span>
+      </a>
       <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="registroempleado" routerLinkActive="active" matTooltip="Agregar empleado" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">group_add</mat-icon>
         <label class="iconoblanco">Agregar empleado</label>
