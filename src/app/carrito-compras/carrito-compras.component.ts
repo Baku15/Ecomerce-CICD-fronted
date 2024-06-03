@@ -74,8 +74,17 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   checkout(): void {
-    // Implementar la lógica para realizar la compra
-    this.snackBar.open('Compra realizada con éxito', 'Cerrar', { duration: 3000 });
+    const userId = this.authService.getUserId();
+    this.shoppingCartService.realizarCompra(userId).subscribe(
+      () => {
+        this.snackBar.open('Compra realizada con éxito', 'Cerrar', { duration: 3000 });
+        this.loadCart(); // Recargar el carrito después de realizar la compra
+      },
+      error => {
+        console.error('Error al realizar la compra:', error);
+        this.snackBar.open('Error al realizar la compra', 'Cerrar', { duration: 3000 });
+      }
+    );
   }
 }
 
