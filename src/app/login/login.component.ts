@@ -11,21 +11,27 @@ import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/autenticacion/auth.service';
 import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { RecaptchaModule } from "ng-recaptcha";
-
+import { RecaptchaV3Module } from 'ng-recaptcha';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterOutlet, RecaptchaModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, RouterModule, FormsModule, HttpClientModule],
+  imports: [RecaptchaV3Module, RouterOutlet, RecaptchaModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, RouterModule, FormsModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 
 export class LoginComponent implements OnInit {
   recaptchaService = inject(ReCaptchaV3Service);
-  executeRecaptcha() {
-    this.recaptchaService.execute('').subscribe((token) => {
-      console.log("el token: "+token);
-    });
+  public executeImportantAction(): void {
+    this.recaptchaV3Service.execute('importantAction')
+      .subscribe((token) => {
+        console.log("el tokenazo: "+token);
+      
+      });
+  }
+
+  public executableCaptcha(token: any): void {
+    console.log("el tokenazo: "+token);
   }
   username: string = '';
   password: string = '';
@@ -35,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   credentials: any = {};
 
-  constructor(private router: Router, private usuarioService: UsuarioService, private authService: AuthService) {}
+  constructor(private recaptchaV3Service: ReCaptchaV3Service, private router: Router, private usuarioService: UsuarioService, private authService: AuthService) {}
 
   ngOnInit(): void {}
 
