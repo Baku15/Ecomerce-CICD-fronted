@@ -1,6 +1,4 @@
 mat-grid-tile {
-    background: lightblue;
-    padding: 2%;
     display: flex;
     flex-direction: column;
   }
@@ -9,4 +7,15 @@ mat-grid-tile {
     padding: 2%;
     display: flex;
     flex-direction: column;
+    background-color: antiquewhite;
+    
+  }
+  .container2 {
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    border-width: 5px;
+    border-style: dashed;
+    height: 70%;
+    color: black;
   }
