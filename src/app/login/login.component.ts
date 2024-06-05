@@ -1,24 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { UsuarioService } from '../services/Usuarios/usuario.service';
 import { Observable, of } from 'rxjs';
 import { AuthService } from '../services/autenticacion/auth.service';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { RecaptchaModule } from "ng-recaptcha";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, RouterModule, FormsModule, HttpClientModule],
+  imports: [RouterOutlet, RecaptchaModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, RouterModule, FormsModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 
 export class LoginComponent implements OnInit {
+  recaptchaService = inject(ReCaptchaV3Service);
+  executeRecaptcha() {
+    this.recaptchaService.execute('').subscribe((token) => {
+      console.log("el token: "+token);
+    });
+  }
   username: string = '';
   password: string = '';
   hide = true;
