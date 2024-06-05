@@ -72,9 +72,10 @@
         </ng-container>
         <ng-container *ngIf="authService.getRole() === 'Comprador'">
           <div class="comprador-actions">
- <button mat-raised-button color="primary" (click)="openQuantityDialog(producto)">Agregar al carrito</button>
-           <button mat-raised-button color="accent" class="rate-button" (click)="rateProduct(producto.id)">Calificar</button>
+            <button mat-raised-button color="primary" (click)="openQuantityDialog(producto)">Agregar al carrito</button>
+            <button mat-raised-button color="accent" class="rate-button" (click)="rateProduct(producto.id)">Calificar</button>
             <button mat-raised-button color="primary" class="comment-button" (click)="commentOnProduct(producto.id)">Comentarios</button>
+            <button mat-raised-button color="primary" class="view-comments-button" [routerLink]="['/admin/ver-comentarios', producto.id]">Ver comentarios</button>
           </div>
         </ng-container>
       </div>

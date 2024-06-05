@@ -1,0 +1,35 @@
+<div *ngIf="producto">
+  <h2>{{ producto.nombre }}</h2>
+  <p>{{ producto.descripcion }}</p>
+  <p>Precio: {{ producto.precio }}</p>
+  <p>Stock: {{ producto.stock }}</p>
+
+  <h3>Comentarios</h3>
+  <div *ngFor="let comment of comments">
+    <mat-card>
+      <mat-card-title>Comentario</mat-card-title>
+      <mat-card-content>
+        <p>{{ comment.comentario }}</p>
+        <p>Puntuación: {{ comment.puntuacion }}</p>
+        <p>Usuario: {{ comment.userName }}</p>
+        <p>Fecha: {{ comment.fechaComentario | date }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <h3>Agregar un comentario</h3>
+  <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <mat-form-field>
+      <mat-label>Comentario</mat-label>
+      <textarea matInput formControlName="comentario"></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Puntuación</mat-label>
+      <mat-select formControlName="puntuacion">
+        <mat-option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Agregar Comentario</button>
+  </form>
+</div>
+

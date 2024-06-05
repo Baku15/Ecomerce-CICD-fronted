@@ -17,6 +17,8 @@ import { UpdateProductoComponent } from './productos/update-producto/update-prod
 import { RegistroEmpleadoComponent } from './registro-empleado/registro-empleado.component';
 import { ListaMarcasComponent } from './productos/lista-marcas/lista-marcas.component';
 import { WelcomePageComponent } from './productos/welcome-page/welcome-page.component';
+import { ProductoDetailComponent } from './productos/producto-detail/producto-detail.component';
+import { VerComentariosComponent } from './productos/ver-comentarios/ver-comentarios.component';
 
 export const routes: Routes = [
   //Login
@@ -45,6 +47,10 @@ export const routes: Routes = [
       { path: 'registroempleado', component: RegistroEmpleadoComponent },
       { path: 'lista-marcas', component: ListaMarcasComponent },
       { path: 'carritoCompras', component: ShoppingCartComponent },
+        { path: 'comments/:id', component: ProductoDetailComponent },
+        { path: 'ver-comentarios/:productoId', component: VerComentariosComponent },
+
+
     ],
   },
   //Para el user SuperAdmin

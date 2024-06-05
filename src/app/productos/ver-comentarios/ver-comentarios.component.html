@@ -1,0 +1,32 @@
+<div class="comments-container">
+  <h2>Comentarios para el producto: {{ productoNombre }}</h2>
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+  <div *ngIf="comments.length === 0 && !errorMessage">
+    <p>No hay comentarios para este producto.</p>
+  </div>
+  <div *ngIf="comments.length > 0 && !errorMessage">
+    <div class="comments-list">
+      <div *ngFor="let comment of comments" class="comment-item">
+        <div class="comment-header">
+          <h3 class="comment-username">{{ comment.userName }}</h3>
+          <span class="comment-date">{{ comment.fechaComentario | date:'short' }}</span>
+        </div>
+        <p class="comment-text">{{ comment.comentario }}</p>
+        <div class="comment-footer">
+          <span class="comment-rating">
+            Puntuación:
+            <ng-container *ngFor="let star of [].constructor(comment.puntuacion); let i = index">
+              <mat-icon color="warn">star</mat-icon>
+            </ng-container>
+            <ng-container *ngFor="let star of [].constructor(5 - comment.puntuacion); let i = index">
+              <mat-icon color="warn">star_border</mat-icon>
+            </ng-container>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

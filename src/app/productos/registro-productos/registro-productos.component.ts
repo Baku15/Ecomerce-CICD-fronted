@@ -186,8 +186,7 @@ addToCart(producto: Producto, quantity: number): void {
   rateProduct(id: number) {
     // Lógica para calificar el producto
   }
-
   commentOnProduct(id: number) {
-    // Lógica para comentar sobre el producto
+    this.router.navigate(['/admin/comments', id]);
   }
 }
