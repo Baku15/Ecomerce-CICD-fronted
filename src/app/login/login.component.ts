@@ -21,6 +21,7 @@ import { RecaptchaV3Module } from 'ng-recaptcha';
 })
 
 export class LoginComponent implements OnInit {
+  tokenObtenido: string = '';
   recaptchaService = inject(ReCaptchaV3Service);
   public executeImportantAction(): void {
     this.recaptchaV3Service.execute('importantAction')
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   public executableCaptcha(token: any): void {
     console.log("el tokenazo: "+token);
+    this.tokenObtenido = token;
   }
   username: string = '';
   password: string = '';
@@ -49,6 +51,13 @@ export class LoginComponent implements OnInit {
     if (this.username === '' || this.password === '') {
       this.stringMessage = 'Debe llenar todos los campos';
       console.error('Debe llenar todos los campos');
+      this.mostrarMensajeDeleteError();
+      return;
+    }
+
+    if(this.tokenObtenido === ''){
+      this.stringMessage = 'Debe verificar que no es un robot';
+      console.error('Debe verificar que no es un robot');
       this.mostrarMensajeDeleteError();
       return;
     }
