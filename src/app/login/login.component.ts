@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -15,7 +16,7 @@ import { RecaptchaV3Module } from 'ng-recaptcha';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RecaptchaV3Module, RouterOutlet, RecaptchaModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, RouterModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, RecaptchaV3Module, RouterOutlet, RecaptchaModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, RouterModule, FormsModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
