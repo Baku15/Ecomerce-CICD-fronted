@@ -5,13 +5,15 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {MatGridListModule} from '@angular/material/grid-list';
 
+import { ActivatedRoute, RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-welcome-page',
   standalone: true,
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.css'],
-  imports: [MatGridListModule]
+  imports: [MatGridListModule,RouterModule]
 })
 
 export class WelcomePageComponent implements OnInit {
