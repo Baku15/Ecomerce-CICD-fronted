@@ -1,10 +1,31 @@
 <div>
-  <h1>Welcome, {{ username }}</h1>
-  <p>User ID: {{ userId }}</p>
-  <p>Role: {{ role }}</p>
+  
+  
   <mat-grid-list cols="2" rowHeight="2:1">
-    <mat-grid-tile>1</mat-grid-tile>
-    <mat-grid-tile>2</mat-grid-tile>
+    <mat-grid-tile>
+      <div class="container1">
+        <div>
+          Bienvenidos a nuestra tienda online, tu destino ideal para encontrar una amplia variedad de productos de alta calidad al mejor precio. En nuestro sitio, nos esforzamos por ofrecerte una experiencia de compra excepcional, con una selección cuidadosamente curada de artículos que van desde tecnología de vanguardia hasta moda y accesorios de las últimas tendencias. ¡Explora, elige y disfruta de una experiencia de compra inigualable!
+        </div>
+
+      </div>
+      
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="container1">
+        <div>
+          <h1>Bienvenido, {{ username }} mucho gusto de tenerte de nuevo!</h1>
+        </div>
+        <div>
+          <p> Tu ID es: {{ userId }}</p>
+        </div>
+        <div>
+          <p>Y tu Rol es: {{ role }}</p>
+        </div>
+
+      </div>
+      
+    </mat-grid-tile>
     <mat-grid-tile>3</mat-grid-tile>
     <mat-grid-tile>4</mat-grid-tile>
   </mat-grid-list>
