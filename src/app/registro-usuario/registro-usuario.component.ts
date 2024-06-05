@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-registro-usuario',
   standalone: true,
-  imports: [MatButtonModule, MatDividerModule, MatIconModule,MatSelectModule,MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule,MatButtonModule, MatDividerModule, MatIconModule,MatSelectModule,MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
   templateUrl: './registro-usuario.component.html',
   styleUrl: './registro-usuario.component.css'
 })

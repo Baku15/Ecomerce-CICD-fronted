@@ -1,60 +1,49 @@
-
-<div class="center">
-  <div class="Title">
-    Registro de Usuario
-  </div>
-  <div class="form">
-    <mat-form-field>
-      <mat-label>Nombre</mat-label>
-      <input matInput [formControl]="nombre">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Apellido</mat-label>
-      <input matInput [formControl]="apellido">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Username</mat-label>
-      <input matInput [formControl]="username">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Carnet</mat-label>
-      <input matInput [formControl]="carnet">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Enter your email</mat-label>
-      <input matInput
-             placeholder="pat@example.com"
-             [formControl]="email"
-             (blur)="updateErrorMessage()"
-             required>
-      @if (email.invalid) {
-        <mat-error>{{errorMessage}}</mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Telefono</mat-label>
-      <input matInput type="number" [formControl]="telefono">
-    </mat-form-field>
-    <button mat-raised-button (click)="registrarUser()">Registrar User</button>
-    <br>
-    <button mat-raised-button routerLinkActive="active" (click)="irhome()">Cancelar</button>
-    @if(mostrarAlertaDelete){
-      <div class="alert">
-          El user se registro satisfactoramente será redirigido al login en 3 segundos.
+<div class="container">
+  <div class="center">
+    <div class="Title">Registro de Usuario</div>
+    <div class="form">
+      <mat-form-field class="form-field">
+        <mat-label>Nombre</mat-label>
+        <input matInput [formControl]="nombre" />
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Apellido</mat-label>
+        <input matInput [formControl]="apellido" />
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Username</mat-label>
+        <input matInput [formControl]="username" />
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Carnet</mat-label>
+        <input matInput [formControl]="carnet" />
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" />
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com" [formControl]="email" (blur)="updateErrorMessage()" required />
+        <mat-error *ngIf="email.invalid">{{ errorMessage }}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Telefono</mat-label>
+        <input matInput type="number" [formControl]="telefono" />
+      </mat-form-field>
+      <div class="button-section">
+        <button mat-raised-button class="custom-button" (click)="registrarUser()">Registrar Usuario</button>
+        <button mat-raised-button class="custom-button cancel-button" routerLinkActive="active" (click)="irhome()">Cancelar</button>
       </div>
-    }
-    @if(mostrarAlertaErrorDelete){
-        <div class="alertE">
-            {{stringMessage}}
-        </div>
-    }
+      <div *ngIf="mostrarAlertaDelete" class="alert">
+        El usuario se registró satisfactoriamente. Serás redirigido al login en 3 segundos.
+      </div>
+      <div *ngIf="mostrarAlertaErrorDelete" class="alertE">
+        {{ stringMessage }}
+      </div>
+    </div>
   </div>
 </div>
-
