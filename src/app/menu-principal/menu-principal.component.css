@@ -3,11 +3,16 @@ body {
   margin: 0;
   padding: 0;
 }
-.container{
+
+.container {
   display: flex;
-    height: 100vh; /* Use full height of the viewport */
-    flex-direction: column;
+  height: 100vh; /* Use full height of the viewport */
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1200px;
+  margin: auto;
 }
+
 header {
   background-color: #333;
   color: #fff;
@@ -53,10 +58,6 @@ footer {
   bottom: 0;
   width: 100%;
 }
-.container {
-  max-width: 1200px;
-  margin: auto;
-}
 
 .carousel-item img {
   height: 500px; /* Ajusta la altura según tus necesidades */
@@ -64,15 +65,100 @@ footer {
 }
 
 .carousel-caption {
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  padding: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.carousel-caption h5,
+.carousel-caption p {
+  margin: 0;
+}
+
+.carousel-caption h5 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  animation: slideInLeft 0.5s ease-in-out;
+}
+
+.carousel-caption p {
+  font-size: 1.25rem;
+  margin-top: 10px;
+  animation: slideInRight 0.5s ease-in-out;
 }
 
 .btn-primary {
   background-color: #007bff;
   border: none;
+  animation: bounceIn 0.5s ease-in-out;
 }
 
 .btn-primary:hover {
   background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceIn {
+  from,
+  20%,
+  40%,
+  60%,
+  80%,
+  to {
+    animation-timing-function: ease-in-out;
+  }
+
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+
+  40% {
+    transform: scale3d(0.9, 0.9, 0.9);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  80% {
+    transform: scale3d(0.97, 0.97, 0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
 }
