@@ -11,11 +11,12 @@ import {MatButtonModule} from '@angular/material/button';
 import { UsuarioService } from '../services/Usuarios/usuario.service';
 import { Router } from '@angular/router';
 import {MatRadioModule} from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-recoverpassword',
   standalone: true,
-  imports: [MatRadioModule,MatButtonModule, MatDividerModule, MatIconModule,MatSelectModule,MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, MatRadioModule,MatButtonModule, MatDividerModule, MatIconModule,MatSelectModule,MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
   templateUrl: './recoverpassword.component.html',
   styleUrl: './recoverpassword.component.css'
 })
