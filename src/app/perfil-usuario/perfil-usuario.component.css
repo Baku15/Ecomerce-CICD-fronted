@@ -1,72 +1,111 @@
-.vertical-layout{
-    background-color: white;
-    border-radius: 15px;
-    padding: 2%;
-    flex-direction: column;
-    display: flex;
-    margin-top: 2%;
-    margin-left: 3%;
-    width: 40%;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+* {
+  box-sizing: border-box;
 }
 
-.horizontal-layout{
-    display: flex;
-    flex-direction: row;
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
 }
 
-.title{
-    margin-left: 2%;
-    font-size: 250%;
-    font-weight: bold;
-}
-.subtitle{
-    font-weight: bold;
-}
-.data{}
-.baja{
-    margin: 1%;
-    flex-direction: row;
-    display: flex;
+.vertical-layout {
+  background-color: white;
+  border-radius: 15px;
+  padding: 2%;
+  flex-direction: column;
+  display: flex;
+  margin-top: 2%;
+  margin-left: 3%;
+  width: 40%;
+  transition: transform 0.3s ease-in-out;
 }
 
-.personal-data{
-    margin: 4%;
-    font-size: 150%;
-    font-weight: bold;
+.vertical-layout:hover {
+  transform: translateY(-5px);
 }
-.account-data{
-    margin: 4%;
-    font-size: 150%;
-    font-weight: bold;
+
+.horizontal-layout {
+  display: flex;
+  flex-direction: row;
 }
-.label{
-    margin-left: 2%;
-    font-size: 100%;
-    font-weight: bold;
+
+.title {
+  margin-left: 2%;
+  font-size: 250%;
+  font-weight: bold;
 }
-.value{
-    margin-left: 2%;
-    font-size: 100%;
-    font-weight: normal;
-    margin-bottom: 1%;
+
+.subtitle {
+  font-weight: bold;
 }
-.data-secction{
-    background-color: white;
-    margin: 1%;
-    border-radius: 15px;
+
+.data {}
+
+.baja {
+  margin: 1%;
+  flex-direction: row;
+  display: flex;
 }
-.button-secction{
-    margin: 2%;
+
+.personal-data {
+  margin: 4%;
+  font-size: 150%;
+  font-weight: bold;
 }
+
+.account-data {
+  margin: 4%;
+  font-size: 150%;
+  font-weight: bold;
+}
+
+.label {
+  margin-left: 2%;
+  font-size: 100%;
+  font-weight: bold;
+}
+
+.value {
+  margin-left: 2%;
+  font-size: 100%;
+  font-weight: normal;
+  margin-bottom: 1%;
+}
+
+.data-secction {
+  background-color: white;
+  margin: 1%;
+  border-radius: 15px;
+}
+
+.button-secction {
+  margin: 2%;
+}
+
 .alert {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px;
-    text-align: center;
-  }
-  
-  .alertE {
-    background-color: rgb(168, 30, 30);
-    color: white;
-    padding: 15px;
-  }
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+}
+
+.alertE {
+  background-color: rgb(168, 30, 30);
+  color: white;
+  padding: 15px;
+  animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
