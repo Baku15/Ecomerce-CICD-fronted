@@ -42,9 +42,14 @@
         <mat-icon class="iconoblanco">shopping_cart</mat-icon>
         <span class="iconoblanco">Nuevo Producto</span>
       </a>
-      <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="marca" routerLinkActive="active" matTooltip="Crear Categoria" [matTooltipPosition]="'right'">
+      <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="categoria" routerLinkActive="active" matTooltip="Crear Categoria" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">category</mat-icon>
         <span class="iconoblanco">Nueva Categoria</span>
+      </a>
+      <!-- Nuevo ícono para el Dashboard -->
+      <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="sales-dashboard" routerLinkActive="active" matTooltip="Dashboard" [matTooltipPosition]="'right'">
+        <mat-icon class="iconoblanco">dashboard</mat-icon>
+        <span class="iconoblanco">Dashboard</span>
       </a>
       <a *ngIf="role === 'Comprador' || role === 'EMPLEADO'" mat-list-item (click)="logout()" matTooltip="Log out" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">logout</mat-icon>

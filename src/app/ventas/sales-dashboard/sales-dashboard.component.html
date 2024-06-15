@@ -1,0 +1,63 @@
+<div class="dashboard">
+  <h1>Sales Dashboard</h1>
+  <div class="summary-cards">
+    <div class="card">
+      <h2>Total Sales</h2>
+      <p>{{ totalSales }}</p>
+    </div>
+    <div class="card">
+      <h2>Total Revenue</h2>
+      <p>{{ totalRevenue | currency }}</p>
+    </div>
+  </div>
+  <div class="chart-controls">
+    <mat-form-field appearance="fill">
+      <mat-label>Chart Type</mat-label>
+      <mat-select [(value)]="chartType" (selectionChange)="updateSalesChart()">
+        <mat-option value="bar">Bar</mat-option>
+        <mat-option value="pie">Pie</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="content">
+    <div class="sales-table">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let sale"> {{ sale.id }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="saleDate">
+          <th mat-header-cell *matHeaderCellDef> Date </th>
+          <td mat-cell *matCellDef="let sale"> {{ sale.fechaVenta | date }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="productName">
+          <th mat-header-cell *matHeaderCellDef> Product </th>
+          <td mat-cell *matCellDef="let sale"> {{ sale.productoNombre || 'Producto ' + sale.productoId }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let sale"> {{ sale.cantidad }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let sale"> {{ sale.precio | currency }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef> Total </th>
+          <td mat-cell *matCellDef="let sale"> {{ sale.precio * sale.cantidad | currency }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div class="chart-container">
+      <canvas #salesChart></canvas>
+    </div>
+  </div>
+</div>

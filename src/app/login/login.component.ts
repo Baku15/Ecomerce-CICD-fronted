@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     this.recaptchaV3Service.execute('importantAction')
       .subscribe((token) => {
         console.log("el tokenazo: "+token);
-      
+
       });
   }
 
@@ -48,39 +48,39 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  login() {
-    if (this.username === '' || this.password === '') {
-      this.stringMessage = 'Debe llenar todos los campos';
-      console.error('Debe llenar todos los campos');
-      this.mostrarMensajeDeleteError();
-      return;
-    }
-
-    if(this.tokenObtenido === ''){
-      this.stringMessage = 'Debe verificar que no es un robot';
-      console.error('Debe verificar que no es un robot');
-      this.mostrarMensajeDeleteError();
-      return;
-    }
-
-    this.credentials = {
-      username: this.username,
-      password: this.password
-    };
-
-    this.usuarioService.login(this.credentials).subscribe({
-      next: (response) => {
-        const { accessToken, userId, username, role } = response.result;
-        this.authService.setSessionData(accessToken, username, userId, role);
-        this.router.navigate(['/admin/welcome-page'], { queryParams: { number: accessToken } });
-      },
-      error: (error) => {
-        console.error('Error de login', error);
-        this.mostrarMensajeDeleteError();
-      }
-    });
+login() {
+  if (this.username === '' || this.password === '') {
+    this.stringMessage = 'Debe llenar todos los campos';
+    console.error('Debe llenar todos los campos');
+    this.mostrarMensajeDeleteError();
+    return;
   }
 
+  if (this.tokenObtenido === '') {
+    this.stringMessage = 'Debe verificar que no es un robot';
+    console.error('Debe verificar que no es un robot');
+    this.mostrarMensajeDeleteError();
+    return;
+  }
+
+  this.credentials = {
+    username: this.username,
+    password: this.password
+  };
+
+  this.usuarioService.login(this.credentials).subscribe({
+    next: (response) => {
+      const { accessToken, userId, username, role } = response.result;
+      sessionStorage.setItem('userId', userId.toString());
+      this.authService.setSessionData(accessToken, username, userId, role);
+      this.router.navigate(['/admin/welcome-page'], { queryParams: { number: accessToken } });
+    },
+    error: (error) => {
+      console.error('Error de login', error);
+      this.mostrarMensajeDeleteError();
+    }
+  });
+}
   mostrarAlerta = false;
   mostrarAlertaError = false;
   mostrarAlertaDelete = false;
