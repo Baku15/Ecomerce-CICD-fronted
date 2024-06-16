@@ -1,48 +1,84 @@
 .dashboard {
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
+  gap: 20px;
 }
 
 .summary-cards {
   display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin-bottom: 20px;
+  gap: 20px;
 }
 
 .card {
   background-color: #fff;
   border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  flex: 1;
   text-align: center;
 }
 
-.chart-controls {
-  margin-bottom: 20px;
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  color: #333;
+}
+
+.card p {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #555;
+}
+
+.chart-controls, .date-filters {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.chart-controls mat-form-field, .date-filters mat-form-field {
+  flex: 1;
+}
+
+.date-filters {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.date-filters button {
+  align-self: flex-end;
 }
 
 .content {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.sales-table, .chart-container {
+  flex: 1;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
 }
 
 .sales-table {
-  width: 50%;
-  margin-right: 20px;
+  overflow: auto;
 }
 
 .chart-container {
-  width: 50%;
-  height: 400px; /* Ajustar la altura del contenedor de la gráfica */
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-canvas {
-  width: 100% !important;
-  height: 100% !important;
+.chart-container canvas {
+  height: 100%;
+  width: 100%;
 }
 

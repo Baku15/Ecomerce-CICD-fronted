@@ -1,15 +1,16 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Sale } from '../../model/sales.model';
 import { AuthService } from '../autenticacion/auth.service';
+import { Producto } from '../../model/producto.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 
 
- export class SalesService {
+export class SalesService {
   private baseUrl = 'http://localhost:8040/api/venta';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -27,6 +28,34 @@ import { AuthService } from '../autenticacion/auth.service';
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}`, { headers }).pipe(
+      map(response => response.result),
+      catchError(this.handleError)
+    );
+  }
+
+  getSalesByUserIdAndDateRange(userId: number, startDate: string, endDate: string): Observable<Sale[]> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const params = { startDate, endDate };
+    return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/daterange`, { headers, params }).pipe(
+      map(response => response.result),
+      catchError(this.handleError)
+    );
+  }
+
+ getSalesByUserIdAndProductId(userId: number, productId: number): Observable<Sale[]> {
+  const token = this.authService.getToken();
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/product/${productId}`, { headers }).pipe(
+    map(response => response.result),
+    catchError(this.handleError)
+  );
+}
+
+  getSalesByUserIdAndCategoryId(userId: number, categoryId: number): Observable<Sale[]> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/category/${categoryId}`, { headers }).pipe(
       map(response => response.result),
       catchError(this.handleError)
     );
@@ -62,5 +91,14 @@ import { AuthService } from '../autenticacion/auth.service';
       }
     }
     return throwError(errorMessage);
+  }
+
+  getProducts(): Observable<Producto[]> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<{ code: string; result: Producto[] }>(`${this.baseUrl}/productos`, { headers }).pipe(
+      map(response => response.result),
+      catchError(this.handleError)
+    );
   }
 }

@@ -3,18 +3,23 @@ import { SalesService } from '../../services/ventas/sales.service';
 import { Sale } from '../../model/sales.model';
 import { Chart, registerables, ChartType } from 'chart.js';
 import { MaterialModule } from '../../material-module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { PlatformService } from '../../services/platform.service';
 import { AuthService } from '../../services/autenticacion/auth.service';
 import { Subscription } from 'rxjs';
+import { MatNativeDateModule } from '@angular/material/core';
+import { ProductoService } from '../../services/productos/producto.service';
+import { CategoriasService } from '../../services/categorias/categorias.service';
+import { Producto } from '../../model/producto.interface';
+import { error } from 'console';
 
 @Component({
   selector: 'app-sales-dashboard',
   standalone: true,
-  imports: [RouterModule, CommonModule, ReactiveFormsModule, MaterialModule],
+  imports: [FormsModule, RouterModule, CommonModule, ReactiveFormsModule, MaterialModule, MatNativeDateModule],
   templateUrl: './sales-dashboard.component.html',
   styleUrl: './sales-dashboard.component.css'
 })
@@ -33,47 +38,114 @@ export class SalesDashboardComponent implements OnInit, AfterViewInit {
   salesChart: any;
   chartType: ChartType = 'bar';
 
-  private authSubscription: Subscription = new Subscription();
+  startDate: Date | null = null;
+  endDate: Date | null = null;
+
+  products: Producto[] = [];
+  selectedProductId: number | null = null;
 
   constructor(
     private salesService: SalesService,
     private renderer: Renderer2,
-    private authService: AuthService
+    private platformService: PlatformService,
+    private authService: AuthService,
+    private productoService: ProductoService
   ) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
-    this.authSubscription.add(this.authService.userId$.subscribe(userId => {
-      if (userId !== 0) {
-        this.loadSalesData(userId);
-      } else {
-        console.error('Error: User ID is 0');
-      }
-    }));
+    this.loadSalesData();
+    this.loadProducts();
   }
 
   ngAfterViewInit(): void {
-    if (typeof window !== 'undefined') {
+    if (this.platformService.isBrowser()) {
       this.createSalesChart();
     }
   }
 
-  loadSalesData(userId: number) {
-    this.salesService.getSalesByUserId(userId).subscribe(
-      (data: Sale[]) => {
-        console.log('Ventas recibidas:', data);
-        this.sales = Array.isArray(data) ? data : [];
-        this.dataSource.data = this.sales;
-        this.calculateSummary();
-        if (typeof window !== 'undefined') {
-          this.updateSalesChart();
+  loadSalesData() {
+    const userId = this.authService.getUserId();
+    if (userId !== 0) {
+      this.salesService.getSalesByUserId(userId).subscribe(
+        (data: Sale[]) => {
+          console.log('Ventas recibidas:', data);
+          this.sales = Array.isArray(data) ? data : [];
+          this.dataSource.data = this.sales;
+          this.calculateSummary();
+          if (this.platformService.isBrowser()) {
+            this.updateSalesChart();
+          }
+        },
+        error => {
+          console.error('Error al cargar las ventas:', error);
         }
+      );
+    } else {
+      console.error('Error: User ID is 0');
+    }
+  }
+
+  loadProducts() {
+    this.productoService.getAllProducts().subscribe(
+      (data: Producto[]) => {
+        this.products = data;
       },
-      error => {
-        console.error('Error al cargar las ventas:', error);
+      error=> {
+        console.error('Error al cargar los productos:', error);
       }
     );
+  }
+
+  applyDateFilter() {
+    const userId = this.authService.getUserId();
+    if (userId !== 0 && this.startDate && this.endDate) {
+      const startDateString = this.startDate.toISOString();
+      const endDateString = this.endDate.toISOString();
+
+      this.salesService.getSalesByUserIdAndDateRange(userId, startDateString, endDateString).subscribe(
+        (data: Sale[]) => {
+          this.sales = Array.isArray(data) ? data : [];
+          this.dataSource.data = this.sales;
+          this.calculateSummary();
+          if (this.platformService.isBrowser()) {
+            this.updateSalesChart();
+          }
+        },
+        error => {
+          console.error('Error al cargar las ventas:', error);
+        }
+      );
+    } else {
+      console.error('Error: User ID is 0 or dates are not selected');
+    }
+  }
+
+  applyProductFilter() {
+    const userId = this.authService.getUserId();
+    if (userId !== 0 && this.selectedProductId !== null) {
+      this.salesService.getSalesByUserIdAndProductId(userId, this.selectedProductId).subscribe(
+        (data: Sale[]) => {
+          this.sales = Array.isArray(data) ? data : [];
+          this.dataSource.data = this.sales;
+          this.calculateSummary();
+          if (this.platformService.isBrowser()) {
+            this.updateSalesChart();
+          }
+        },
+        error => {
+          console.error('Error al cargar las ventas:', error);
+        }
+      );
+    } else {
+      console.error('Error: User ID is 0 or product is not selected');
+    }
+  }
+
+  clearProductFilter() {
+    this.selectedProductId = null;
+    this.loadSalesData();
   }
 
   calculateSummary() {
@@ -99,7 +171,7 @@ export class SalesDashboardComponent implements OnInit, AfterViewInit {
       data: {
         labels: this.topProducts.map(p => p.name),
         datasets: [{
-          label: 'Top Products',
+          label: 'Top Productos',
           data: this.topProducts.map(p => p.quantity),
           backgroundColor: this.chartType === 'bar' ? 'rgba(54, 162, 235, 0.2)' : [
             'rgba(54, 162, 235, 0.2)',
@@ -149,9 +221,5 @@ export class SalesDashboardComponent implements OnInit, AfterViewInit {
       this.salesChart.destroy();
       this.createSalesChart();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.authSubscription.unsubscribe();
   }
 }
