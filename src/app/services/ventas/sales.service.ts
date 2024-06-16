@@ -52,14 +52,14 @@ export class SalesService {
   );
 }
 
-  getSalesByUserIdAndCategoryId(userId: number, categoryId: number): Observable<Sale[]> {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/category/${categoryId}`, { headers }).pipe(
-      map(response => response.result),
-      catchError(this.handleError)
-    );
-  }
+getSalesByUserIdAndCategoryId(userId: number, categoryId: number): Observable<Sale[]> {
+  const token = this.authService.getToken();
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/categoria/${categoryId}`, { headers }).pipe(
+    map(response => response.result),
+    catchError(this.handleError)
+  );
+}
 
   getSaleById(id: number): Observable<Sale> {
     const token = this.authService.getToken();

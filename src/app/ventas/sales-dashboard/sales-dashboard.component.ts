@@ -1,20 +1,25 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef,  OnInit,  Renderer2, ViewChild } from '@angular/core';
 import { SalesService } from '../../services/ventas/sales.service';
 import { Sale } from '../../model/sales.model';
 import { Chart, registerables, ChartType } from 'chart.js';
 import { MaterialModule } from '../../material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule,  } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { PlatformService } from '../../services/platform.service';
 import { AuthService } from '../../services/autenticacion/auth.service';
-import { Subscription } from 'rxjs';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ProductoService } from '../../services/productos/producto.service';
 import { CategoriasService } from '../../services/categorias/categorias.service';
 import { Producto } from '../../model/producto.interface';
-import { error } from 'console';
+import { Categoria } from '../../model/categoria.interface';
+import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+
+
 
 @Component({
   selector: 'app-sales-dashboard',
@@ -23,8 +28,6 @@ import { error } from 'console';
   templateUrl: './sales-dashboard.component.html',
   styleUrl: './sales-dashboard.component.css'
 })
-
-
 export class SalesDashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('salesChart') salesChartRef!: ElementRef;
 
@@ -44,12 +47,16 @@ export class SalesDashboardComponent implements OnInit, AfterViewInit {
   products: Producto[] = [];
   selectedProductId: number | null = null;
 
+  categories: Categoria[] = [];
+  selectedCategoryId: number | null = null;
+
   constructor(
     private salesService: SalesService,
     private renderer: Renderer2,
     private platformService: PlatformService,
     private authService: AuthService,
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private categoriaService: CategoriasService
   ) {
     Chart.register(...registerables);
   }
@@ -57,6 +64,7 @@ export class SalesDashboardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.loadSalesData();
     this.loadProducts();
+    this.loadCategories();
   }
 
   ngAfterViewInit(): void {
@@ -70,7 +78,6 @@ export class SalesDashboardComponent implements OnInit, AfterViewInit {
     if (userId !== 0) {
       this.salesService.getSalesByUserId(userId).subscribe(
         (data: Sale[]) => {
-          console.log('Ventas recibidas:', data);
           this.sales = Array.isArray(data) ? data : [];
           this.dataSource.data = this.sales;
           this.calculateSummary();
@@ -92,8 +99,19 @@ export class SalesDashboardComponent implements OnInit, AfterViewInit {
       (data: Producto[]) => {
         this.products = data;
       },
-      error=> {
-        console.error('Error al cargar los productos:', error);
+      error => {
+        console.error('Error al cargar productos:', error);
+      }
+    );
+  }
+
+  loadCategories() {
+    this.categoriaService.getAllCategorias().subscribe(
+      (data: Categoria[]) => {
+        this.categories = data;
+      },
+      error => {
+        console.error('Error al cargar categorías:', error);
       }
     );
   }
@@ -145,6 +163,32 @@ export class SalesDashboardComponent implements OnInit, AfterViewInit {
 
   clearProductFilter() {
     this.selectedProductId = null;
+    this.loadSalesData();
+  }
+
+  applyCategoryFilter() {
+    const userId = this.authService.getUserId();
+    if (userId !== 0 && this.selectedCategoryId !== null) {
+      this.salesService.getSalesByUserIdAndCategoryId(userId, this.selectedCategoryId).subscribe(
+        (data: Sale[]) => {
+          this.sales = Array.isArray(data) ? data : [];
+          this.dataSource.data = this.sales;
+          this.calculateSummary();
+          if (this.platformService.isBrowser()) {
+            this.updateSalesChart();
+          }
+        },
+        error => {
+          console.error('Error al cargar las ventas:', error);
+        }
+      );
+    } else {
+      console.error('Error: User ID is 0 or category is not selected');
+    }
+  }
+
+  clearCategoryFilter() {
+    this.selectedCategoryId = null;
     this.loadSalesData();
   }
 
@@ -221,5 +265,40 @@ export class SalesDashboardComponent implements OnInit, AfterViewInit {
       this.salesChart.destroy();
       this.createSalesChart();
     }
+  }
+
+  exportSalesToCsv() {
+    const options = {
+      headers: ['ID', 'Fecha de Venta', 'Producto', 'Cantidad', 'Precio', 'Total']
+    };
+    const data = this.sales.map(sale => ({
+      ID: sale.id,
+      'Fecha de Venta': new Date(sale.fechaVenta).toLocaleDateString(),
+      Producto: sale.productoNombre,
+      Cantidad: sale.cantidad,
+      Precio: sale.precio.toFixed(2),
+      Total: (sale.precio * sale.cantidad).toFixed(2)
+    }));
+    new Angular5Csv(data, 'Ventas', options);
+  }
+
+  exportSalesToPdf() {
+    const doc = new jsPDF();
+    doc.text('Reporte de Ventas', 14, 16);
+    doc.text(`Total de Ventas: ${this.totalSales}`, 14, 26);
+    doc.text(`Ingresos Totales: ${this.totalRevenue.toFixed(2)}`, 14, 36);
+    autoTable(doc, {
+      head: [['ID', 'Fecha', 'Producto', 'Cantidad', 'Precio', 'Total']],
+      body: this.sales.map(sale => [
+        sale.id,
+        new Date(sale.fechaVenta).toLocaleDateString(),
+        sale.productoNombre || `Producto ${sale.productoId}`,
+        sale.cantidad,
+        sale.precio.toFixed(2),
+        (sale.precio * sale.cantidad).toFixed(2)
+      ]),
+      startY: 46
+    });
+    doc.save('reporte_de_ventas.pdf');
   }
 }

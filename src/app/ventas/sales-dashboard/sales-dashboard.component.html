@@ -10,43 +10,53 @@
       <p>{{ totalRevenue | currency }}</p>
     </div>
   </div>
-  <div class="chart-controls">
-    <mat-form-field appearance="fill">
-      <mat-label>Tipo de Gráfico</mat-label>
-      <mat-select [(ngModel)]="chartType" (selectionChange)="updateSalesChart()">
-        <mat-option value="bar">Barras</mat-option>
-        <mat-option value="pie">Pastel</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div class="controls-row">
+    <div class="chart-controls">
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de Gráfico</mat-label>
+        <mat-select [(ngModel)]="chartType" (selectionChange)="updateSalesChart()">
+          <mat-option value="bar">Barra</mat-option>
+          <mat-option value="pie">Pastel</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="date-filters">
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Inicio</mat-label>
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Fin</mat-label>
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="applyDateFilter()">Aplicar Filtro</button>
+    </div>
   </div>
-  <div class="date-filters">
-    <h2>Filtros por Fecha</h2>
+  <div class="product-filters">
     <mat-form-field appearance="fill">
-      <mat-label>Fecha de Inicio</mat-label>
-      <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
-      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-      <mat-datepicker #startPicker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Fecha de Fin</mat-label>
-      <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
-      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-      <mat-datepicker #endPicker></mat-datepicker>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="applyDateFilter()">Aplicar Filtro</button>
-  </div>
-  <div class="product-filter">
-    <h2>Filtrar por Producto</h2>
-    <mat-form-field appearance="fill">
-      <mat-label>Producto</mat-label>
-      <mat-select [(ngModel)]="selectedProductId" (selectionChange)="applyProductFilter()">
+      <mat-label>Seleccionar Producto</mat-label>
+      <mat-select [(ngModel)]="selectedProductId">
         <mat-option *ngFor="let product of products" [value]="product.id">{{ product.nombre }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button color="accent" (click)="clearProductFilter()">Limpiar Filtro</button>
+    <button mat-raised-button color="primary" (click)="applyProductFilter()">Aplicar Filtro de Producto</button>
+    <button mat-raised-button (click)="clearProductFilter()">Limpiar Filtro de Producto</button>
+  </div>
+  <div class="category-filters">
+    <mat-form-field appearance="fill">
+      <mat-label>Seleccionar Categoría</mat-label>
+      <mat-select [(ngModel)]="selectedCategoryId">
+        <mat-option *ngFor="let category of categories" [value]="category.idCategoria">{{ category.categoria }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="applyCategoryFilter()">Aplicar Filtro de Categoría</button>
+    <button mat-raised-button (click)="clearCategoryFilter()">Limpiar Filtro de Categoría</button>
   </div>
   <div class="content">
-    <h2>Detalles de Ventas</h2>
     <div class="sales-table">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
@@ -86,6 +96,10 @@
     <div class="chart-container">
       <canvas #salesChart></canvas>
     </div>
+  </div>
+  <div class="export-buttons">
+    <button mat-raised-button color="primary" (click)="exportSalesToCsv()">Exportar a CSV</button>
+    <button mat-raised-button color="primary" (click)="exportSalesToPdf()">Exportar a PDF</button>
   </div>
 </div>
 
