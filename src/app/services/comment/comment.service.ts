@@ -42,8 +42,8 @@ export class CommentService {
         errorMessage = 'No autorizado.';
       } else if (error.status === 404) {
         errorMessage = 'Recurso no encontrado.';
-      } else if (error.status === 500 && error.error.message === 'El usuario ya ha comentado sobre este producto.') {
-        errorMessage = 'Solo puedes agregar un mensaje por producto.';
+      } else if (error.status === 500 && error.error.message === 'Has excedido el número máximo de comentarios para este producto.') {
+        errorMessage = 'Has excedido el número máximo de comentarios para este producto.';
       } else {
         errorMessage = `Error: ${error.message}`;
       }

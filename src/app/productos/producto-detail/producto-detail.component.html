@@ -18,7 +18,7 @@
   </div>
 
   <h3>Agregar un comentario</h3>
-  <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+  <form [formGroup]="commentForm" (ngSubmit)="submitComment()" *ngIf="canComment">
     <mat-form-field>
       <mat-label>Comentario</mat-label>
       <textarea matInput formControlName="comentario"></textarea>
@@ -31,5 +31,6 @@
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Agregar Comentario</button>
   </form>
+  <p *ngIf="!canComment">Has excedido el número máximo de comentarios para este producto.</p>
 </div>
 

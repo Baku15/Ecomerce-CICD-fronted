@@ -1,11 +1,48 @@
+.all-products-button,
+.available-products-button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.all-products-button {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.all-products-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.available-products-button {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.available-products-button:hover {
+  background-color: #1e88e5;
+  transform: translateY(-2px);
+}
+
+.buttons-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center; /* Centra los botones horizontalmente */
+}
+
 .comprador-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px; /* Ajusta este valor según sea necesario */
+  gap: 10px;
 }
 
 .comprador-actions button {
-  flex: 1 1 calc(50% - 10px); /* Ajusta este valor según sea necesario */
+  flex: 1 1 calc(50% - 10px);
   margin-bottom: 10px;
 }
 
@@ -14,10 +51,21 @@
   align-items: center;
   justify-content: center;
   margin-top: 20px;
+  flex-wrap: wrap; /* Asegura que el formulario se ajuste */
 }
 
 .search-form .search-input {
   width: 300px;
+  margin-right: 15px;
+}
+
+.search-form .pagination-input {
+  width: 150px;
+  margin-right: 15px;
+}
+
+.search-form .sort-input {
+  width: 200px;
   margin-right: 15px;
 }
 
@@ -41,7 +89,7 @@
   background-color: #f8f8f8;
   min-height: 70vh;
   padding: 20px;
-  gap: 20px; /* Añadido gap para el espacio entre las tarjetas */
+  gap: 20px;
 }
 
 .product-list .product-card {
@@ -51,7 +99,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   background-color: #fff;
   transition: transform 0.3s, box-shadow 0.3s;
-  position: relative; /* Para el overlay de carga */
+  position: relative;
 }
 
 .product-list .product-card:hover {
@@ -71,7 +119,7 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s;
-  border-bottom: 1px solid #ddd; /* Borde sutil */
+  border-bottom: 1px solid #ddd;
 }
 
 .product-list .product-card .product-image img:hover {
@@ -103,7 +151,7 @@
   text-align: center;
 }
 
-.product-list .product-card .product-details .product-nombre {
+.product-list .product-card .product-details .producto-nombre {
   font-size: 18px;
   font-weight: bold;
   color: #108ee9;
@@ -136,20 +184,20 @@
   margin-bottom: 6px;
 }
 
-.product-list .product-card .product-details .producto-info .info-row .info-label {
+.product-list .product-card .product-details .producto-info .info-label {
   font-size: 14px;
   margin-right: 10px;
   color: #999;
 }
 
-.product-list .product-card .product-details .producto-info .info-row .info-value {
+.product-list .product-card .product-details .producto-info .info-value {
   font-weight: bold;
   color: #333;
 }
 
 .product-list .product-card .product-details .actions {
   display: flex;
-  justify-content: center; /* Cambiado a center para centrar los botones */
+  justify-content: center;
   margin-top: 8px;
 }
 
@@ -176,7 +224,7 @@
 }
 
 .product-list .product-card .product-details .actions .update-button::before {
-  content: "\f044"; /* Icono de lápiz de FontAwesome */
+  content: "\f044";
   font-family: 'FontAwesome';
   margin-right: 5px;
 }
@@ -191,7 +239,7 @@
 }
 
 .product-list .product-card .product-details .actions .delete-button::before {
-  content: "\f1f8"; /* Icono de papelera de FontAwesome */
+  content: "\f1f8";
   font-family: 'FontAwesome';
   margin-right: 5px;
 }

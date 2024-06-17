@@ -24,6 +24,7 @@ export class ProductoDetailComponent implements OnInit {
   comments: Comment[] = [];
   commentForm!: FormGroup;
   ratings: number[] = [1, 2, 3, 4, 5];
+  canComment: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,8 +55,15 @@ export class ProductoDetailComponent implements OnInit {
   }
 
   loadComments(productId: number) {
+    const userId = this.authService.getUserId();
     this.commentService.getCommentsByProductId(productId).subscribe(
-      comments => this.comments = comments,
+      comments => {
+        this.comments = comments;
+        const userComments = comments.filter(comment => comment.id_user === userId);
+        if (userComments.length >= 2) {
+          this.canComment = false;
+        }
+      },
       error => console.error('Error al cargar los comentarios:', error)
     );
   }
@@ -77,6 +85,10 @@ export class ProductoDetailComponent implements OnInit {
           this.comments.push(comment);
           this.snackBar.open('Comentario agregado con éxito', 'Cerrar', { duration: 3000 });
           this.commentForm.reset({ comentario: '', puntuacion: 5 });
+          const userComments = this.comments.filter(c => c.id_user === newComment.id_user);
+          if (userComments.length >= 2) {
+            this.canComment = false;
+          }
         },
         error => {
           this.snackBar.open(error, 'Cerrar', { duration: 3000 });

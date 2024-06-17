@@ -29,6 +29,7 @@ export class RegistroProductosComponent implements OnInit {
   totalPages: number = 0;
   currentPage: number = 0;
   pageSize: number = 10;
+  showOnlyAvailable: boolean = false; // Variable para controlar la visualización de productos disponibles
 
   constructor(
     private productoService: ProductoService,
@@ -36,9 +37,8 @@ export class RegistroProductosComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar,
     public authService: AuthService,
-    private shoppingCartService: ShoppingCartService, // Inyecta tu servicio de carrito
+    private shoppingCartService: ShoppingCartService,
     private dialog: MatDialog
-
   ) {}
 
   ngOnInit() {
@@ -52,12 +52,11 @@ export class RegistroProductosComponent implements OnInit {
 
     this.loadProductos();
 
- // Escucha los cambios en el formulario para hacer las búsquedas dinámicas
-  this.searchProductForm.valueChanges.pipe(
-    debounceTime(300)
-  ).subscribe(() => {
-    this.submitForm();
-  });
+    this.searchProductForm.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      this.submitForm();
+    });
 
     this.searchProductForm.get('page')!.valueChanges.pipe(
       debounceTime(300)
@@ -83,58 +82,74 @@ export class RegistroProductosComponent implements OnInit {
       this.loadProductos();
     });
   }
-loadProductos() {
-  const title = this.searchProductForm.get('title')!.value;
-  const role = this.authService.getRole();
-  const userId = this.authService.getUserId();
-  const page = this.searchProductForm.get('page')!.value;
-  const size = this.searchProductForm.get('size')!.value;
-  const sortField = this.searchProductForm.get('sortField')!.value;
-  const sortOrder = this.searchProductForm.get('sortOrder')!.value;
 
-  console.log('loadProductos called with:', { title, role, userId, page, size, sortField, sortOrder });
+  loadProductos() {
+    const title = this.searchProductForm.get('title')!.value;
+    const role = this.authService.getRole();
+    const userId = this.authService.getUserId();
+    const page = this.searchProductForm.get('page')!.value;
+    const size = this.searchProductForm.get('size')!.value;
+    const sortField = this.searchProductForm.get('sortField')!.value;
+    const sortOrder = this.searchProductForm.get('sortOrder')!.value;
 
-  if (role === 'EMPLEADO') {
-    if (title) {
-      this.productoService.getProductosByNameAndUserId(title, userId, page, size, sortField, sortOrder).subscribe(
-        (res: Page<Producto>) => {
-          console.log('API response:', res);
-          this.productos = res.content;
-          this.totalPages = res.totalPages;
-        },
-        error => {
-          console.error('Error al cargar productos:', error);
-          this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
-        }
-      );
-    } else {
-      this.productoService.getProductosByUsuario(userId, page, size, sortField, sortOrder).subscribe(
-        (res: Page<Producto>) => {
-          console.log('API response:', res);
-          this.productos = res.content;
-          this.totalPages = res.totalPages;
-        },
-        error => {
-          console.error('Error al cargar productos:', error);
-          this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
-        }
-      );
-    }
-  } else {
-    this.productoService.list(page, size, sortField, sortOrder).subscribe(
-      (res: Page<Producto>) => {
-        console.log('API response:', res);
-        this.productos = res.content;
-        this.totalPages = res.totalPages;
-      },
-      error => {
-        console.error('Error al cargar productos:', error);
-        this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
+    console.log('loadProductos called with:', { title, role, userId, page, size, sortField, sortOrder, showOnlyAvailable: this.showOnlyAvailable });
+
+    if (role === 'EMPLEADO') {
+      if (title) {
+        this.productoService.getProductosByNameAndUserId(title, userId, page, size, sortField, sortOrder).subscribe(
+          (res: Page<Producto>) => {
+            this.applyStockFilter(res.content);
+            this.totalPages = res.totalPages;
+          },
+          error => {
+            console.error('Error al cargar productos:', error);
+            this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
+          }
+        );
+      } else {
+        this.productoService.getProductosByUsuario(userId, page, size, sortField, sortOrder).subscribe(
+          (res: Page<Producto>) => {
+            this.applyStockFilter(res.content);
+            this.totalPages = res.totalPages;
+          },
+          error => {
+            console.error('Error al cargar productos:', error);
+            this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
+          }
+        );
       }
-    );
+    } else {
+      if (title) {
+        this.productoService.getProductosByName(title, page, size, sortField, sortOrder).subscribe(
+          (res: Page<Producto>) => {
+            this.applyStockFilter(res.content);
+            this.totalPages = res.totalPages;
+          },
+          error => {
+            console.error('Error al cargar productos:', error);
+            this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
+          }
+        );
+      } else {
+        this.productoService.list(page, size, sortField, sortOrder).subscribe(
+          (res: Page<Producto>) => {
+            this.applyStockFilter(res.content);
+            this.totalPages = res.totalPages;
+          },
+          error => {
+            console.error('Error al cargar productos:', error);
+            this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
+          }
+        );
+      }
+    }
   }
-}
- onPageChange(event: any) {
+
+  applyStockFilter(productos: Producto[]) {
+    this.productos = this.showOnlyAvailable ? productos.filter(p => p.stock > 0) : productos;
+  }
+
+  onPageChange(event: any) {
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
     this.loadProductos();
@@ -145,30 +160,34 @@ loadProductos() {
     this.loadProductos();
   }
 
-deleteProducto(id: number) {
-  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-    width: '250px',
-    data: { id: id }
-  });
+  deleteProducto(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: { id: id }
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      // Si el usuario confirma la eliminación
-      this.productoService.deleteProducto(id).subscribe(
-        () => {
-          this.snackBar.open('Producto eliminado con éxito', 'Cerrar', { duration: 3000 });
-          this.loadProductos(); // Recargar la lista de productos después de eliminar
-        },
-        error => {
-          console.error('Error al eliminar el producto:', error);
-          this.snackBar.open('Error al eliminar el producto', 'Cerrar', { duration: 3000 });
-        }
-      );
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.productoService.deleteProducto(id).subscribe(
+          () => {
+            this.snackBar.open('Producto eliminado con éxito', 'Cerrar', { duration: 3000 });
+            this.loadProductos();
+          },
+          error => {
+            console.error('Error al eliminar el producto:', error);
+            this.snackBar.open('Error al eliminar el producto', 'Cerrar', { duration: 3000 });
+          }
+        );
+      }
+    });
+  }
+
+  openQuantityDialog(producto: Producto): void {
+    if (producto.stock === 0) {
+      this.snackBar.open('No se puede agregar al carrito. Stock agotado.', 'Cerrar', { duration: 3000 });
+      return;
     }
-  });
-}
 
-    openQuantityDialog(producto: Producto): void {
     const dialogRef = this.dialog.open(QuantityDialogComponent, {
       data: { quantity: 1, stock: producto.stock }
     });
@@ -179,13 +198,14 @@ deleteProducto(id: number) {
       }
     });
   }
-addToCart(producto: Producto, quantity: number): void {
+
+  addToCart(producto: Producto, quantity: number): void {
     const userId = this.authService.getUserId();
     const cartItem = {
-      id: 0, // Asignando un valor inicial para el id
+      id: 0,
       quantity: quantity,
       productId: producto.id,
-      purchaseRecordId: 0, // Esto permitirá crear un nuevo registro de compra si no existe
+      purchaseRecordId: 0,
       userId: userId,
       productName: producto.nombre,
       productPrice: producto.precio
@@ -202,9 +222,20 @@ addToCart(producto: Producto, quantity: number): void {
     );
   }
 
+  showAllProducts() {
+    this.showOnlyAvailable = false;
+    this.loadProductos();
+  }
+
+  showAvailableProducts() {
+    this.showOnlyAvailable = true;
+    this.loadProductos();
+  }
+
   rateProduct(id: number) {
     // Lógica para calificar el producto
   }
+
   commentOnProduct(id: number) {
     this.router.navigate(['/admin/comments', id]);
   }
