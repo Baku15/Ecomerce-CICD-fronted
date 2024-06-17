@@ -13,6 +13,7 @@ import { ShoppingCart } from '../../model/shopping-cart.model';
 import { ShoppingCartService } from '../../services/carritoCompras/registro-carrito.service';
 import { QuantityDialogComponent } from '../../quantity-dialog/quantity-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-registro-productos',
@@ -51,11 +52,12 @@ export class RegistroProductosComponent implements OnInit {
 
     this.loadProductos();
 
-    this.searchProductForm.get('title')!.valueChanges.pipe(
-      debounceTime(300)
-    ).subscribe(() => {
-      this.loadProductos();
-    });
+ // Escucha los cambios en el formulario para hacer las búsquedas dinámicas
+  this.searchProductForm.valueChanges.pipe(
+    debounceTime(300)
+  ).subscribe(() => {
+    this.submitForm();
+  });
 
     this.searchProductForm.get('page')!.valueChanges.pipe(
       debounceTime(300)
@@ -81,52 +83,58 @@ export class RegistroProductosComponent implements OnInit {
       this.loadProductos();
     });
   }
+loadProductos() {
+  const title = this.searchProductForm.get('title')!.value;
+  const role = this.authService.getRole();
+  const userId = this.authService.getUserId();
+  const page = this.searchProductForm.get('page')!.value;
+  const size = this.searchProductForm.get('size')!.value;
+  const sortField = this.searchProductForm.get('sortField')!.value;
+  const sortOrder = this.searchProductForm.get('sortOrder')!.value;
 
-  loadProductos() {
-    const title = this.searchProductForm.get('title')!.value;
-    const role = this.authService.getRole();
-    const userId = this.authService.getUserId();
-    const page = this.searchProductForm.get('page')!.value;
-    const size = this.searchProductForm.get('size')!.value;
-    const sortField = this.searchProductForm.get('sortField')!.value;
-    const sortOrder = this.searchProductForm.get('sortOrder')!.value;
+  console.log('loadProductos called with:', { title, role, userId, page, size, sortField, sortOrder });
 
-    if (role === 'Comprador') {
-      if (title) {
-        this.productoService.getProductosByName(title, page, size, sortField, sortOrder).subscribe(
-          (res: Page<Producto>) => {
-            this.productos = res.content;
-            this.totalPages = res.totalPages;
-          }
-        );
-      } else {
-        this.productoService.list(page, size, sortField, sortOrder).subscribe(
-          (res: Page<Producto>) => {
-            this.productos = res.content;
-            this.totalPages = res.totalPages;
-          }
-        );
-      }
+  if (role === 'EMPLEADO') {
+    if (title) {
+      this.productoService.getProductosByNameAndUserId(title, userId, page, size, sortField, sortOrder).subscribe(
+        (res: Page<Producto>) => {
+          console.log('API response:', res);
+          this.productos = res.content;
+          this.totalPages = res.totalPages;
+        },
+        error => {
+          console.error('Error al cargar productos:', error);
+          this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
+        }
+      );
     } else {
-      if (title) {
-        this.productoService.getProductosByName(title, page, size, sortField, sortOrder).subscribe(
-          (res: Page<Producto>) => {
-            this.productos = res.content;
-            this.totalPages = res.totalPages;
-          }
-        );
-      } else {
-        this.productoService.getProductosByUsuario(userId, page, size, sortField, sortOrder).subscribe(
-          (res: Page<Producto>) => {
-            this.productos = res.content;
-            this.totalPages = res.totalPages;
-          }
-        );
-      }
+      this.productoService.getProductosByUsuario(userId, page, size, sortField, sortOrder).subscribe(
+        (res: Page<Producto>) => {
+          console.log('API response:', res);
+          this.productos = res.content;
+          this.totalPages = res.totalPages;
+        },
+        error => {
+          console.error('Error al cargar productos:', error);
+          this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
+        }
+      );
     }
+  } else {
+    this.productoService.list(page, size, sortField, sortOrder).subscribe(
+      (res: Page<Producto>) => {
+        console.log('API response:', res);
+        this.productos = res.content;
+        this.totalPages = res.totalPages;
+      },
+      error => {
+        console.error('Error al cargar productos:', error);
+        this.snackBar.open('Error al cargar productos', 'Cerrar', { duration: 3000 });
+      }
+    );
   }
-
-  onPageChange(event: any) {
+}
+ onPageChange(event: any) {
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
     this.loadProductos();
@@ -138,17 +146,28 @@ export class RegistroProductosComponent implements OnInit {
   }
 
 deleteProducto(id: number) {
-  this.productoService.deleteProducto(id).subscribe(
-    () => {
-      this.snackBar.open('Producto eliminado con éxito', 'Cerrar', { duration: 3000 });
-      this.loadProductos(); // Recargar la lista de productos después de eliminar
-    },
-    error => {
-      console.error('Error al eliminar el producto:', error);
-      this.snackBar.open('Error al eliminar el producto', 'Cerrar', { duration: 3000 });
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    width: '250px',
+    data: { id: id }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      // Si el usuario confirma la eliminación
+      this.productoService.deleteProducto(id).subscribe(
+        () => {
+          this.snackBar.open('Producto eliminado con éxito', 'Cerrar', { duration: 3000 });
+          this.loadProductos(); // Recargar la lista de productos después de eliminar
+        },
+        error => {
+          console.error('Error al eliminar el producto:', error);
+          this.snackBar.open('Error al eliminar el producto', 'Cerrar', { duration: 3000 });
+        }
+      );
     }
-  );
+  });
 }
+
     openQuantityDialog(producto: Producto): void {
     const dialogRef = this.dialog.open(QuantityDialogComponent, {
       data: { quantity: 1, stock: producto.stock }

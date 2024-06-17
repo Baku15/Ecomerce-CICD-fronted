@@ -77,4 +77,13 @@ export class ProductoService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get<Producto[]>(`${this.baseUrl}/low-stock/${userId}`, { headers });
   }
+//metodo para buscar producto por id de usuario
+getProductosByNameAndUserId(nombre: string, userId: number, page: number, size: number, sort: string, order: string): Observable<Page<Producto>> {
+  let params = new HttpParams();
+  params = params.append('page', page.toString());
+  params = params.append('size', size.toString());
+  params = params.append('sort', `${sort},${order}`);
+
+  return this.http.get<Page<Producto>>(`${this.baseUrl}/search/${nombre}/usuario/${userId}`, { params });
+}
 }
