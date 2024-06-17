@@ -32,45 +32,46 @@
   color: #555;
 }
 
-.controls-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.chart-controls, .date-filters, .product-filters, .category-filters {
+.filters-row {
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
-.chart-controls mat-form-field, .date-filters mat-form-field, .product-filters mat-form-field, .category-filters mat-form-field {
+.filters-row mat-form-field, .product-category-filters mat-form-field {
   flex: 1;
 }
 
-.date-filters button, .product-filters button, .category-filters button {
-  align-self: flex-end;
+.product-category-filters {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .content {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 20px;
-}
-
-.sales-table, .chart-container {
-  flex: 1;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 16px;
 }
 
 .sales-table {
   overflow: auto;
 }
 
+.charts-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
 .chart-container {
+  flex: 1;
+  min-width: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
   height: 400px;
   display: flex;
   justify-content: center;
@@ -84,12 +85,7 @@
 
 .export-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 10px;
-  margin-top: 20px;
-}
-
-button {
-  min-width: 120px;
 }
 

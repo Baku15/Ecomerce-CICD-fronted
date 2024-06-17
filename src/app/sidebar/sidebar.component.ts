@@ -1,4 +1,4 @@
-import { Component, OnInit, Signal, computed } from '@angular/core';
+import { Component, OnDestroy, OnInit, Signal, computed } from '@angular/core';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +13,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../services/autenticacion/auth.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ProductoService } from '../services/productos/producto.service';
+import { MaterialModule } from '../material-module';
+import { Producto } from '../model/producto.interface';
 
 export type MenuItem = {
   icon: string;
@@ -34,6 +37,7 @@ export type MenuItem = {
     MatCheckboxModule,
     FormsModule,
     CommonModule,
+    MaterialModule
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
@@ -55,11 +59,24 @@ export class SidebarComponent implements OnInit {
 
   role: string = '';
   private authSubscription: Subscription = new Subscription();
+  lowStockProducts: Producto[] = [];
+  lowStockCount: number = 0;
+  showNotificationPanel: boolean = false;
 
-  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private productService: ProductoService
+  ) {}
 
   ngOnInit(): void {
-    this.authSubscription.add(this.authService.role$.subscribe(role => this.role = role));
+    this.authSubscription.add(this.authService.role$.subscribe(role => {
+      this.role = role;
+      if (this.role === 'EMPLEADO') {
+        this.loadLowStockNotifications();
+      }
+    }));
     this.route.queryParams.subscribe((params) => {
       this.id = params['number'];
     });
@@ -82,5 +99,33 @@ export class SidebarComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.authSubscription.unsubscribe();
+  }
+
+  loadLowStockNotifications() {
+    const userId = this.authService.getUserId();
+    this.productService.getLowStockProductsByUserId(userId).subscribe(
+      (products: Producto[]) => {
+        this.lowStockProducts = products;
+        this.lowStockCount = products.length;
+              console.log('Low stock products:', products); // Log the received data
+
+      },
+      (error) => {
+        console.error('Error al cargar productos con stock bajo:', error);
+      }
+    );
+  }
+
+  toggleNotificationPanel() {
+    this.showNotificationPanel = !this.showNotificationPanel;
+  }
+
+  closeNotificationPanel() {
+    this.showNotificationPanel = false;
+  }
+
+  removeNotification(productId: number) {
+    this.lowStockProducts = this.lowStockProducts.filter(product => product.id !== productId);
+    this.lowStockCount = this.lowStockProducts.length;
   }
 }

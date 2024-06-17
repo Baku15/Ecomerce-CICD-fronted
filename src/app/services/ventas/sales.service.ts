@@ -36,30 +36,30 @@ export class SalesService {
   getSalesByUserIdAndDateRange(userId: number, startDate: string, endDate: string): Observable<Sale[]> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const params = { startDate, endDate };
+    const params = new HttpParams().set('startDate', startDate).set('endDate', endDate);
     return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/daterange`, { headers, params }).pipe(
       map(response => response.result),
       catchError(this.handleError)
     );
   }
 
- getSalesByUserIdAndProductId(userId: number, productId: number): Observable<Sale[]> {
-  const token = this.authService.getToken();
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/product/${productId}`, { headers }).pipe(
-    map(response => response.result),
-    catchError(this.handleError)
-  );
-}
+  getSalesByUserIdAndProductId(userId: number, productId: number): Observable<Sale[]> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/product/${productId}`, { headers }).pipe(
+      map(response => response.result),
+      catchError(this.handleError)
+    );
+  }
 
-getSalesByUserIdAndCategoryId(userId: number, categoryId: number): Observable<Sale[]> {
-  const token = this.authService.getToken();
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/categoria/${categoryId}`, { headers }).pipe(
-    map(response => response.result),
-    catchError(this.handleError)
-  );
-}
+  getSalesByUserIdAndCategoryId(userId: number, categoryId: number): Observable<Sale[]> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<{ code: string; result: Sale[] }>(`${this.baseUrl}/usuario/${userId}/categoria/${categoryId}`, { headers }).pipe(
+      map(response => response.result),
+      catchError(this.handleError)
+    );
+  }
 
   getSaleById(id: number): Observable<Sale> {
     const token = this.authService.getToken();
@@ -100,5 +100,19 @@ getSalesByUserIdAndCategoryId(userId: number, categoryId: number): Observable<Sa
       map(response => response.result),
       catchError(this.handleError)
     );
+  }
+
+  getSalesPaginated(userId: number, page: number, size: number, sortColumn: string, sortOrder: string): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const params = new HttpParams().set('page', page).set('size', size).set('sortColumn', sortColumn).set('sortOrder', sortOrder);
+    return this.http.get<{ code: string; result: any }>(`${this.baseUrl}/usuario/${userId}/paginated`, { headers, params });
+  }
+
+  searchSales(userId: number, nombreProducto: string, page: number, size: number, sortColumn: string, sortOrder: string): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const params = new HttpParams().set('nombreProducto', nombreProducto).set('page', page).set('size', size).set('sortColumn', sortColumn).set('sortOrder', sortOrder);
+    return this.http.get<{ code: string; result: any }>(`${this.baseUrl}/usuario/${userId}/search`, { headers, params });
   }
 }

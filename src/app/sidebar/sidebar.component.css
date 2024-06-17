@@ -34,7 +34,7 @@ mat-sidenav-container {
     color: black;
     overflow-y:visible;
     height: 100vh; /* Use full height of the viewport */
-    
+
 }
 .sidebar-bottom {
     position: absolute;
@@ -66,6 +66,39 @@ mat-icon {
 @media only screen and (max-width: 768px) {
     .hidebar{
         display:flex;
-    
+
     }
   }
+
+.notification-panel {
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  color: black; /* Cambia el color del texto a negro */
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  color: black; /* Cambia el color del texto a negro */
+}
+
+.notification-item button {
+  background: none;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+}
+
+.notification-item button:hover {
+  text-decoration: underline;
+}
+

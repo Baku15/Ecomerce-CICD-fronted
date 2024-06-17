@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Producto } from '../../model/producto.interface';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Page } from '../../model/page.model';
+import { AuthService } from '../autenticacion/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { Page } from '../../model/page.model';
 export class ProductoService {
   private baseUrl = 'http://localhost:8040/api/producto';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   list(page: number, size: number, sort: string, order: string): Observable<Page<Producto>> {
     let params = new HttpParams();
@@ -69,5 +70,11 @@ export class ProductoService {
     headers.append('Content-Type', 'multipart/form-data');
 
     return this.http.put<any>(`${this.baseUrl}/editar/${productoId}`, productoDto, { headers: headers });
+  }
+
+  getLowStockProductsByUserId(userId: number): Observable<Producto[]> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<Producto[]>(`${this.baseUrl}/low-stock/${userId}`, { headers });
   }
 }

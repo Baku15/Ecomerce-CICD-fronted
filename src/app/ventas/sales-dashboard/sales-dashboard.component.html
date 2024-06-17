@@ -10,33 +10,35 @@
       <p>{{ totalRevenue | currency }}</p>
     </div>
   </div>
-  <div class="controls-row">
-    <div class="chart-controls">
-      <mat-form-field appearance="fill">
-        <mat-label>Tipo de Gráfico</mat-label>
-        <mat-select [(ngModel)]="chartType" (selectionChange)="updateSalesChart()">
-          <mat-option value="bar">Barra</mat-option>
-          <mat-option value="pie">Pastel</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="date-filters">
-      <mat-form-field appearance="fill">
-        <mat-label>Fecha de Inicio</mat-label>
-        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
-        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-        <mat-datepicker #startPicker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Fecha de Fin</mat-label>
-        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
-        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-        <mat-datepicker #endPicker></mat-datepicker>
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="applyDateFilter()">Aplicar Filtro</button>
-    </div>
+  <div class="filters-row">
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo de Gráfico</mat-label>
+      <mat-select [(ngModel)]="chartType" (selectionChange)="updateSalesChart()">
+        <mat-option value="bar">Barra</mat-option>
+        <mat-option value="pie">Pastel</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha de Inicio</mat-label>
+      <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Fecha de Fin</mat-label>
+      <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="applyDateFilter()">Aplicar Filtro</button>
   </div>
-  <div class="product-filters">
+  <div class="filters-row">
+    <mat-form-field appearance="fill">
+      <mat-label>Buscar Producto</mat-label>
+      <input matInput [formControl]="searchControl">
+    </mat-form-field>
+  </div>
+  <div class="product-category-filters">
     <mat-form-field appearance="fill">
       <mat-label>Seleccionar Producto</mat-label>
       <mat-select [(ngModel)]="selectedProductId">
@@ -45,8 +47,7 @@
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="applyProductFilter()">Aplicar Filtro de Producto</button>
     <button mat-raised-button (click)="clearProductFilter()">Limpiar Filtro de Producto</button>
-  </div>
-  <div class="category-filters">
+
     <mat-form-field appearance="fill">
       <mat-label>Seleccionar Categoría</mat-label>
       <mat-select [(ngModel)]="selectedCategoryId">
@@ -92,9 +93,18 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons (page)="onPageChange($event)"></mat-paginator>
     </div>
-    <div class="chart-container">
-      <canvas #salesChart></canvas>
+    <div class="charts-section">
+      <div class="chart-container">
+        <canvas #salesChart></canvas>
+      </div>
+      <div class="chart-container">
+        <canvas #revenueChart></canvas>
+      </div>
+      <div class="chart-container">
+        <canvas #categoryChart></canvas>
+      </div>
     </div>
   </div>
   <div class="export-buttons">

@@ -5,7 +5,23 @@
   <button mat-icon-button aria-label="Example icon button with a home icon" (click)="collapsed.set(!collapsed())">
     <mat-icon>menu</mat-icon>
   </button>
+  <div class="spacer"></div>
+  <div *ngIf="role === 'EMPLEADO'" class="notification-container">
+    <button mat-icon-button aria-label="Notifications" [matBadge]="lowStockCount" matBadgeColor="warn" matBadgePosition="above after" (click)="toggleNotificationPanel()">
+      <mat-icon>notifications</mat-icon>
+    </button>
+    <div *ngIf="showNotificationPanel" class="notification-panel">
+      <div *ngFor="let product of lowStockProducts" class="notification-item">
+        {{ product.nombre }} tiene stock bajo
+        <button mat-icon-button (click)="removeNotification(product.id)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <button mat-button (click)="closeNotificationPanel()">Cerrar</button>
+    </div>
+  </div>
 </mat-toolbar>
+
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" [(opened)]="opened" [style.width]="sidenavwidth()" class="custom-sidebar">
     <a (click)="irperfil()" routerLinkActive="active" matTooltip="My profile" [matTooltipPosition]="'right'">
