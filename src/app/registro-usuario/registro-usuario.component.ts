@@ -51,6 +51,12 @@ export class RegistroUsuarioComponent {
         console.error('Espacio maximo alcanzado.');
         return;
       }
+      if(this.nombre.value && this.nombre.value.length > 50 || this.password.value && this.password.value.length > 50 || (this.telefono.value && this.telefono.value.length > 50 )){
+        this.stringMessage = 'Maximo 50 caracteres en los inputs.';
+        this.mostrarMensajeDeleteError();
+        console.error('Espacio maximo alcanzado.');
+        return;
+      }
     }
     this.newUser = {
       nombre: this.nombre.value,
