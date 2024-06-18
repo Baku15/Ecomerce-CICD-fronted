@@ -44,6 +44,13 @@ export class RegistroUsuarioComponent {
       console.error('Debe llenar todos los campos');
       this.mostrarMensajeDeleteError();
       return;
+    }else{
+      if(this.nombre.value && this.nombre.value.length < 5 || this.password.value && this.password.value.length < 5 || (this.telefono.value && this.telefono.value.length < 5)){
+        this.stringMessage = 'Mimino 5 caracteres en los inputs.';
+        this.mostrarMensajeDeleteError();
+        console.error('Espacio maximo alcanzado.');
+        return;
+      }
     }
     this.newUser = {
       nombre: this.nombre.value,
