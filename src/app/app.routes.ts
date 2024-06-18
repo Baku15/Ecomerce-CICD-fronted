@@ -1,4 +1,8 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './services/autenticacion/auth.guard';
+import { AuthEmployeeGuard } from './services/autenticacion/auth-employee.guard';
+import { AuthCompradorGuard } from './services/autenticacion/auth-comprador.guard';
+
 import { RegistroUsuarioComponent } from './registro-usuario/registro-usuario.component';
 import { ShoppingCartComponent } from './carrito-compras/carrito-compras.component';
 import { EditarperfilComponent } from './editar-perfil/editar-perfil.component';
@@ -22,40 +26,35 @@ import { VerComentariosComponent } from './productos/ver-comentarios/ver-comenta
 import { SalesDashboardComponent } from './ventas/sales-dashboard/sales-dashboard.component';
 
 export const routes: Routes = [
-  //Login
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'registro-usuario', component: RegistroUsuarioComponent },
   { path: 'recoveraccount', component: RecoverpasswordComponent },
-  //Para el user Admin
   {
     path: 'admin',
     component: SidebarComponent,
+    canActivate: [AuthGuard],
     children: [
-      // { path: 'catalogo', component: CatalogoComponent},
-      { path: 'categoria', component: CategoriaProductoComponent },
-      { path: 'editar-perfil', component: EditarperfilComponent },
-      { path: 'menu-principal', component: MenuPrincipalComponent },
-      { path: 'perfil-user', component: PerfilUsuarioComponent },
-      { path: 'lista-productos', component: RegistroProductosComponent },
-      {path: 'welcome-page', component: WelcomePageComponent},
-      { path: 'nuevo-producto', component: ProductoFormComponent },
-      { path: 'registro-producto/:id/edit', component: ProductoFormComponent },
-      { path: 'userlist', component: UserlistComponent },
-      { path: 'producto/:productoId', component: UpdateProductoComponent },
-      { path: 'detalleuser', component: DetalleuserComponent },
-      { path: 'marca', component: MarcaComponent },
-      { path: 'registroempleado', component: RegistroEmpleadoComponent },
-      { path: 'lista-marcas', component: ListaMarcasComponent },
-      { path: 'carritoCompras', component: ShoppingCartComponent },
-        { path: 'comments/:id', component: ProductoDetailComponent },
-        { path: 'ver-comentarios/:productoId', component: VerComentariosComponent },
-        { path: 'sales-dashboard', component: SalesDashboardComponent },
-
-
-
+      { path: 'categoria', component: CategoriaProductoComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'editar-perfil', component: EditarperfilComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'menu-principal', component: MenuPrincipalComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'perfil-user', component: PerfilUsuarioComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'lista-productos', component: RegistroProductosComponent},
+      { path: 'welcome-page', component: WelcomePageComponent},
+      { path: 'nuevo-producto', component: ProductoFormComponent, canActivate: [AuthEmployeeGuard], },
+      { path: 'registro-producto/:id/edit', component: ProductoFormComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'userlist', component: UserlistComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'producto/:productoId', component: UpdateProductoComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'detalleuser', component: DetalleuserComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'marca', component: MarcaComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'registroempleado', component: RegistroEmpleadoComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'lista-marcas', component: ListaMarcasComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'carritoCompras', component: ShoppingCartComponent, canActivate: [AuthCompradorGuard] },
+      { path: 'comments/:id', component: ProductoDetailComponent, canActivate: [AuthCompradorGuard] },
+      { path: 'ver-comentarios/:productoId', component: VerComentariosComponent, canActivate: [AuthCompradorGuard] },
+      { path: 'sales-dashboard', component: SalesDashboardComponent, canActivate: [AuthEmployeeGuard] },
     ],
   },
-  //Para el user SuperAdmin
   { path: 'superadmin', component: SidebarComponent, children: [] },
 ];
+

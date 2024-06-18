@@ -1,36 +1,40 @@
-<div *ngIf="producto">
-  <h2>{{ producto.nombre }}</h2>
-  <p>{{ producto.descripcion }}</p>
-  <p>Precio: {{ producto.precio }}</p>
-  <p>Stock: {{ producto.stock }}</p>
+<div *ngIf="producto" class="producto-container">
+  <h2 class="producto-nombre">{{ producto.nombre }}</h2>
+  <p class="producto-descripcion">{{ producto.descripcion }}</p>
+  <p class="producto-precio">Precio: {{ producto.precio | currency:'Bs' }}</p>
+  <p class="producto-stock">Stock: {{ producto.stock }}</p>
 
-  <h3>Comentarios</h3>
-  <div *ngFor="let comment of comments">
+  <h3 class="section-title">Comentarios</h3>
+  <div *ngFor="let comment of comments" class="comment-card">
     <mat-card>
-      <mat-card-title>Comentario</mat-card-title>
+      <mat-card-header>
+        <div mat-card-avatar class="comment-avatar"></div>
+        <mat-card-title>{{ comment.userName }}</mat-card-title>
+        <mat-card-subtitle>{{ comment.fechaComentario | date }}</mat-card-subtitle>
+      </mat-card-header>
       <mat-card-content>
         <p>{{ comment.comentario }}</p>
-        <p>Puntuación: {{ comment.puntuacion }}</p>
-        <p>Usuario: {{ comment.userName }}</p>
-        <p>Fecha: {{ comment.fechaComentario | date }}</p>
+        <div class="comment-rating" matBadge="{{ comment.puntuacion }}" matBadgeColor="primary">
+          Puntuación: {{ comment.puntuacion }}
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
 
-  <h3>Agregar un comentario</h3>
-  <form [formGroup]="commentForm" (ngSubmit)="submitComment()" *ngIf="canComment">
-    <mat-form-field>
+  <h3 class="section-title">Agregar un comentario</h3>
+  <form [formGroup]="commentForm" (ngSubmit)="submitComment()" *ngIf="canComment" class="comment-form">
+    <mat-form-field class="full-width">
       <mat-label>Comentario</mat-label>
       <textarea matInput formControlName="comentario"></textarea>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="full-width">
       <mat-label>Puntuación</mat-label>
       <mat-select formControlName="puntuacion">
         <mat-option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Agregar Comentario</button>
+    <button mat-raised-button color="primary" type="submit" class="comment-button">Agregar Comentario</button>
   </form>
-  <p *ngIf="!canComment">Has excedido el número máximo de comentarios para este producto.</p>
+  <p *ngIf="!canComment" class="comment-limit-message">Has excedido el número máximo de comentarios para este producto.</p>
 </div>
 

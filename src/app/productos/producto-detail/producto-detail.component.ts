@@ -7,8 +7,8 @@ import { AuthService } from '../../services/autenticacion/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommentService } from '../../services/comment/comment.service';
 import { Comment } from '../../model/comment.model'; // Asegúrate de que esta ruta sea correcta
-import { MaterialModule } from '../../material-module';
 import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../../material-module';
 
 
 @Component({

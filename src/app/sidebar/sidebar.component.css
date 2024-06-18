@@ -3,38 +3,35 @@
     height: 200px;
     margin: 10px;
     border: 1px solid #d64141;
-  }
-  .container{
+}
+.container{
     display: flex;
     height: 100vh; /* Use full height of the viewport */
     flex-direction: column;
-  }
-mat-toolbar{
+}
+mat-toolbar {
     position: relative;
     z-index: 5;
 }
-.mat-elevation-z3{
-    background-color: rgb(6, 54, 122);
+.mat-elevation-z3 {
+    background-color: #3f51b5; /* Color de fondo de la barra de herramientas */
     color: white;
 }
-.hidebar{
+.hidebar {
     display: none;
-
 }
-.iconoblanco{
+.iconoblanco {
     color: white;
-
 }
 mat-sidenav-container {
-    height: calc(100vh-64px);
+    height: calc(100vh - 64px);
 }
-.content{
+.content {
     padding: 1%;
-    background-color: #EBF2FC;
+    background-color: #f5f5f5; /* Color de fondo del contenido */
     color: black;
-    overflow-y:visible;
+    overflow-y: visible;
     height: 100vh; /* Use full height of the viewport */
-
 }
 .sidebar-bottom {
     position: absolute;
@@ -42,63 +39,78 @@ mat-sidenav-container {
     width: 100%;
 }
 .custom-sidebar {
-    background-color: rgb(6, 54, 122);
+    background-color: #303f9f; /* Color de fondo del sidebar */
     color: white;
-  }
-
-
+}
 mat-icon {
     margin-right: 10px;
 }
-
-
-
-.sidenav-header{
+.sidenav-header {
     padding-top: 24px;
     text-align: center;
-
-    >img {
+    > img {
         border-radius: 100%;
         object-fit: cover;
     }
 }
-
 @media only screen and (max-width: 768px) {
-    .hidebar{
-        display:flex;
-
+    .hidebar {
+        display: flex;
     }
-  }
-
+}
+.spacer {
+    flex: 1;
+}
+.notification-container {
+    position: relative;
+}
 .notification-panel {
-  position: absolute;
-  top: 60px;
-  right: 10px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 300px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  padding: 10px;
-  color: black; /* Cambia el color del texto a negro */
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background-color: #ffffff; /* Color de fondo del panel de notificaciones */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    color: black; /* Cambia el color del texto a negro */
 }
-
 .notification-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 0;
-  color: black; /* Cambia el color del texto a negro */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    color: black; /* Cambia el color del texto a negro */
 }
-
 .notification-item button {
-  background: none;
-  border: none;
-  color: #f44336;
-  cursor: pointer;
+    background: none;
+    border: none;
+    color: #f44336;
+    cursor: pointer;
+}
+.notification-item button:hover {
+    text-decoration: underline;
+}
+.notification-item .mat-icon {
+    color: #f44336; /* Color del icono de cerrar */
 }
 
-.notification-item button:hover {
-  text-decoration: underline;
+/* Estilo adicional para los botones del sidebar */
+.mat-nav-list a.mat-list-item {
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.mat-nav-list a.mat-list-item:hover {
+    background-color: #3949ab; /* Color de fondo al pasar el mouse */
+    color: #fff; /* Color del texto al pasar el mouse */
+}
+
+.mat-nav-list a.mat-list-item.active {
+    background-color: #3949ab; /* Color de fondo para la página activa */
+    color: #fff; /* Color del texto para la página activa */
 }
 
