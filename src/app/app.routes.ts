@@ -40,7 +40,7 @@ export const routes: Routes = [
       { path: 'editar-perfil', component: EditarperfilComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'menu-principal', component: MenuPrincipalComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'perfil-user', component: PerfilUsuarioComponent, canActivate: [AuthEmployeeGuard] },
-      { path: 'lista-productos', component: RegistroProductosComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'lista-productos', component: RegistroProductosComponent},
       { path: 'welcome-page', component: WelcomePageComponent, },
       { path: 'nuevo-producto', component: ProductoFormComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'registro-producto/:id/edit', component: ProductoFormComponent, canActivate: [AuthEmployeeGuard] },
