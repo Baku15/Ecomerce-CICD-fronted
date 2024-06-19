@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, Subscription, catchError, map, of } from 'rxjs';
 import {MatSelectModule} from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -25,6 +25,7 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 import { ModalpasswordComponent } from '../modalpassword/modalpassword.component';
+import { AuthService } from '../services/autenticacion/auth.service';
 
 export interface DialogData {
   id: number;
@@ -40,6 +41,11 @@ export interface DialogData {
   styleUrl: './perfil-usuario.component.css'
 })
 export class PerfilUsuarioComponent implements OnInit{
+  username: string = '';
+  userId: number = 0;
+  role: string = '';
+  token: string = '';
+  private authSubscription: Subscription = new Subscription();
   animal!: string;
   name!: string;
   hide = true;
@@ -78,28 +84,27 @@ export class PerfilUsuarioComponent implements OnInit{
 
   userList$!: Observable<any[]>;
   addressList$!: Observable<any[]>;
-  constructor(public dialog: MatDialog,private router: Router, private usuarioService: UsuarioService,private route: ActivatedRoute) {
+  constructor(private authService: AuthService,public dialog: MatDialog,private router: Router, private usuarioService: UsuarioService,private route: ActivatedRoute) {
     merge(this.emailf.statusChanges, this.emailf.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
   }
   ngOnInit(): void {
+    this.authSubscription.add(this.authService.username$.subscribe(username => this.username = username));
+    this.authSubscription.add(this.authService.userId$.subscribe(userId => this.userId = userId));
+    this.authSubscription.add(this.authService.role$.subscribe(role => this.role = role));
+    this.authSubscription.add(this.authService.token$.subscribe(token => this.token = token));
     this.nombre = '';
     this.userPropid = localStorage.getItem('token') ? parseInt(localStorage.getItem('token')!) : 0;
     this.obteneraddress();
-    this.usuarioService.getAllUsuarios().subscribe({
-      next: (response) => {
-        this.userList$ = of(response); // Ajustamos según la respuesta real esperada
-        // Ajustamos según la respuesta real esperada
-        // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
-      },
-      error: (error) => {
-        console.error(error); // Para propósitos de depuración
-      }
-    });
+    this.userporid();
     setTimeout(() => {
       this.obtenerdatos();
     },500)    
+  }
+
+  ngOnDestroy(): void {
+    this.authSubscription.unsubscribe();
   }
 
   obteneraddress(){
@@ -121,12 +126,13 @@ export class PerfilUsuarioComponent implements OnInit{
     this.obteneraddress();
     this.usuarioService.getAllUsuarios().subscribe({
       next: (response) => {
-        this.userList$ = of(response); // Ajustamos según la respuesta real esperada
+        this.userList$ = of(response.result); // Ajustamos según la respuesta real esperada
         // Ajustamos según la respuesta real esperada
         // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
+        console.log("SOY LA RESPUESTA:"+response);
       },
       error: (error) => {
-        console.error(error); // Para propósitos de depuración
+        console.error("SOY EL ERROR:"+error); // Para propósitos de depuración
       }
     });
     setTimeout(() => {
@@ -242,27 +248,36 @@ export class PerfilUsuarioComponent implements OnInit{
     });
   }
 
-  obtenerdatos() {
-    this.userList$.subscribe((userList: any[]) => {
-      for (var i = 0; i < userList.length; i++) {
-        if (this.userPropid == userList[i].id_usuario) {
-          this.iduser = userList[i].id_usuario
-          this.nombre = userList[i].usuario_nombre;
-          this.paterno = userList[i].usuario_rol;
+  userporid(){
+    this.usuarioService.userporid(this.userId).subscribe({
+      next: (response) => {
+        this.iduser = response.result.idUsuario;
+          this.nombre = "";
+          this.paterno = "";
           this.materno = "";
           this.edad = 0;
           this.genero = "";
-          this.celular = userList[i].usuario_telefono;
+          this.celular = "";
           this.domicilio = "";
-          this.email = userList[i].usuario_correo;
-          this.usuario = "";
-          this.password = userList[i].usuario_pass;
-          this.status = userList[i].usuario_estado;
+          this.email = response.result.email;
+          this.usuario = response.result.username;
+          this.password = response.result.password;
+          this.status = "";
           this.createdate = "";
           this.updatedate = "";
-        }
+      },
+      error: (error) => {
+        console.error("SOY EL ERROR:"+error); // Para propósitos de depuración
       }
-    }); 
+    });
+    setTimeout(() => {
+      this.obtenerdatos();
+    },500) 
+  
+  }
+
+  obtenerdatos() {
+    this.userporid();
   }
   mostrarAlerta = false;
   mostrarAlertaError = false;

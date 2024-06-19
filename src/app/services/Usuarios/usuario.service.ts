@@ -14,7 +14,7 @@ export class UsuarioService {
     return this.httpClient.post(this.API_SERVER+"/auth/login", credentials);
   }
   public getAllUsuarios(): Observable<any>{
-    return this.httpClient.get(this.API_SERVER);
+    return this.httpClient.get(this.API_SERVER+"/all");
   }
 
   public getAllUsers(): Observable<any>{
@@ -58,6 +58,10 @@ export class UsuarioService {
 
   public getAllAddress(): Observable<any>{
     return this.httpClient.get('http://localhost:8040/api/Addresses');
+  }
+
+  public userporid(id: number): Observable<any>{
+    return this.httpClient.get('http://localhost:8040/api/user/find/'+id);
   }
 }
 
