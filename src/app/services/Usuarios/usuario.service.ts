@@ -32,6 +32,10 @@ export class UsuarioService {
     return this.httpClient.get('http://localhost:8040/api/BusquedasR/buscarRol/EMPLEADO');
   }
 
+  public editpersona(id: number, data: any): Observable<any>{
+    return this.httpClient.put('http://localhost:8040/api/BusquedasP/ActualizarG/'+id, data)
+  }
+
   public changerole(id: number, rol: string): Observable<any>{
     const roles = `${rol}`;
     console.log(roles);

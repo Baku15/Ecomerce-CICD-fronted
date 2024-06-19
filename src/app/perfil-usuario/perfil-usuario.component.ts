@@ -41,6 +41,13 @@ export interface DialogData {
   styleUrl: './perfil-usuario.component.css'
 })
 export class PerfilUsuarioComponent implements OnInit{
+  auxid: number = 0;
+  auxnombre!: any;
+  auxpassword!: any;
+  auxtelefono!: any
+  auxrol!: any;
+  auxemail!: any;
+  auxestado!: any;
   flagg: number = 0;
   username: string = '';
   userId: number = 0;
@@ -92,6 +99,14 @@ export class PerfilUsuarioComponent implements OnInit{
       .subscribe(() => this.updateErrorMessage());
   }
   ngOnInit(): void {
+    this.auxid = this.userId;
+    this.auxnombre = "";
+    this.auxpassword = "";
+    this.auxtelefono = "";
+    this.auxrol = "";
+    this.auxemail = "";
+    this.auxestado = "";
+
     this.authSubscription.add(this.authService.username$.subscribe(username => this.username = username));
     this.authSubscription.add(this.authService.userId$.subscribe(userId => this.userId = userId));
     this.authSubscription.add(this.authService.role$.subscribe(role => this.role = role));
@@ -125,20 +140,11 @@ export class PerfilUsuarioComponent implements OnInit{
   }
 
   actualizardatos(){
+    this.userporid();
     
     this.obteneraddress();
-    this.usuarioService.getAllUsuarios().subscribe({
-      next: (response) => {
-        this.userList$ = of(response.result); // Ajustamos según la respuesta real esperada
-        // Ajustamos según la respuesta real esperada
-        // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
-        console.log("SOY LA RESPUESTA:"+response);
-      },
-      error: (error) => {
-        console.error("SOY EL ERROR:"+error); // Para propósitos de depuración
-      }
-    });
     setTimeout(() => {
+      this.personas();
       this.obtenerdatos();
       this.obteneraddress();
     },500) 
@@ -194,22 +200,48 @@ export class PerfilUsuarioComponent implements OnInit{
     }
   }
   registrarUser(){
-    if (this.nombref.value === '' || this.passwordf.value === '' || this.telefonof.value === '' || this.rolf.value === '') {
-      this.stringMessage = 'Debe llenar todos los campos';
-      console.error('Debe llenar todos los campos');
-      this.mostrarMensajeDeleteError();
+    if(this.nombref.value && this.nombref.value.length > 50 || this.passwordf.value && this.passwordf.value.length > 50 || this.telefonof.value && this.telefonof.value.length > 50 || this.emailf.value && this.emailf.value.length > 50){
+      this.errorMessage = 'Maximo 50 caracteres en los inputs.';
+      this.mostrarMensajeRegistroError();
+      console.error('Espacio maximo alcanzado.');
       return;
     }
-    this.newUser = {
-      id_usuario: this.iduser,
-      usuario_nombre: this.nombref.value,
-      usuario_pass: this.passwordf.value,
-      usuario_estado: "activo",
-      usuario_correo: this.emailf.value,
-      usuario_telefono: this.telefonof.value,
-      usuario_rol: this.rolf.value
+    this.auxid = this.userId;
+    this.auxnombre = this.nombref.value;
+    this.auxpassword = this.passwordf.value;
+    this.auxtelefono = this.telefonof.value;
+    this.auxrol = this.rolf.value;
+    this.auxemail = this.emailf.value;
+    this.auxestado = "activo";
+    if(this.nombref.value == ""){
+      this.auxnombre = this.nombre;
     }
-    this.usuarioService.registerNewUsuario(this.newUser).subscribe({
+    if(this.passwordf.value == ""){
+      this.auxpassword = this.password;
+    }
+    if(this.telefonof.value == ""){
+      this.auxtelefono = this.celular;
+    }
+    if(this.rolf.value == ""){
+      this.auxrol = this.role;
+    }
+    if(this.emailf.value == ""){
+      this.auxemail = this.email;
+    }
+
+
+    this.newUser = {
+      idUsuario: this.userId,
+      nombre: this.auxnombre,
+      apellido: "",      
+      carnet: this.paterno,
+      telefono: this.auxtelefono,
+      email: this.auxemail,
+      password: this.auxpassword,
+      username: this.usuario,
+      roles: ["EMPLEADO"]
+    }
+    this.usuarioService.editpersona(this.userId, this.newUser).subscribe({
       next: (response) => {
         console.log(response+" Usuario registrado: "+this.newUser);
         this.mostrarMensajeDeleteError();
@@ -218,7 +250,7 @@ export class PerfilUsuarioComponent implements OnInit{
         // Suponiendo que la respuesta contiene directamente los datos del usuario necesarios
       },
       error: (error) => {
-        console.error(error+" Usuario registrado: "+this.newUser); // Para propósitos de depuración
+        console.error(error+" Usuario registrado: "+this.newUser.usuario_nombre); // Para propósitos de depuración
       }
     });
   }
@@ -255,7 +287,7 @@ export class PerfilUsuarioComponent implements OnInit{
     this.usuarioService.getpersonas().subscribe({
       next: (response) => {
         for (let i = 0; i < response.result.length; i++) {
-          if(response.result[i].idPersona == this.userId){
+          if(response.result[i].idPersona == this.edad){
             this.nombre = response.result[i].nombre;
             this.paterno = response.result[i].carnet;
             this.celular = response.result[i].telefono;
@@ -274,7 +306,7 @@ export class PerfilUsuarioComponent implements OnInit{
       next: (response) => {
         this.iduser = response.result.idUsuario;
           this.materno = "";
-          this.edad = 0;
+          this.edad = response.result.idPersona;
           this.genero = "";
           this.domicilio = "";
           this.email = response.result.email;

@@ -1,5 +1,16 @@
 <div class="title">
     <mat-icon>account_circle</mat-icon> Profile {{userId}}
+    
+@if(mostrarAlertaDelete){
+  <div class="alert">
+      Se realizó la accion con exito.
+  </div>
+}
+@if(mostrarAlertaErrorDelete){
+    <div class="alertE">
+        {{stringMessage}}
+    </div>
+} 
 </div>
 <div class="data">
     <div class="data-secction">        
@@ -23,7 +34,7 @@
                 <div class="value">{{this.usuario}}</div> 
             </div>         
         </div>
-
+        
     </div>
     <div class="horizontal-layout">        
         <div class="vertical-layout">
@@ -57,11 +68,14 @@
               <mat-form-field>
                 <mat-label>Select rol</mat-label>
                 <mat-select [formControl]="rolf">
-                  <mat-option value="admin">Admin</mat-option>
-                  <mat-option value="vendedor">Vendedor</mat-option>
-                  <mat-option value="comprador">Comprador</mat-option>
+                  <mat-option value="EMPLEADO">Admin</mat-option>
+                  <mat-option value="EMPLEADO">Vendedor</mat-option>
+                  <mat-option value="Comprador">Comprador</mat-option>
                 </mat-select>
               </mat-form-field>
+              <div class="button-secction">        
+                <button mat-raised-button (click)="registrarUser()">Actualizar User</button>
+            </div>
         </div>
         <div class="vertical-layout">
           <div class="personal-data"><mat-icon>edit</mat-icon>Enter new adresses</div>
@@ -93,16 +107,6 @@
         </div>
     </div>
 </div>
-@if(mostrarAlertaDelete){
-  <div class="alert">
-      Se realizó la accion con exito.
-  </div>
-}
-@if(mostrarAlertaErrorDelete){
-    <div class="alertE">
-        {{stringMessage}}
-    </div>
-}
 <div class="baja">
     <div class="button-secction">        
         <button mat-raised-button (click)="registrarUser()">Actualizar User</button>
