@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthGuard } from './services/autenticacion/auth.guard';
 import { AuthEmployeeGuard } from './services/autenticacion/auth-employee.guard';
 import { AuthCompradorGuard } from './services/autenticacion/auth-comprador.guard';
+import { AuthAdminGuard } from './services/autenticacion/auth-admin.guard';
 
 import { RegistroUsuarioComponent } from './registro-usuario/registro-usuario.component';
 import { ShoppingCartComponent } from './carrito-compras/carrito-compras.component';
@@ -39,15 +40,15 @@ export const routes: Routes = [
       { path: 'editar-perfil', component: EditarperfilComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'menu-principal', component: MenuPrincipalComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'perfil-user', component: PerfilUsuarioComponent, canActivate: [AuthEmployeeGuard] },
-      { path: 'lista-productos', component: RegistroProductosComponent},
-      { path: 'welcome-page', component: WelcomePageComponent},
-      { path: 'nuevo-producto', component: ProductoFormComponent, canActivate: [AuthEmployeeGuard], },
+      { path: 'lista-productos', component: RegistroProductosComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'welcome-page', component: WelcomePageComponent, },
+      { path: 'nuevo-producto', component: ProductoFormComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'registro-producto/:id/edit', component: ProductoFormComponent, canActivate: [AuthEmployeeGuard] },
-      { path: 'userlist', component: UserlistComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'userlist', component: UserlistComponent, canActivate: [AuthAdminGuard] },
       { path: 'producto/:productoId', component: UpdateProductoComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'detalleuser', component: DetalleuserComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'marca', component: MarcaComponent, canActivate: [AuthEmployeeGuard] },
-      { path: 'registroempleado', component: RegistroEmpleadoComponent, canActivate: [AuthEmployeeGuard] },
+      { path: 'registroempleado', component: RegistroEmpleadoComponent, canActivate: [AuthAdminGuard] },
       { path: 'lista-marcas', component: ListaMarcasComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'carritoCompras', component: ShoppingCartComponent, canActivate: [AuthCompradorGuard] },
       { path: 'comments/:id', component: ProductoDetailComponent, canActivate: [AuthCompradorGuard] },

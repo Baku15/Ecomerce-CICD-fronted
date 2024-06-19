@@ -30,15 +30,15 @@
       </div>
     </a>
     <mat-nav-list>
-      <a *ngIf="role === 'Comprador' || role === 'EMPLEADO'" mat-list-item routerLink="welcome-page" routerLinkActive="active" matTooltip="My Cloud" [matTooltipPosition]="'right'">
+      <a mat-list-item routerLink="welcome-page" routerLinkActive="active" matTooltip="My Cloud" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">home</mat-icon>
         <label class="iconoblanco">menu-principal</label>
       </a>
-      <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="userlist" routerLinkActive="active" matTooltip="User administration" [matTooltipPosition]="'right'">
+      <a *ngIf="role === 'ADMIN'" mat-list-item routerLink="userlist" routerLinkActive="active" matTooltip="User administration" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">people</mat-icon>
         <label class="iconoblanco">userlist</label>
       </a>
-      <a *ngIf="role === 'Comprador' || role === 'EMPLEADO'" mat-list-item routerLink="lista-productos" routerLinkActive="active" matTooltip="Lista de Productos" [matTooltipPosition]="'right'">
+      <a mat-list-item routerLink="lista-productos" routerLinkActive="active" matTooltip="Lista de Productos" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">list_alt</mat-icon>
         <span class="iconoblanco">Lista de Productos</span>
       </a>
@@ -46,27 +46,27 @@
         <mat-icon class="iconoblanco">shopping_cart</mat-icon>
         <span class="iconoblanco">Carrito de Compra</span>
       </a>
-      <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="registroempleado" routerLinkActive="active" matTooltip="Agregar empleado" [matTooltipPosition]="'right'">
+      <a *ngIf="role === 'ADMIN'" mat-list-item routerLink="registroempleado" routerLinkActive="active" matTooltip="Agregar empleado" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">group_add</mat-icon>
         <label class="iconoblanco">Agregar empleado</label>
       </a>
-      <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="marca" routerLinkActive="active" matTooltip="Crear Marca" [matTooltipPosition]="'right'">
+      <a *ngIf="role === 'ADMIN' || role === 'EMPLEADO'" mat-list-item routerLink="marca" routerLinkActive="active" matTooltip="Crear Marca" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">collections_bookmark</mat-icon>
         <label class="iconoblanco">Crear marca</label>
       </a>
-      <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="nuevo-producto" routerLinkActive="active" matTooltip="Crear Producto" [matTooltipPosition]="'right'">
+      <a *ngIf="role === 'ADMIN' || role === 'EMPLEADO'" mat-list-item routerLink="nuevo-producto" routerLinkActive="active" matTooltip="Crear Producto" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">shopping_cart</mat-icon>
         <span class="iconoblanco">Nuevo Producto</span>
       </a>
-      <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="categoria" routerLinkActive="active" matTooltip="Crear Categoria" [matTooltipPosition]="'right'">
+      <a *ngIf="role === 'ADMIN' || role === 'EMPLEADO'" mat-list-item routerLink="categoria" routerLinkActive="active" matTooltip="Crear Categoria" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">category</mat-icon>
         <span class="iconoblanco">Nueva Categoria</span>
       </a>
-      <a *ngIf="role === 'EMPLEADO'" mat-list-item routerLink="sales-dashboard" routerLinkActive="active" matTooltip="Dashboard" [matTooltipPosition]="'right'">
+      <a *ngIf="role === 'ADMIN' || role === 'EMPLEADO'" mat-list-item routerLink="sales-dashboard" routerLinkActive="active" matTooltip="Dashboard" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">dashboard</mat-icon>
         <span class="iconoblanco">Dashboard</span>
       </a>
-      <a *ngIf="role === 'Comprador' || role === 'EMPLEADO'" mat-list-item (click)="logout()" matTooltip="Log out" [matTooltipPosition]="'right'">
+      <a mat-list-item (click)="logout()" matTooltip="Log out" [matTooltipPosition]="'right'">
         <mat-icon class="iconoblanco">logout</mat-icon>
         <label class="iconoblanco">Log out</label>
       </a>

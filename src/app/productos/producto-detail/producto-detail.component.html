@@ -1,24 +1,9 @@
 <div *ngIf="producto" class="producto-container">
-  <h2 class="producto-nombre">{{ producto.nombre }}</h2>
-  <p class="producto-descripcion">{{ producto.descripcion }}</p>
-  <p class="producto-precio">Precio: {{ producto.precio | currency:'Bs' }}</p>
-  <p class="producto-stock">Stock: {{ producto.stock }}</p>
-
-  <h3 class="section-title">Comentarios</h3>
-  <div *ngFor="let comment of comments" class="comment-card">
-    <mat-card>
-      <mat-card-header>
-        <div mat-card-avatar class="comment-avatar"></div>
-        <mat-card-title>{{ comment.userName }}</mat-card-title>
-        <mat-card-subtitle>{{ comment.fechaComentario | date }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p>{{ comment.comentario }}</p>
-        <div class="comment-rating" matBadge="{{ comment.puntuacion }}" matBadgeColor="primary">
-          Puntuación: {{ comment.puntuacion }}
-        </div>
-      </mat-card-content>
-    </mat-card>
+  <div class="producto-info">
+    <h2 class="producto-nombre">{{ producto.nombre }}</h2>
+    <p class="producto-descripcion">{{ producto.descripcion }}</p>
+    <p class="producto-precio">Precio: {{ producto.precio | currency:'Bs' }}</p>
+    <p class="producto-stock">Stock: {{ producto.stock }}</p>
   </div>
 
   <h3 class="section-title">Agregar un comentario</h3>
@@ -36,5 +21,22 @@
     <button mat-raised-button color="primary" type="submit" class="comment-button">Agregar Comentario</button>
   </form>
   <p *ngIf="!canComment" class="comment-limit-message">Has excedido el número máximo de comentarios para este producto.</p>
+
+  <h3 class="section-title">Comentarios</h3>
+  <div *ngFor="let comment of comments" class="comment-card">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar class="comment-avatar"></div>
+        <mat-card-title>{{ comment.userName }}</mat-card-title>
+        <mat-card-subtitle>{{ comment.fechaComentario | date }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ comment.comentario }}</p>
+        <div class="comment-rating" matBadge="{{ comment.puntuacion }}" matBadgeColor="primary">
+          Puntuación: {{ comment.puntuacion }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommentService } from '../../services/comment/comment.service';
 import { ProductoService } from '../../services/productos/producto.service';
 import { Comment } from '../../model/comment.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material-module';
-
 
 @Component({
   selector: 'app-ver-comentarios',
@@ -24,6 +23,7 @@ export class VerComentariosComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router, // Inyecta el Router aquí
     private commentService: CommentService,
     private productoService: ProductoService
   ) {}
@@ -52,4 +52,9 @@ export class VerComentariosComponent implements OnInit {
       }
     );
   }
+
+  goBack(): void {
+    this.router.navigate(['/admin/lista-productos']); // Redirige a la lista de productos
+  }
 }
+

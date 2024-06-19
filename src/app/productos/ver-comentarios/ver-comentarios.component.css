@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -110,3 +109,13 @@ body {
     transform: translateY(0);
   }
 }
+.back-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.back-button mat-icon {
+  margin-right: 8px;
+}
+

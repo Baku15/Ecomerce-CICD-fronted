@@ -42,8 +42,7 @@ export type MenuItem = {
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   opened: boolean = true;
   id: number = 0;
   collapsed = signal(true);
@@ -107,8 +106,6 @@ export class SidebarComponent implements OnInit {
       (products: Producto[]) => {
         this.lowStockProducts = products;
         this.lowStockCount = products.length;
-              console.log('Low stock products:', products); // Log the received data
-
       },
       (error) => {
         console.error('Error al cargar productos con stock bajo:', error);

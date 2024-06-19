@@ -2,6 +2,10 @@
   <h2 class="mb-5">Nuevo Producto</h2>
   <div class="row justify-content-center">
     <form [formGroup]="productoForm" (ngSubmit)="create()" class="col-md-6">
+      <div class="button-container text-end">
+        <button mat-button color="warn" routerLink="/admin/registro-producto" class="mr-2">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="productoForm.invalid">Crear producto</button>
+      </div>
       <div class="file-upload-container mb-3">
         <label class="file-upload-label">
           <span>Select a file</span>
@@ -11,9 +15,7 @@
         <div *ngIf="selectedFile" class="image-preview">
           <div class="rectangle-image">
             <img [src]="imagePreview" alt="Select Image" class="preview-image">
-
           </div>
-
         </div>
       </div>
 
@@ -33,29 +35,23 @@
         <div class="col-md-6">
           <mat-form-field class="mb-3">
             <mat-label class="label-width">Precio</mat-label>
-            <input matInput type="number" placeholder="Precio" formControlName="precio" step="1" min="0"
->
+            <input matInput type="number" placeholder="Precio" formControlName="precio" step="1" min="0">
           </mat-form-field>
         </div>
-
         <div class="col-md-6">
           <mat-form-field class="mb-3">
             <mat-label class="label-width">Stock</mat-label>
-            <input matInput type="number" placeholder="Stock" formControlName="stock" step="1" min="0"  onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
->
+            <input matInput type="number" placeholder="Stock" formControlName="stock" step="1" min="0" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
           </mat-form-field>
         </div>
-
- <div class="col-md-6">
+        <div class="col-md-6">
           <mat-form-field class="mb-3">
             <mat-label class="label-width">Marca</mat-label>
- <mat-select formControlName="marca">
-<mat-option *ngFor="let marca of listOfMarcas" [value]="marca.id">{{ marca.nombre }}</mat-option>
+            <mat-select formControlName="marca">
+              <mat-option *ngFor="let marca of listOfMarcas" [value]="marca.id">{{ marca.nombre }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-
-
         <div class="col-md-6">
           <mat-form-field class="mb-3">
             <mat-label class="label-width">Categoría</mat-label>
@@ -65,8 +61,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="button-container">
-        <button mat-button color="warn" routerLink="/admin/registro-producto" class="mr-2">Cancelar</button>
-        <button mat-raised-button color="primary" type="submit" [disabled]="productoForm.invalid">Crear producto</button> </div> </form> </div>
+    </form>
+  </div>
 </div>
 

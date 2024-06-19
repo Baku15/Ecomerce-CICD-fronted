@@ -70,9 +70,9 @@
       <mat-divider></mat-divider>
       <div class="actions">
         <ng-container *ngIf="authService.getRole() === 'EMPLEADO'">
-          <button mat-raised-button color="primary" class="update-button" [routerLink]="">FAQ</button>
-          <button mat-raised-button color="accent" class="update-button" [routerLink]="'/admin/producto/' + producto.id">Update</button>
-          <button mat-raised-button color="warn" class="delete-button" (click)="deleteProducto(producto.id)">Delete</button>
+          <button mat-raised-button color="primary" class="view-comments-button" [routerLink]="['/admin/ver-comentarios', producto.id]">Ver comentarios</button>
+          <button mat-raised-button color="accent" class="update-button" [routerLink]="'/admin/producto/' + producto.id">Actualizar</button>
+          <button mat-raised-button color="warn" class="delete-button" (click)="deleteProducto(producto.id)">Eliminar</button>
         </ng-container>
         <ng-container *ngIf="authService.getRole() === 'Comprador'">
           <div class="comprador-actions">

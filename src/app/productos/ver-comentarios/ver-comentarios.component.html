@@ -1,4 +1,8 @@
 <div class="comments-container">
+  <button mat-button color="primary" class="back-button" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+    Volver a la lista de productos
+  </button>
   <h2>Comentarios para el producto: {{ productoNombre }}</h2>
   <div *ngIf="errorMessage" class="error-message">
     <p>{{ errorMessage }}</p>

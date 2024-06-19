@@ -14,7 +14,7 @@ export class AuthCompradorGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean | UrlTree {
     const role = this.authService.getRole();
-    if (role === 'Comprador') {
+ if (role === 'EMPLEADO' || role === 'ADMIN') {
       return true;
     } else {
       return this.router.createUrlTree(['/login']);
