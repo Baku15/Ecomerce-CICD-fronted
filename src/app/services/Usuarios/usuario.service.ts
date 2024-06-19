@@ -63,5 +63,9 @@ export class UsuarioService {
   public userporid(id: number): Observable<any>{
     return this.httpClient.get('http://localhost:8040/api/user/find/'+id);
   }
+
+  public getpersonas(): Observable<any>{
+    return this.httpClient.get('http://localhost:8040/api/persona/allPages');
+  }
 }
 

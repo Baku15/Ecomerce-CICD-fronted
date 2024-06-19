@@ -41,6 +41,7 @@ export interface DialogData {
   styleUrl: './perfil-usuario.component.css'
 })
 export class PerfilUsuarioComponent implements OnInit{
+  flagg: number = 0;
   username: string = '';
   userId: number = 0;
   role: string = '';
@@ -83,6 +84,7 @@ export class PerfilUsuarioComponent implements OnInit{
   errorMessage = '';
 
   userList$!: Observable<any[]>;
+  personaslist$!: Observable<any[]>;
   addressList$!: Observable<any[]>;
   constructor(private authService: AuthService,public dialog: MatDialog,private router: Router, private usuarioService: UsuarioService,private route: ActivatedRoute) {
     merge(this.emailf.statusChanges, this.emailf.valueChanges)
@@ -100,6 +102,7 @@ export class PerfilUsuarioComponent implements OnInit{
     this.userporid();
     setTimeout(() => {
       this.obtenerdatos();
+      this.personas();
     },500)    
   }
 
@@ -248,21 +251,35 @@ export class PerfilUsuarioComponent implements OnInit{
     });
   }
 
+  personas(){
+    this.usuarioService.getpersonas().subscribe({
+      next: (response) => {
+        for (let i = 0; i < response.result.length; i++) {
+          if(response.result[i].idPersona == this.userId){
+            this.nombre = response.result[i].nombre;
+            this.paterno = response.result[i].carnet;
+            this.celular = response.result[i].telefono;
+          }
+        }
+          
+      },
+      error: (error) => {
+        console.error("SOY EL ERROR:"+error); // Para propósitos de depuración
+      }
+    });
+  }
+
   userporid(){
     this.usuarioService.userporid(this.userId).subscribe({
       next: (response) => {
         this.iduser = response.result.idUsuario;
-          this.nombre = "";
-          this.paterno = "";
           this.materno = "";
           this.edad = 0;
           this.genero = "";
-          this.celular = "";
           this.domicilio = "";
           this.email = response.result.email;
           this.usuario = response.result.username;
           this.password = response.result.password;
-          this.status = "";
           this.createdate = "";
           this.updatedate = "";
       },
