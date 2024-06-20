@@ -3,12 +3,10 @@ import { AuthGuard } from './services/autenticacion/auth.guard';
 import { AuthEmployeeGuard } from './services/autenticacion/auth-employee.guard';
 import { AuthCompradorGuard } from './services/autenticacion/auth-comprador.guard';
 import { AuthAdminGuard } from './services/autenticacion/auth-admin.guard';
-
 import { RegistroUsuarioComponent } from './registro-usuario/registro-usuario.component';
 import { ShoppingCartComponent } from './carrito-compras/carrito-compras.component';
 import { EditarperfilComponent } from './editar-perfil/editar-perfil.component';
 import { LoginComponent } from './login/login.component';
-import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -38,7 +36,6 @@ export const routes: Routes = [
     children: [
       { path: 'categoria', component: CategoriaProductoComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'editar-perfil', component: EditarperfilComponent, canActivate: [AuthEmployeeGuard] },
-      { path: 'menu-principal', component: MenuPrincipalComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'perfil-user', component: PerfilUsuarioComponent, canActivate: [AuthEmployeeGuard] },
       { path: 'lista-productos', component: RegistroProductosComponent},
       { path: 'welcome-page', component: WelcomePageComponent, },
