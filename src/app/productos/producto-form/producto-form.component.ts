@@ -1,6 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router,RouterModule } from '@angular/router';
-import { AbstractControl, FormBuilder,FormGroup,ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { File } from 'buffer';
 import { CommonModule, NgIf } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,11 +19,16 @@ import { AuthService } from '../../services/autenticacion/auth.service';
 @Component({
   selector: 'app-producto-form',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, MaterialModule, NgIf],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    NgIf,
+  ],
   templateUrl: './producto-form.component.html',
-  styleUrl: './producto-form.component.css'
+  styleUrl: './producto-form.component.css',
 })
-
 export class ProductoFormComponent implements OnInit {
   productoForm!: FormGroup;
   listOfCategorias: any[] = [];
@@ -49,10 +61,10 @@ export class ProductoFormComponent implements OnInit {
 
   getAllCategorias() {
     this.categoriaService.getAllCategorias().subscribe(
-      res => {
+      (res) => {
         this.listOfCategorias = res;
       },
-      error => {
+      (error) => {
         console.error('Error al obtener las categorías:', error);
       }
     );
@@ -60,10 +72,10 @@ export class ProductoFormComponent implements OnInit {
 
   getAllMarcas() {
     this.marcaService.getAllMarcas().subscribe(
-      res => {
+      (res) => {
         this.listOfMarcas = res;
       },
-      error => {
+      (error) => {
         console.error('Error al obtener las marcas:', error);
       }
     );
@@ -71,7 +83,20 @@ export class ProductoFormComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
-    this.previewImage();
+    if (this.selectedFile) {
+      const fileType = this.selectedFile.type;
+      const validFileTypes = ['image/jpeg', 'image/png'];
+      if (!validFileTypes.includes(fileType)) {
+        this.snackBar.open('Solo se permiten archivos .jpg y .png', 'Cerrar', {
+          duration: 5000,
+        });
+        this.selectedFile = null;
+        this.imagePreview = null;
+        event.target.value = ''; // Resetea el input de archivo
+        return;
+      }
+      this.previewImage();
+    }
   }
 
   previewImage(): void {
@@ -87,12 +112,27 @@ export class ProductoFormComponent implements OnInit {
   create(): void {
     if (this.productoForm.valid) {
       const formData: FormData = new FormData();
-      formData.append('categorias', this.productoForm.get('categorias')?.value.toString());
-      formData.append('marca', this.productoForm.get('marca')?.value.toString());
+      formData.append(
+        'categorias',
+        this.productoForm.get('categorias')?.value.toString()
+      );
+      formData.append(
+        'marca',
+        this.productoForm.get('marca')?.value.toString()
+      );
       formData.append('nombre', this.productoForm.get('nombre')?.value);
-      formData.append('descripcion', this.productoForm.get('descripcion')?.value);
-      formData.append('precio', this.productoForm.get('precio')?.value.toString());
-      formData.append('stock', this.productoForm.get('stock')?.value.toString());
+      formData.append(
+        'descripcion',
+        this.productoForm.get('descripcion')?.value
+      );
+      formData.append(
+        'precio',
+        this.productoForm.get('precio')?.value.toString()
+      );
+      formData.append(
+        'stock',
+        this.productoForm.get('stock')?.value.toString()
+      );
 
       if (this.selectedFile) {
         const blob = this.selectedFile as Blob;
@@ -111,17 +151,21 @@ export class ProductoFormComponent implements OnInit {
         precio: this.productoForm.get('precio')?.value,
         stock: this.productoForm.get('stock')?.value,
         userId: userId,
-        imageUrl: this.selectedFile ? this.selectedFile.name : null
+        imageUrl: this.selectedFile ? this.selectedFile.name : null,
       });
 
       this.productoService.create(formData).subscribe(
         () => {
-          this.snackBar.open('Producto creado correctamente', 'Cerrar', { duration: 5000 });
+          this.snackBar.open('Producto creado correctamente', 'Cerrar', {
+            duration: 5000,
+          });
           this.router.navigateByUrl('/admin/lista-productos');
         },
-        error => {
+        (error) => {
           console.error('Error al crear el producto:', error);
-          this.snackBar.open('Error al crear el producto', 'ERROR', { duration: 5000 });
+          this.snackBar.open('Error al crear el producto', 'ERROR', {
+            duration: 5000,
+          });
         }
       );
     } else {
