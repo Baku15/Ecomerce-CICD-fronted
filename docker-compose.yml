@@ -2,8 +2,8 @@ version: "3.8"
 
 services:
   frontend:
-    image: proyecto-tienda-frontend
+    image: freddychura93/cicddockerdiplonadogithubactionsecomercefronted2025:latest
     container_name: proyecto-tienda-frontend
     ports:
-      - "4200:80"
+      - "4200:80"       # Mapea puerto 4200 local al puerto 80 de Nginx dentro del contenedor
     restart: unless-stopped
