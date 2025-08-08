@@ -1,4 +1,4 @@
-name: CI/CD Build and Push Frontend
+name: CI/CD Build and Push Angular Frontend
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Angular app
+      - name: Build Angular app (production)
         run: npm run build -- --configuration production
 
       - name: Login to Docker Hub
