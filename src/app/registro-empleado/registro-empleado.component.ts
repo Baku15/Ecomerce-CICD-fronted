@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { UsuarioService } from '../services/Usuarios/usuario.service';
 import { Router } from '@angular/router';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { merge } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -12,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import {untilDestroyed} from "@ngneat/until-destroy";
 
 @Component({
   selector: 'app-registro-empleado',

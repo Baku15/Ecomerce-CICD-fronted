@@ -9,7 +9,7 @@ import { Producto } from '../../model/producto.interface';
 import { Categoria } from '../../model/categoria.interface';
 import { ProductoService } from '../../services/productos/producto.service';
 import { CategoriasService } from '../../services/categorias/categorias.service';
-import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import { ngxCsv } from 'ngx-csv/ngx-csv';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -460,7 +460,7 @@ createCategoryChart() {
       Precio: sale.precio.toFixed(2),
       Total: (sale.precio * sale.cantidad).toFixed(2)
     }));
-    new Angular5Csv(data, 'Ventas', options);
+    new ngxCsv(data, 'Ventas', options);
   }
 
   exportSalesToPdf() {

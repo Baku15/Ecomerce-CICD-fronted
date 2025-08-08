@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  frontend:
+    image: proyecto-tienda-frontend
+    container_name: proyecto-tienda-frontend
+    ports:
+      - "4200:80"
+    restart: unless-stopped
