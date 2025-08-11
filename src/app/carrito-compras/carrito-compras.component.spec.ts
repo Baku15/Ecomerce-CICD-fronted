@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CarritoComprasComponent } from './carrito-compras.component';
 
 describe('CarritoComprasComponent', () => {
@@ -8,10 +7,10 @@ describe('CarritoComprasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CarritoComprasComponent]
+      imports: [CarritoComprasComponent]  // porque es standalone
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(CarritoComprasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

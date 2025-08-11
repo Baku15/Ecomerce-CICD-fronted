@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-class EditarPerfilComponent {
-}
+import { EditarPerfilComponent } from './editar-perfil.component';
 
 describe('EditarPerfilComponent', () => {
   let component: EditarPerfilComponent;
@@ -9,7 +7,7 @@ describe('EditarPerfilComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditarPerfilComponent]
+      imports: [EditarPerfilComponent]  // porque es standalone
     })
       .compileComponents();
 
