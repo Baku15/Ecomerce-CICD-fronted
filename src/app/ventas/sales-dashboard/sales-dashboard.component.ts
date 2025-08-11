@@ -19,7 +19,6 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material-module';
 import { MatNativeDateModule } from '@angular/material/core';
 import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
-import { error } from 'console';
 
 @Component({
   selector: 'app-sales-dashboard',

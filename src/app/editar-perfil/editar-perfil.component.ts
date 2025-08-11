@@ -5,8 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './editar-perfil.component.html',
-  styleUrl: './editar-perfil.component.css'
+  styleUrls: ['./editar-perfil.component.css']  // corregí "styleUrl" por "styleUrls"
 })
-export class EditarperfilComponent {
-
+export class EditarPerfilComponent {  // <-- aquí cambiaste "EditarperfilComponent" por "EditarPerfilComponent"
 }
