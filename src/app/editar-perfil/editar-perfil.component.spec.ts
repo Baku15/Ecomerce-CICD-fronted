@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EditarPerfilComponent } from './editar-perfil.component';
 
-import { MenuPrincipalComponent } from './editar-perfil.component';
-
-describe('MenuPrincipalComponent', () => {
-  let component: MenuPrincipalComponent;
-  let fixture: ComponentFixture<MenuPrincipalComponent>;
+describe('EditarPerfilComponent', () => {
+  let component: EditarPerfilComponent;
+  let fixture: ComponentFixture<EditarPerfilComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MenuPrincipalComponent]
+      imports: [EditarPerfilComponent]  // porque es standalone
     })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(MenuPrincipalComponent);
+      .compileComponents();
+
+    fixture = TestBed.createComponent(EditarPerfilComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
