@@ -11,7 +11,7 @@ describe('VerComentariosComponent', () => {
       imports: [VerComentariosComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(VerComentariosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

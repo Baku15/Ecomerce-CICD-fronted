@@ -2,7 +2,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router,RouterModule } from '@angular/router';
 import { FormBuilder,FormGroup,ReactiveFormsModule, Validators } from '@angular/forms';
-import { File } from 'buffer';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material-module';
 import { CategoriasService } from '../../services/categorias/categorias.service';
