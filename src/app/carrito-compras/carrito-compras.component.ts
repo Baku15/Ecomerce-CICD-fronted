@@ -88,3 +88,5 @@ export class ShoppingCartComponent implements OnInit {
   }
 }
 
+export class CarritoComprasComponent {
+}
